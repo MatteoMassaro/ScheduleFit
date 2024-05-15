@@ -36,4 +36,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tedesco => 'Alemán';
+
+  @override
+  String get contatti => 'Contactos';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get sitoWeb => 'Sitio web';
 }

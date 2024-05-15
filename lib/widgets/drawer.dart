@@ -1,6 +1,7 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/locale_provider.dart';
@@ -33,7 +34,6 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-
     final provider = Provider.of<LocaleProvider>(context, listen: false);
     final locale = provider.locale;
 
@@ -67,26 +67,6 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                 ),
               ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: ListTile(
-              leading: Icon(
-                Icons.calendar_month_outlined,
-                color: Colors.white,
-                size: 30,
-              ),
-              title: Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(
-                  "Calendario",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ),
           ),
           GestureDetector(
@@ -327,6 +307,168 @@ class _MyDrawerState extends State<MyDrawer> {
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
                     AppLocalizations.of(context)!.lingua,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: const Color(0xFF556EAA),
+                    title: Text(
+                      AppLocalizations.of(context)!.contatti,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                    content: SingleChildScrollView(
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: ListView(shrinkWrap: true, children: [
+                          InkWell(
+                            onTap: () {
+                              launchUrl(Uri.parse(
+                                  'https://www.instagram.com/matteo__massaro/'));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  const Padding(
+                                      padding: EdgeInsets.only(right: 15),
+                                      child: Image(
+                                        image: AssetImage(
+                                            "assets/images/instagram.png"),
+                                        width: 40,
+                                        height: 40,
+                                      )),
+                                  Text(
+                                    AppLocalizations.of(context)!.instagram,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      color: Color(0xFFfbc24c),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: () async {
+                              final Uri emailLaunchUri = Uri(
+                                  scheme: 'mailto',
+                                  path: 'massaromatteo21@gmail.com');
+                              if (await canLaunchUrl(emailLaunchUri)) {
+                                await launchUrl(emailLaunchUri);
+                              } else {
+                                throw 'Could not launch $emailLaunchUri';
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  const Padding(
+                                      padding: EdgeInsets.only(right: 15),
+                                      child: Image(
+                                        image: AssetImage(
+                                            "assets/images/email.png"),
+                                        width: 40,
+                                        height: 40,
+                                      )),
+                                  Text(
+                                    AppLocalizations.of(context)!.email,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      color: Color(0xFFfbc24c),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: () {
+                              launchUrl(Uri.parse(
+                                  'https://matteomassaro.altervista.org/'));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  const Padding(
+                                      padding: EdgeInsets.only(right: 8),
+                                      child: Image(
+                                        image: AssetImage(
+                                            "assets/images/website.png"),
+                                        width: 45,
+                                        height: 45,
+                                      )),
+                                  Text(
+                                    AppLocalizations.of(context)!.sitoWeb,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      color: Color(0xFFfbc24c),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.chiudi,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: ListTile(
+                leading: const ImageIcon(
+                  AssetImage("assets/images/social.png"),
+                  size: 30,
+                  color: Colors.white,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.contatti,
                     style: const TextStyle(
                       fontSize: 24,
                       color: Colors.white,

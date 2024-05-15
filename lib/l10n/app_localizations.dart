@@ -164,6 +164,30 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Tedesco'**
   String get tedesco;
+
+  /// No description provided for @contatti.
+  ///
+  /// In it, this message translates to:
+  /// **'Contatti'**
+  String get contatti;
+
+  /// No description provided for @instagram.
+  ///
+  /// In it, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
+
+  /// No description provided for @email.
+  ///
+  /// In it, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @sitoWeb.
+  ///
+  /// In it, this message translates to:
+  /// **'Sito web'**
+  String get sitoWeb;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

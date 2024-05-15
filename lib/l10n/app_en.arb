@@ -3,5 +3,11 @@
   "versione": "Version: ",
   "autore": "Author: ",
   "descrizioneApp" : "Create your own training programs to track your progress every day!",
-  "chiudi": "Close"
+  "chiudi": "Close",
+  "lingua": "Language",
+  "italiano": "Italian",
+  "inglese": "English",
+  "francese": "French",
+  "spagnolo": "Spanish",
+  "tedesco": "German"
 }

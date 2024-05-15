@@ -128,6 +128,42 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Chiudi'**
   String get chiudi;
+
+  /// No description provided for @lingua.
+  ///
+  /// In it, this message translates to:
+  /// **'Lingua'**
+  String get lingua;
+
+  /// No description provided for @italiano.
+  ///
+  /// In it, this message translates to:
+  /// **'Italiano'**
+  String get italiano;
+
+  /// No description provided for @inglese.
+  ///
+  /// In it, this message translates to:
+  /// **'Inglese'**
+  String get inglese;
+
+  /// No description provided for @francese.
+  ///
+  /// In it, this message translates to:
+  /// **'Francese'**
+  String get francese;
+
+  /// No description provided for @spagnolo.
+  ///
+  /// In it, this message translates to:
+  /// **'Spagnolo'**
+  String get spagnolo;
+
+  /// No description provided for @tedesco.
+  ///
+  /// In it, this message translates to:
+  /// **'Tedesco'**
+  String get tedesco;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

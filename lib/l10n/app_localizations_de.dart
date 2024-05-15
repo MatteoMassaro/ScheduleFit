@@ -18,4 +18,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get chiudi => 'Schließen';
+
+  @override
+  String get lingua => 'Sprache';
+
+  @override
+  String get italiano => 'Italienisch';
+
+  @override
+  String get inglese => 'Englisch';
+
+  @override
+  String get francese => 'Französisch';
+
+  @override
+  String get spagnolo => 'Spanisch';
+
+  @override
+  String get tedesco => 'Deutsch';
 }

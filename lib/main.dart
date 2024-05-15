@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/widgets/drawer.dart';
-import 'package:schedule_fit/widgets/locale_switcher.dart';
+
 import 'l10n/app_localizations.dart';
 import 'l10n/locale_provider.dart';
 
@@ -70,10 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
           style:
               const TextStyle(fontFamily: 'Cooper Hewitt', color: Colors.white),
         ),
-        actions: const [
+        /* actions: const [
           LocaleSwitcherWidget(),
           SizedBox(width: 12),
         ],
+        */
       ),
       drawer: const MyDrawer(),
       body: Center(

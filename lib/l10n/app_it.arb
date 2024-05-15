@@ -2,6 +2,12 @@
   "info": "Info",
   "versione": "Versione: ",
   "autore": "Autore: ",
-  "descrizioneApp" : "Crea i tuoi programmi di allenamento  per tenere traccia ogni giorno dei tuoi progressi!",
-  "chiudi": "Chiudi"
+  "descrizioneApp": "Crea i tuoi programmi di allenamento  per tenere traccia ogni giorno dei tuoi progressi!",
+  "chiudi": "Chiudi",
+  "lingua": "Lingua",
+  "italiano": "Italiano",
+  "inglese": "Inglese",
+  "francese": "Francese",
+  "spagnolo": "Spagnolo",
+  "tedesco": "Tedesco"
 }

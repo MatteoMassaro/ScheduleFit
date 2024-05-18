@@ -126,7 +126,7 @@ abstract class AppLocalizations {
   /// No description provided for @chiudi.
   ///
   /// In it, this message translates to:
-  /// **'Chiudi'**
+  /// **'CHIUDI'**
   String get chiudi;
 
   /// No description provided for @lingua.
@@ -188,6 +188,78 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Sito web'**
   String get sitoWeb;
+
+  /// No description provided for @eliminaScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'ELIMINA SCHEDA'**
+  String get eliminaScheda;
+
+  /// No description provided for @eliminaSchedaDialog.
+  ///
+  /// In it, this message translates to:
+  /// **'Elimina scheda'**
+  String get eliminaSchedaDialog;
+
+  /// No description provided for @apriScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'APRI SCHEDA'**
+  String get apriScheda;
+
+  /// No description provided for @serieCompletate.
+  ///
+  /// In it, this message translates to:
+  /// **'Serie completate: '**
+  String get serieCompletate;
+
+  /// No description provided for @confermaEliminaScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'Sei sicuro di voler eliminare la scheda?'**
+  String get confermaEliminaScheda;
+
+  /// No description provided for @si.
+  ///
+  /// In it, this message translates to:
+  /// **'SI'**
+  String get si;
+
+  /// No description provided for @annulla.
+  ///
+  /// In it, this message translates to:
+  /// **'ANNULLA'**
+  String get annulla;
+
+  /// No description provided for @scegliGruppoMuscolare.
+  ///
+  /// In it, this message translates to:
+  /// **'Scegli gruppo muscolare'**
+  String get scegliGruppoMuscolare;
+
+  /// No description provided for @nomeMuscolo.
+  ///
+  /// In it, this message translates to:
+  /// **'{nomeMuscolo, select, adduttori {Adduttori} bicipiti {Bicipiti} bicipitiFemorali {Bicipiti femorali} brachioradiale {Brachioradiale} deltoidi {Deltoidi} dorsali {Dorsali} glutei {Glutei} lombari {Lombari} obliquiEsterni {Obliqui esterni} obliquiInterni {Obliqui interni} pettorali {Pettorali} polpacci {Polpacci} quadricipiti {Quadricipiti} rettoAddominale {Retto addominale} trapezio {Trapezio} tricipiti {Tricipiti} other {Altro}}'**
+  String nomeMuscolo(String nomeMuscolo);
+
+  /// No description provided for @creaScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'Crea scheda'**
+  String get creaScheda;
+
+  /// No description provided for @mioAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'Il mio allenamento'**
+  String get mioAllenamento;
+
+  /// No description provided for @calendario.
+  ///
+  /// In it, this message translates to:
+  /// **'Calendario'**
+  String get calendario;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

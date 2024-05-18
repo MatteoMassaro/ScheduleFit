@@ -1,7 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
-import 'package:schedule_fit/widgets/drawer.dart';
+import 'package:schedule_fit/widgets/exercises_dialog.dart';
+import 'package:schedule_fit/widgets/schedule_card.dart';
+import 'package:schedule_fit/widgets/app_drawer.dart';
 
 import 'l10n/app_localizations.dart';
 import 'l10n/locale_provider.dart';
@@ -32,32 +35,39 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: const Color(0xFF556EAA)),
               useMaterial3: true,
               fontFamily: 'Cooper Hewitt'),
-          home: const MyHomePage(title: 'Home'),
+          home: Builder(
+            builder: (context) {
+              final localizations = AppLocalizations.of(context);
+              final title = localizations?.mioAllenamento ?? 'Il mio allenamento';
+              return HomePage(title: title);
+            },
+          )
         );
       });
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void _showExercisesDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const ExercisesDialog();
+        });
   }
 
   @override
@@ -76,21 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         */
       ),
-      drawer: const MyDrawer(),
-      body: Center(
+      drawer: const AppDrawer(),
+      body: const Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context)!.info),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            ScheduleCard(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _showExercisesDialog,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

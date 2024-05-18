@@ -3,7 +3,7 @@
   "versione": "Versione: ",
   "autore": "Autore: ",
   "descrizioneApp": "Crea i tuoi programmi di allenamento  per tenere traccia ogni giorno dei tuoi progressi!",
-  "chiudi": "Chiudi",
+  "chiudi": "CHIUDI",
   "lingua": "Lingua",
   "italiano": "Italiano",
   "inglese": "Inglese",
@@ -13,5 +13,22 @@
   "contatti": "Contatti",
   "instagram": "Instagram",
   "email": "Email",
-  "sitoWeb": "Sito web"
+  "sitoWeb": "Sito web",
+  "eliminaScheda": "ELIMINA SCHEDA",
+  "eliminaSchedaDialog": "Elimina scheda",
+  "apriScheda": "APRI SCHEDA",
+  "serieCompletate": "Serie completate: ",
+  "confermaEliminaScheda": "Sei sicuro di voler eliminare la scheda?",
+  "si": "SI",
+  "annulla": "ANNULLA",
+  "scegliGruppoMuscolare": "Scegli gruppo muscolare",
+  "nomeMuscolo": "{nomeMuscolo, select, adduttori {Adduttori} bicipiti {Bicipiti} bicipitiFemorali {Bicipiti femorali} brachioradiale {Brachioradiale} deltoidi {Deltoidi} dorsali {Dorsali} glutei {Glutei} lombari {Lombari} obliquiEsterni {Obliqui esterni} obliquiInterni {Obliqui interni} pettorali {Pettorali} polpacci {Polpacci} quadricipiti {Quadricipiti} rettoAddominale {Retto addominale} trapezio {Trapezio} tricipiti {Tricipiti} other {Altro}}",
+  "@nomeMuscolo": {
+    "placeholders": {
+      "nomeMuscolo": {}
+    }
+  },
+  "creaScheda": "Crea scheda",
+  "mioAllenamento": "Il mio allenamento",
+  "calendario": "Calendario"
 }

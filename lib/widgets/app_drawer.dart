@@ -1,19 +1,21 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/main.dart';
+import 'package:schedule_fit/widgets/exercises_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/locale_provider.dart';
 
-class MyDrawer extends StatefulWidget {
-  const MyDrawer({super.key});
+class AppDrawer extends StatefulWidget {
+  const AppDrawer({super.key});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
+  State<AppDrawer> createState() => _AppDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _AppDrawerState extends State<AppDrawer> {
   late LocaleProvider provider;
   late String _selectedLanguage;
 
@@ -34,9 +36,6 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context, listen: false);
-    final locale = provider.locale;
-
     return Drawer(
       backgroundColor: const Color(0xFF556EAA),
       child: ListView(
@@ -67,6 +66,96 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                 ),
               ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return HomePage(title: AppLocalizations.of(context)!.mioAllenamento);
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: ListTile(
+                leading: const ImageIcon(
+                  AssetImage("assets/images/myTraining.png"),
+                  size: 30,
+                  color: Colors.white,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.mioAllenamento,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ExercisesDialog();
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: ListTile(
+                leading: const ImageIcon(
+                  AssetImage("assets/images/createCard.png"),
+                  size: 30,
+                  color: Colors.white,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.creaScheda,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return HomePage(title: AppLocalizations.of(context)!.mioAllenamento);
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: ListTile(
+                leading: const ImageIcon(
+                  AssetImage("assets/images/calendar.png"),
+                  size: 30,
+                  color: Colors.white,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.calendario,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           GestureDetector(

@@ -3,7 +3,7 @@
   "versione": "Version: ",
   "autore": "Author: ",
   "descrizioneApp" : "Create your own training programs to track your progress every day!",
-  "chiudi": "Close",
+  "chiudi": "CLOSE",
   "lingua": "Language",
   "italiano": "Italian",
   "inglese": "English",
@@ -13,5 +13,22 @@
   "contatti": "Contacts",
   "instagram": "Instagram",
   "email": "Email",
-  "sitoWeb": "Website"
+  "sitoWeb": "Website",
+  "eliminaScheda": "DELETE CARD",
+  "eliminaSchedaDialog": "Delete card",
+  "apriScheda": "OPEN CARD",
+  "serieCompletate": "Completed series: ",
+  "confermaEliminaScheda": "Are you sure you want to delete the card?",
+  "si": "YES",
+  "annulla": "CANCEL",
+  "scegliGruppoMuscolare": "Choose muscle group",
+  "nomeMuscolo": "{nomeMuscolo, select, adduttori {Adductors} bicipiti {Biceps} bicipitiFemorali {Hamstrings} brachioradiale {Brachioradialis} deltoidi {Deltoids} dorsali {Lats} glutei {Glutes} lombari {Lower back} obliquiEsterni {External obliques} obliquiInterni {Internal obliques} pettorali {Pectorals} polpacci {Calves} quadricipiti {Quadriceps} rettoAddominale {Rectus abdominis} trapezio {Trapezius} tricipiti {Triceps} other {Other}}",
+  "@nomeMuscolo": {
+    "placeholders": {
+      "nomeMuscolo": {}
+    }
+  },
+  "creaScheda": "Create card",
+  "mioAllenamento": "My training",
+  "calendario": "Calendar"
 }

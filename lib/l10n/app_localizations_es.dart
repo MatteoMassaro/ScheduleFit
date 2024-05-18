@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 /// The translations for Spanish Castilian (`es`).
@@ -17,7 +19,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get descrizioneApp => '¡Crea tus propios programas de entrenamiento para seguir tu progreso todos los días!';
 
   @override
-  String get chiudi => 'Cerca';
+  String get chiudi => 'CERCA';
 
   @override
   String get lingua => 'Idioma';
@@ -48,4 +50,64 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sitoWeb => 'Sitio web';
+
+  @override
+  String get eliminaScheda => 'BORRAR TARJETA';
+
+  @override
+  String get eliminaSchedaDialog => 'Borrar tarjeta';
+
+  @override
+  String get apriScheda => 'ABRIR TARJETA';
+
+  @override
+  String get serieCompletate => 'Serie completa: ';
+
+  @override
+  String get confermaEliminaScheda => '¿Estás seguro de que deseas eliminar la tarjeta?';
+
+  @override
+  String get si => 'SÍ';
+
+  @override
+  String get annulla => 'CANCELAR';
+
+  @override
+  String get scegliGruppoMuscolare => 'Elegir grupo muscular';
+
+  @override
+  String nomeMuscolo(String nomeMuscolo) {
+    String temp0 = intl.Intl.selectLogic(
+      nomeMuscolo,
+      {
+        'adduttori': 'Aductores',
+        'bicipiti': 'Bíceps',
+        'bicipitiFemorali': 'Isquiotibiales',
+        'brachioradiale': 'Braquiorradial',
+        'deltoidi': 'Deltoides',
+        'dorsali': 'Dorsales',
+        'glutei': 'Glúteos',
+        'lombari': 'Lumbar',
+        'obliquiEsterni': 'Oblicuos externos',
+        'obliquiInterni': 'Oblicuos internos',
+        'pettorali': 'Pectorales',
+        'polpacci': 'Pantorrillas',
+        'quadricipiti': 'Cuádriceps',
+        'rettoAddominale': 'Recto abdominal',
+        'trapezio': 'Trapecio',
+        'tricipiti': 'Tríceps',
+        'other': 'Otro',
+      },
+    );
+    return temp0;
+  }
+
+  @override
+  String get creaScheda => 'Crear tarjeta';
+
+  @override
+  String get mioAllenamento => 'Mi entrenamiento';
+
+  @override
+  String get calendario => 'Calendario';
 }

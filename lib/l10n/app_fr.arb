@@ -2,8 +2,8 @@
   "info": "Info",
   "versione": "Version: ",
   "autore": "Auteur: ",
-  "descrizioneApp" : "Créez vos propres programmes d'entraînement pour suivre vos progrès au quotidien !",
-  "chiudi": "Fermer",
+  "descrizioneApp": "Créez vos propres programmes d'entraînement pour suivre vos progrès au quotidien !",
+  "chiudi": "FERMER",
   "lingua": "Langue",
   "italiano": "Italien",
   "inglese": "Anglais",
@@ -13,5 +13,22 @@
   "contatti": "Contacts",
   "instagram": "Instagram",
   "email": "Email",
-  "sitoWeb": "Site web"
+  "sitoWeb": "Site web",
+  "eliminaScheda": "SUPPRIMER L'ONGLET",
+  "eliminaSchedaDialog": "Supprimer l'onglet",
+  "apriScheda": "ONGLET OUVERTE",
+  "serieCompletate": "Série terminée: ",
+  "confermaEliminaScheda": "Êtes-vous sûr de vouloir supprimer l'onglet?",
+  "si": "OUI",
+  "annulla": "ANNULLER",
+  "scegliGruppoMuscolare": "Choisir un groupe musculaire",
+  "nomeMuscolo": "{nomeMuscolo, select, adduttori {Adducteurs} bicipiti {Biceps} bicipitiFemorali {Ischio-jambiers} brachioradiale {Brachioradial} deltoidi {Deltoïdes} dorsali {Dorsaux} glutei {Fessiers} lombari {Lombaires} obliquiEsterni {Obliques externes} obliquiInterni {Obliques internes} pettorali {Pectoraux} polpacci {Mollets} quadricipiti {Quadriceps} rettoAddominale {Grand droit de l'abdomen} trapezio {Trapèze} tricipiti {Triceps} other {Autre}}",
+  "@nomeMuscolo": {
+    "placeholders": {
+      "nomeMuscolo": {}
+    }
+  },
+  "creaScheda": "Créer une carte",
+  "mioAllenamento": "Mon entrainement",
+  "calendario": "Calendrier"
 }

@@ -2,8 +2,8 @@
   "info": "Info",
   "versione": "Ausführung: ",
   "autore": "Autor: ",
-  "descrizioneApp" : "Erstellen Sie Ihre eigenen Trainingsprogramme, um Ihre Fortschritte jeden Tag zu verfolgen!",
-  "chiudi": "Schließen",
+  "descrizioneApp": "Erstellen Sie Ihre eigenen Trainingsprogramme, um Ihre Fortschritte jeden Tag zu verfolgen!",
+  "chiudi": "SCHLIESSEN",
   "lingua": "Sprache",
   "italiano": "Italienisch",
   "inglese": "Englisch",
@@ -13,5 +13,22 @@
   "contatti": "Kontakte",
   "instagram": "Instagram",
   "email": "Email",
-  "sitoWeb": "Webseite"
+  "sitoWeb": "Webseite",
+  "eliminaScheda": "KARTE LÖSCHEN",
+  "eliminaSchedaDialog": "Karte löschen",
+  "apriScheda": "KARTE ÖFFNEN",
+  "serieCompletate": "Abgeschlossene serie: ",
+  "confermaEliminaScheda": "Sind Sie sicher, dass Sie die Karte löschen möchten?",
+  "si": "JA",
+  "annulla": "STORNIEREN",
+  "scegliGruppoMuscolare": "Wählen sie eine muskelgruppe",
+  "nomeMuscolo": "{nomeMuscolo, select, adduttori {Adduktoren} bicipiti {Bizeps} bicipitiFemorali {Beinbeuger} brachioradiale {Brachioradialis} deltoidi {Deltamuskeln} dorsali {Rückenmuskeln} glutei {Gluteus} lombari {Lendenmuskeln} obliquiEsterni {Äußere schrägen Bauchmuskeln} obliquiInterni {Innere schrägen Bauchmuskeln} pettorali {Brustmuskeln} polpacci {Wadenmuskeln} quadricipiti {Quadrizeps} rettoAddominale {Gerade Bauchmuskeln} trapezio {Trapezmuskel} tricipiti {Trizeps} other {Andere}}",
+  "@nomeMuscolo": {
+    "placeholders": {
+      "nomeMuscolo": {}
+    }
+  },
+  "creaScheda": "Karte erstellen",
+  "mioAllenamento": "Mein training",
+  "calendario": "Kalender"
 }

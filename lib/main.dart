@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
-import 'package:schedule_fit/widgets/exercises_dialog.dart';
-import 'package:schedule_fit/widgets/exercise_card.dart';
-import 'package:schedule_fit/widgets/app_drawer.dart';
+import 'package:schedule_fit/screens/home_screen.dart';
 
 import 'l10n/app_localizations.dart';
 import 'l10n/locale_provider.dart';
@@ -58,59 +56,4 @@ class MyApp extends StatelessWidget {
               },
             ));
       });
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _showExercisesDialog() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const ExercisesDialog();
-        });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style:
-              const TextStyle(fontFamily: 'Cooper Hewitt', color: Colors.white),
-        ),
-        /* actions: const [
-          LocaleSwitcherWidget(),
-          SizedBox(width: 12),
-        ],
-        */
-      ),
-      drawer: const AppDrawer(),
-      body: const Center(
-        child: Column(
-          children: <Widget>[
-            ExerciseCard(),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showExercisesDialog,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
 }

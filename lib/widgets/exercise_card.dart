@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
@@ -17,20 +16,27 @@ class _CardState extends State<ExerciseCard> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF556EAA),
-          title:  Center(child: Text(AppLocalizations.of(context)!.eliminaSchedaDialog, style: const TextStyle(color: Colors.white),)),
-          content: Text(AppLocalizations.of(context)!.confermaEliminaScheda, style: const TextStyle(color: Color(0xFFfbc24c), fontSize: 15)),
+          title: Center(
+              child: Text(
+            AppLocalizations.of(context)!.eliminaSchedaDialog,
+            style: const TextStyle(color: Colors.white),
+          )),
+          content: Text(AppLocalizations.of(context)!.confermaEliminaScheda,
+              style: const TextStyle(color: Color(0xFFfbc24c), fontSize: 15)),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-
-              },
-              child: Text(AppLocalizations.of(context)!.si, style: const TextStyle(color: Colors.white)),
+              onPressed: () {},
+              child: Text(AppLocalizations.of(context)!.si,
+                  style: const TextStyle(color: Colors.white)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.annulla, style: const TextStyle(color: Colors.red),),
+              child: Text(
+                AppLocalizations.of(context)!.annulla,
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );

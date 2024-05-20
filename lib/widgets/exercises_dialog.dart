@@ -65,9 +65,10 @@ class _ExercisesDialogState extends State<ExercisesDialog> {
                   ),
                   onTap: () => {
                     Navigator.of(context).pop(),
-                    Navigator.of(context).push(
-                        _createRoute(AppLocalizations.of(context)!
-                            .nomeMuscolo(iconData['name']!), iconData['path']!))
+                    Navigator.of(context).push(_createRoute(
+                        AppLocalizations.of(context)!
+                            .nomeMuscolo(iconData['name']!),
+                        iconData['path']!))
                   },
                 ),
                 const SizedBox(height: 20)

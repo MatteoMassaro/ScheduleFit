@@ -1,12 +1,12 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedule_fit/main.dart';
 import 'package:schedule_fit/widgets/exercises_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/locale_provider.dart';
+import '../screens/home_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});

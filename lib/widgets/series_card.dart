@@ -48,8 +48,7 @@ class _CardState extends State<SeriesCard> {
                   TextButton(
                     child: Text(AppLocalizations.of(context)!.eliminaScheda,
                         style: const TextStyle(color: Colors.red)),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                   TextButton(
                     child: Text(

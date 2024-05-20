@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 
-class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key});
+class ExerciseCard extends StatefulWidget {
+  const ExerciseCard({super.key});
 
   @override
-  State<ScheduleCard> createState() => _CardState();
+  State<ExerciseCard> createState() => _CardState();
 }
 
-class _CardState extends State<ScheduleCard> {
+class _CardState extends State<ExerciseCard> {
   _openDialog() {
     showDialog(
       context: context,

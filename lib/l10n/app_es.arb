@@ -30,5 +30,8 @@
   },
   "creaScheda": "Crear tarjeta",
   "mioAllenamento": "Mi entrenamiento",
-  "calendario": "Calendario"
+  "calendario": "Calendario",
+  "inserisciTitolo": "Introduce el título",
+  "aggiungiSerie": "AÑADIR SERIE",
+  "salva": "GUARDAR"
 }

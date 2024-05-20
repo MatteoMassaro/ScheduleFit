@@ -110,4 +110,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendario => 'Kalender';
+
+  @override
+  String get inserisciTitolo => 'Titel eingeben';
+
+  @override
+  String get aggiungiSerie => 'REIHE HINZUFÜGEN';
+
+  @override
+  String get salva => 'SPEICHERN';
 }

@@ -260,6 +260,24 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Calendario'**
   String get calendario;
+
+  /// No description provided for @inserisciTitolo.
+  ///
+  /// In it, this message translates to:
+  /// **'Inserisci titolo'**
+  String get inserisciTitolo;
+
+  /// No description provided for @aggiungiSerie.
+  ///
+  /// In it, this message translates to:
+  /// **'AGGIUNGI SERIE'**
+  String get aggiungiSerie;
+
+  /// No description provided for @salva.
+  ///
+  /// In it, this message translates to:
+  /// **'SALVA'**
+  String get salva;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

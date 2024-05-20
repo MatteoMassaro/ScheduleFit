@@ -30,5 +30,8 @@
   },
   "creaScheda": "Karte erstellen",
   "mioAllenamento": "Mein training",
-  "calendario": "Kalender"
+  "calendario": "Kalender",
+  "inserisciTitolo": "Titel eingeben",
+  "aggiungiSerie": "REIHE HINZUFÜGEN",
+  "salva": "SPEICHERN"
 }

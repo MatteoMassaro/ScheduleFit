@@ -110,4 +110,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calendario => 'Calendario';
+
+  @override
+  String get inserisciTitolo => 'Introduce el título';
+
+  @override
+  String get aggiungiSerie => 'AÑADIR SERIE';
+
+  @override
+  String get salva => 'GUARDAR';
 }

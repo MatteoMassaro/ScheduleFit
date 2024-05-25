@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/screens/home_screen.dart';
 
 import 'l10n/app_localizations.dart';
-import 'l10n/locale_provider.dart';
+import 'providers/locale_provider.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +36,11 @@ class MyApp extends StatelessWidget {
           color: Color(0xFF556EAA), foregroundColor: Colors.white));
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => LocaleProvider(),
+  Widget build(BuildContext context) => MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => PageProvider(AppLocalizations.of(context)?.mioAllenamento ?? 'Il mio allenamento')),
+      ],
       builder: (context, child) {
         final provider = Provider.of<LocaleProvider>(context);
         return MaterialApp(

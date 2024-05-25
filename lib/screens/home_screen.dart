@@ -31,12 +31,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      drawerEnableOpenDragGesture: true,
       appBar: AppBar(
           title: Text(
-            widget.title,
-            style:
+        widget.title,
+        style:
             const TextStyle(fontFamily: 'Cooper Hewitt', color: Colors.white),
-          )),
+      )),
       drawer: const AppDrawer(),
       body: const Center(
         child: Column(

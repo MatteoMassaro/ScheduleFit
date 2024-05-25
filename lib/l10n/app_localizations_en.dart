@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 /// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([super.locale = 'en']);
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
   String get info => 'Info';
@@ -77,7 +77,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String temp0 = intl.Intl.selectLogic(
+    String _temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Adductors',
@@ -99,7 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
         'other': 'Other',
       },
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
@@ -119,4 +119,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get salva => 'SAVE';
+
+  @override
+  String serie(Object numero) {
+    return 'Series $numero';
+  }
+
+  @override
+  String get numeroRipetizioni => 'Number of repetitions';
+
+  @override
+  String get eliminaSerie => 'DELETE SERIES';
 }

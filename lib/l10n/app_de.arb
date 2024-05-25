@@ -32,6 +32,9 @@
   "mioAllenamento": "Mein training",
   "calendario": "Kalender",
   "inserisciTitolo": "Titel eingeben",
-  "aggiungiSerie": "REIHE HINZUFÜGEN",
-  "salva": "SPEICHERN"
+  "aggiungiSerie": "SERIE HINZUFÜGEN",
+  "salva": "SPEICHERN",
+  "serie": "Serie {numero}",
+  "numeroRipetizioni": "Anzahl der wiederholungen",
+  "eliminaSerie": "SERIE LÖSCHEN"
 }

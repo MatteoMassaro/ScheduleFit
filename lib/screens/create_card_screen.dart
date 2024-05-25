@@ -16,12 +16,19 @@ class CreateCardScreen extends StatefulWidget {
 
 class _CreateCardScreenState extends State<CreateCardScreen> {
   late TextEditingController _textEditingController;
-  List<SeriesCard> cards = [];
+  List<int> cards = [];
+  bool _isSaveButtonEnabled = false;
+
+  void _removeSeries(int index) {
+    setState(() {
+      cards.removeAt(index);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _textEditingController = TextEditingController(text: 'Valore iniziale');
+    _textEditingController = TextEditingController();
   }
 
   @override
@@ -32,9 +39,7 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
 
   void _addCard() {
     setState(() {
-      if (_textEditingController.text.isNotEmpty) {
-        cards.add(const SeriesCard());
-      }
+      cards.add(cards.length + 1);
     });
   }
 
@@ -45,11 +50,12 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.creaScheda),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -88,12 +94,13 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
                   Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
+                      padding: const EdgeInsets.only(right: 50.0),
                       child: TextField(
                           controller: _textEditingController,
                           maxLength: 30,
                           maxLines: 3,
                           textInputAction: TextInputAction.done,
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 30, color: Color(0xFFfbc24c)),
                           decoration: InputDecoration(
@@ -103,16 +110,19 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
                               counterText: "",
                               border: InputBorder.none),
                           onChanged: (text) {
-                            if (text.isNotEmpty) {
-                              final newText =
-                                  text.substring(0, 1).toUpperCase() +
-                                      text.substring(1);
-                              _textEditingController.value = TextEditingValue(
-                                text: newText,
-                                selection: TextSelection.collapsed(
-                                    offset: newText.length),
-                              );
-                            }
+                            setState(() {
+                              _isSaveButtonEnabled = text.isNotEmpty;
+                              if (text.isNotEmpty) {
+                                final newText =
+                                    text.substring(0, 1).toUpperCase() +
+                                        text.substring(1);
+                                _textEditingController.value = TextEditingValue(
+                                  text: newText,
+                                  selection: TextSelection.collapsed(
+                                      offset: newText.length),
+                                );
+                              }
+                            });
                           }),
                     ),
                   ),
@@ -120,12 +130,18 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
               ),
             ),
             Expanded(
-              flex: 4,
-              child: ListView.builder(
-                itemCount: cards.length,
-                itemBuilder: (context, index) {
-                  return cards[index];
-                },
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: ListView.builder(
+                  itemCount: cards.length,
+                  itemBuilder: (context, index) {
+                    return SeriesCard(
+                      index: index + 1,
+                      onDelete: () => _removeSeries(index),
+                    );
+                  },
+                ),
               ),
             ),
             Expanded(
@@ -145,18 +161,21 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
                       onPressed: _addCard,
                       child: Text(AppLocalizations.of(context)!.aggiungiSerie,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 18, color: Colors.black)),
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black)),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                          disabledBackgroundColor: Colors.grey,
                           fixedSize: const Size(150, 65),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           backgroundColor: Colors.green),
-                      onPressed: _saveChanges,
+                      onPressed: _isSaveButtonEnabled ? _saveChanges : null,
                       child: Text(AppLocalizations.of(context)!.salva,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 18, color: Colors.black)),
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black)),
                     ),
                   ],
                 ),

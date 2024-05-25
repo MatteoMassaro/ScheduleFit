@@ -33,5 +33,8 @@
   "calendario": "Calendar",
   "inserisciTitolo": "Enter title",
   "aggiungiSerie": "ADD SERIES",
-  "salva": "SAVE"
+  "salva": "SAVE",
+  "serie": "Series {numero}",
+  "numeroRipetizioni": "Number of repetitions",
+  "eliminaSerie": "DELETE SERIES"
 }

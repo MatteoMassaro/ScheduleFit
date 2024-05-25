@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 /// The translations for French (`fr`).
 class AppLocalizationsFr extends AppLocalizations {
-  AppLocalizationsFr([super.locale = 'fr']);
+  AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
   String get info => 'Info';
@@ -77,7 +77,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String temp0 = intl.Intl.selectLogic(
+    String _temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Adducteurs',
@@ -99,7 +99,7 @@ class AppLocalizationsFr extends AppLocalizations {
         'other': 'Autre',
       },
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
@@ -119,4 +119,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get salva => 'ENREGISTRER';
+
+  @override
+  String serie(Object numero) {
+    return 'Série $numero';
+  }
+
+  @override
+  String get numeroRipetizioni => 'Nombre de répétitions';
+
+  @override
+  String get eliminaSerie => 'SUPPRIMER LA SÉRIE';
 }

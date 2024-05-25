@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 /// The translations for Spanish Castilian (`es`).
 class AppLocalizationsEs extends AppLocalizations {
-  AppLocalizationsEs([super.locale = 'es']);
+  AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
   String get info => 'Info';
@@ -77,7 +77,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String temp0 = intl.Intl.selectLogic(
+    String _temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Aductores',
@@ -99,7 +99,7 @@ class AppLocalizationsEs extends AppLocalizations {
         'other': 'Otro',
       },
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
@@ -119,4 +119,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get salva => 'GUARDAR';
+
+  @override
+  String serie(Object numero) {
+    return 'Serie $numero';
+  }
+
+  @override
+  String get numeroRipetizioni => 'Número de repeticiones';
+
+  @override
+  String get eliminaSerie => 'ELIMINAR SERIE';
 }

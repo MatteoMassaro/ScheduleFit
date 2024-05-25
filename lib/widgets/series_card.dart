@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 
 class SeriesCard extends StatefulWidget {
-  const SeriesCard({super.key});
+  final int index;
+  final VoidCallback onDelete;
+
+  const SeriesCard({super.key, required this.index, required this.onDelete});
 
   @override
   State<SeriesCard> createState() => _CardState();
 }
 
 class _CardState extends State<SeriesCard> {
+  int serieCompletate = 0;
+  bool _switchValue = false;
+  final List<String> _unitaMisuraList = ['Kg', 'Lbs'];
+  String _unitaMisuraSelezionata = 'Kg';
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -20,47 +28,91 @@ class _CardState extends State<SeriesCard> {
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Row(children: [
-                Text("Allenamento spalle",
+              Row(children: [
+                Text(AppLocalizations.of(context)!.serie(widget.index),
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 25, color: Color(0xFFfbc24c))),
-                Spacer(),
-                Icon(
-                  Icons.fitness_center,
-                  size: 50,
+                    style: const TextStyle(
+                        fontSize: 25, color: Color(0xFFfbc24c))),
+                const Spacer(),
+                Switch(
+                  value: _switchValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      if (newValue == true) {
+                        serieCompletate++;
+                      }
+                      _switchValue = newValue;
+                    });
+                  },
                 ),
               ]),
               Row(children: [
-                Text(AppLocalizations.of(context)!.serieCompletate,
+                Text(AppLocalizations.of(context)!.numeroRipetizioni,
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 15, color: Colors.white)),
-                const SizedBox(width: 5),
-                const Text("0/10",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 15, color: Colors.white)),
-              ]),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  TextButton(
-                    child: Text(AppLocalizations.of(context)!.eliminaScheda,
-                        style: const TextStyle(color: Colors.red)),
-                    onPressed: () {},
+                const SizedBox(width: 10),
+                const SizedBox(
+                  height: 50,
+                  width: 130,
+                  child: TextField(
+                    maxLength: 10,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(fontSize: 20, color: Color(0xFFfbc24c)),
+                    decoration: InputDecoration(
+                        hintText: '0',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        counterText: "",
+                        border: InputBorder.none),
                   ),
+                )
+              ]),
+              Row(children: [
+                DropdownButton<String>(
+                  value: _unitaMisuraSelezionata,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _unitaMisuraSelezionata = newValue!;
+                    });
+                  },
+                  items: _unitaMisuraList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(width: 10),
+                const SizedBox(
+                  height: 50,
+                  width: 130,
+                  child: TextField(
+                    maxLength: 10,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(fontSize: 20, color: Color(0xFFfbc24c)),
+                    decoration: InputDecoration(
+                        hintText: '0',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        counterText: "",
+                        border: InputBorder.none),
+                  ),
+                )
+              ]),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Spacer(),
                   TextButton(
-                    child: Text(
-                      AppLocalizations.of(context)!.apriScheda,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      /* ... */
-                    },
+                    onPressed: widget.onDelete,
+                    child: Text(AppLocalizations.of(context)!.eliminaSerie,
+                        style: const TextStyle(color: Colors.red)),
                   ),
                 ],
-              ),
+              )
             ],
           ),
         ),

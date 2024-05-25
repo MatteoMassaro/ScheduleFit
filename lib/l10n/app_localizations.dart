@@ -278,6 +278,24 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'SALVA'**
   String get salva;
+
+  /// No description provided for @serie.
+  ///
+  /// In it, this message translates to:
+  /// **'Serie {numero}'**
+  String serie(Object numero);
+
+  /// No description provided for @numeroRipetizioni.
+  ///
+  /// In it, this message translates to:
+  /// **'Numero ripetizioni'**
+  String get numeroRipetizioni;
+
+  /// No description provided for @eliminaSerie.
+  ///
+  /// In it, this message translates to:
+  /// **'ELIMINA SERIE'**
+  String get eliminaSerie;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

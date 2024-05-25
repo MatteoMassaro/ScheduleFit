@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 /// The translations for German (`de`).
 class AppLocalizationsDe extends AppLocalizations {
-  AppLocalizationsDe([String locale = 'de']) : super(locale);
+  AppLocalizationsDe([super.locale = 'de']);
 
   @override
   String get info => 'Info';
@@ -77,7 +77,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String _temp0 = intl.Intl.selectLogic(
+    String temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Adduktoren',
@@ -99,7 +99,7 @@ class AppLocalizationsDe extends AppLocalizations {
         'other': 'Andere',
       },
     );
-    return '$_temp0';
+    return temp0;
   }
 
   @override

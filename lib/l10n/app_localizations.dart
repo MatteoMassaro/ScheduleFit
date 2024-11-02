@@ -296,6 +296,18 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'ELIMINA SERIE'**
   String get eliminaSerie;
+
+  /// No description provided for @suggerimentoAggiungiScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'Clicca su \'+\' per aggiungere una scheda'**
+  String get suggerimentoAggiungiScheda;
+
+  /// No description provided for @erroreCaricamentoSchede.
+  ///
+  /// In it, this message translates to:
+  /// **'Errore nel caricamento delle schede'**
+  String get erroreCaricamentoSchede;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

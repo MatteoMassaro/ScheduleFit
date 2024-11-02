@@ -130,4 +130,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eliminaSerie => 'DELETE SERIES';
+
+  @override
+  String get suggerimentoAggiungiScheda => 'Click on \'+\' to add a tab';
+
+  @override
+  String get erroreCaricamentoSchede => 'Error loading cards';
 }

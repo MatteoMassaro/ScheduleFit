@@ -130,4 +130,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eliminaSerie => 'ELIMINA SERIE';
+
+  @override
+  String get suggerimentoAggiungiScheda => 'Clicca su \'+\' per aggiungere una scheda';
+
+  @override
+  String get erroreCaricamentoSchede => 'Errore nel caricamento delle schede';
 }

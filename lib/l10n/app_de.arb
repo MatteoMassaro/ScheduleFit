@@ -36,5 +36,7 @@
   "salva": "SPEICHERN",
   "serie": "Serie {numero}",
   "numeroRipetizioni": "Anzahl der wiederholungen",
-  "eliminaSerie": "SERIE LÖSCHEN"
+  "eliminaSerie": "SERIE LÖSCHEN",
+  "suggerimentoAggiungiScheda": "Klicken sie auf '+' um eine registerkarte hinzuzufügen",
+  "erroreCaricamentoSchede": "Fehler beim laden der karten"
 }

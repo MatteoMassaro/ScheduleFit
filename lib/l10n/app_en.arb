@@ -36,5 +36,7 @@
   "salva": "SAVE",
   "serie": "Series {numero}",
   "numeroRipetizioni": "Number of repetitions",
-  "eliminaSerie": "DELETE SERIES"
+  "eliminaSerie": "DELETE SERIES",
+  "suggerimentoAggiungiScheda": "Click on '+' to add a tab",
+  "erroreCaricamentoSchede": "Error loading cards"
 }

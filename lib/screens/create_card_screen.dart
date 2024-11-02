@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_fit/widgets/series_card.dart';
 
+import '../database/database_helper.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/exercise_info.dart';
 
 class CreateCardScreen extends StatefulWidget {
   final String muscleIconName;
   final String muscleIconPath;
+  final Function onSave;
 
   const CreateCardScreen(
-      {super.key, required this.muscleIconName, required this.muscleIconPath});
+      {super.key, required this.muscleIconName, required this.muscleIconPath, required this.onSave});
 
   @override
   State<CreateCardScreen> createState() => _CreateCardScreenState();
 }
 
 class _CreateCardScreenState extends State<CreateCardScreen> {
+  late DatabaseHelper _dbHelper;
   late TextEditingController _textEditingController;
   List<int> cards = [];
   bool _isSaveButtonEnabled = false;
-
-  void _removeSeries(int index) {
-    setState(() {
-      cards.removeAt(index);
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
+    _dbHelper = DatabaseHelper();
+  }
+
+  void _removeSeries(int index) {
+    setState(() {
+      cards.removeAt(index);
+    });
   }
 
   @override
@@ -43,8 +48,23 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
     });
   }
 
-  void _saveChanges() {
-    // Logica per salvare le modifiche
+  Future<void> _addExercise() async {
+    ExerciseInfo exerciseInfo = ExerciseInfo(
+        nomeEsercizio: _textEditingController.text,
+        categoriaEsercizio: widget.muscleIconName,
+        immagine: widget.muscleIconPath,
+        serieCompletate: 0,
+        serieTotali: 0);
+    await _dbHelper.insertExerciseInfo(exerciseInfo);
+  }
+
+  _saveChanges() async {
+    await _addExercise();
+    widget.onSave();
+    setState(() {
+      _isSaveButtonEnabled = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
@@ -134,12 +154,11 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 5),
                 child: ListView.builder(
+                  key: UniqueKey(),
                   itemCount: cards.length,
                   itemBuilder: (context, index) {
                     return SeriesCard(
-                      index: index + 1,
-                      onDelete: () => _removeSeries(index),
-                    );
+                        index: index + 1, onDelete: () => _removeSeries(index));
                   },
                 ),
               ),

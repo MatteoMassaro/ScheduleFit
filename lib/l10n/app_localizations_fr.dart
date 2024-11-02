@@ -130,4 +130,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eliminaSerie => 'SUPPRIMER LA SÉRIE';
+
+  @override
+  String get suggerimentoAggiungiScheda => 'Cliquez sur \'+\' pour ajouter un onglet';
+
+  @override
+  String get erroreCaricamentoSchede => 'Erreur lors du chargement des cartes';
 }

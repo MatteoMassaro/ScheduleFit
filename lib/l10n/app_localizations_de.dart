@@ -130,4 +130,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eliminaSerie => 'SERIE LÖSCHEN';
+
+  @override
+  String get suggerimentoAggiungiScheda => 'Klicken sie auf \'+\' um eine registerkarte hinzuzufügen';
+
+  @override
+  String get erroreCaricamentoSchede => 'Fehler beim laden der karten';
 }

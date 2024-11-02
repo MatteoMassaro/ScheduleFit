@@ -10,7 +10,8 @@ import '../providers/page_provider.dart';
 import '../screens/home_screen.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({super.key});
+  final VoidCallback onSave;
+  const AppDrawer({super.key, required this.onSave});
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -72,16 +73,20 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    pageProvider.setCurrentPage(
-                        AppLocalizations.of(context)?.mioAllenamento ??
-                            'Il mio allenamento');
-                    return HomePage(
-                        title: AppLocalizations.of(context)!.mioAllenamento);
-                  },
-                );
+                if (pageProvider.paginaCorrente !=
+                    (AppLocalizations.of(context)?.mioAllenamento ??
+                        'Il mio allenamento')) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      pageProvider.setCurrentPage(
+                          AppLocalizations.of(context)?.mioAllenamento ??
+                              'Il mio allenamento');
+                      return HomePage(
+                          title: AppLocalizations.of(context)!.mioAllenamento);
+                    },
+                  );
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
@@ -91,7 +96,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     size: 30,
                     color: Colors.white,
                   ),
-                  tileColor: pageProvider.currentPage ==
+                  tileColor: pageProvider.paginaCorrente ==
                           AppLocalizations.of(context)?.mioAllenamento
                       ? Colors.black12
                       : null,
@@ -113,7 +118,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return const ExercisesDialog();
+                    return ExercisesDialog(onSave: widget.onSave);
                   },
                 );
               },

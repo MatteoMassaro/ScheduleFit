@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/providers/exercise_info_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/screens/home_screen.dart';
 
@@ -37,27 +38,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
-        ChangeNotifierProvider(create: (_) => PageProvider(AppLocalizations.of(context)?.mioAllenamento ?? 'Il mio allenamento')),
-      ],
-      builder: (context, child) {
-        final provider = Provider.of<LocaleProvider>(context);
-        return MaterialApp(
-            title: 'ScheduleFit',
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: provider.locale,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: ThemeMode.system,
-            home: Builder(
-              builder: (context) {
-                final localizations = AppLocalizations.of(context);
-                final title =
-                    localizations?.mioAllenamento ?? 'Il mio allenamento';
-                return HomePage(title: title);
-              },
-            ));
-      });
+          providers: [
+            ChangeNotifierProvider(create: (_) => LocaleProvider()),
+            ChangeNotifierProvider(
+                create: (_) => PageProvider(
+                    AppLocalizations.of(context)?.mioAllenamento ??
+                        'Il mio allenamento')),
+            ChangeNotifierProvider(create: (_) => ExerciseInfoProvider(0))
+          ],
+          builder: (context, child) {
+            final provider = Provider.of<LocaleProvider>(context);
+            return MaterialApp(
+                title: 'ScheduleFit',
+                supportedLocales: AppLocalizations.supportedLocales,
+                locale: provider.locale,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: ThemeMode.system,
+                home: Builder(
+                  builder: (context) {
+                    final localizations = AppLocalizations.of(context);
+                    final title =
+                        localizations?.mioAllenamento ?? 'Il mio allenamento';
+                    return HomePage(title: title);
+                  },
+                ));
+          });
 }

@@ -36,5 +36,7 @@
   "salva": "SALVA",
   "serie": "Serie {numero}",
   "numeroRipetizioni": "Numero ripetizioni",
-  "eliminaSerie": "ELIMINA SERIE"
+  "eliminaSerie": "ELIMINA SERIE",
+  "suggerimentoAggiungiScheda": "Clicca su '+' per aggiungere una scheda",
+  "erroreCaricamentoSchede": "Errore nel caricamento delle schede"
 }

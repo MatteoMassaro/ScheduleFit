@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 class PageProvider extends ChangeNotifier {
-  String _currentPage = '';
+  String _paginaCorrente = '';
 
-  PageProvider(this._currentPage);
+  PageProvider(this._paginaCorrente);
 
-  String get currentPage => _currentPage;
+  String get paginaCorrente => _paginaCorrente;
 
   void setCurrentPage(String page) {
-    _currentPage = page;
+    _paginaCorrente = page;
     notifyListeners();
   }
 }

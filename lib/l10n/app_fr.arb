@@ -36,5 +36,7 @@
   "salva": "ENREGISTRER",
   "serie": "Série {numero}",
   "numeroRipetizioni": "Nombre de répétitions",
-  "eliminaSerie": "SUPPRIMER LA SÉRIE"
+  "eliminaSerie": "SUPPRIMER LA SÉRIE",
+  "suggerimentoAggiungiScheda": "Cliquez sur '+' pour ajouter un onglet",
+  "erroreCaricamentoSchede": "Erreur lors du chargement des cartes"
 }

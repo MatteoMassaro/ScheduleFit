@@ -36,5 +36,7 @@
   "salva": "GUARDAR",
   "serie": "Serie {numero}",
   "numeroRipetizioni": "Número de repeticiones",
-  "eliminaSerie": "ELIMINAR SERIE"
+  "eliminaSerie": "ELIMINAR SERIE",
+  "suggerimentoAggiungiScheda": "Haga clic en '+' para agregar una tarjeta",
+  "erroreCaricamentoSchede": "Error al cargar tarjetas"
 }

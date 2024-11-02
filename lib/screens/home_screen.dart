@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
-import 'package:schedule_fit/widgets/exercise_info.dart';
+import 'package:schedule_fit/models/exercise_info.dart';
 
 import '../database/database_helper.dart';
 import '../widgets/app_drawer.dart';

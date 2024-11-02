@@ -6,15 +6,15 @@ import '../l10n/app_localizations.dart';
 import '../providers/exercise_info_provider.dart';
 
 class ExerciseCard extends StatefulWidget {
-  int id;
-  String nomeEsercizio;
-  String categoriaEsercizio;
-  String immagine;
-  int serieCompletate;
-  int serieTotali;
+  final int id;
+  final String nomeEsercizio;
+  final String categoriaEsercizio;
+  final String immagine;
+  final int serieCompletate;
+  final int serieTotali;
   final Function onDelete;
 
-  ExerciseCard(
+  const ExerciseCard(
       {super.key,
       required this.id,
       required this.nomeEsercizio,
@@ -152,7 +152,19 @@ class _CardState extends State<ExerciseCard> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        /* ... */
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateCardScreen(
+                              id: widget.id,
+                              nomeEsercizio: widget.nomeEsercizio,
+                              categoriaEsercizio: widget.categoriaEsercizio,
+                              immagine: widget.immagine,
+                              serieTotali: widget.serieTotali,
+                              serieCompletate: widget.serieCompletate,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ],

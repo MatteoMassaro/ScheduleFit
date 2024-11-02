@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:schedule_fit/widgets/exercise_info.dart';
+import 'package:schedule_fit/models/exercise_info.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {

@@ -6,9 +6,9 @@ import 'package:schedule_fit/widgets/language_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
+import '../pages/home_page.dart';
 import '../providers/locale_provider.dart';
 import '../providers/page_provider.dart';
-import '../screens/home_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   final VoidCallback onSave;

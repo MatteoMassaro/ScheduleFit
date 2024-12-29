@@ -5,16 +5,25 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/locale_provider.dart';
 
-class LanguageDialog extends StatefulWidget {
-  const LanguageDialog({super.key});
+class ScheduleFitLanguageDialog extends StatefulWidget {
+  const ScheduleFitLanguageDialog({super.key});
 
   @override
-  State<LanguageDialog> createState() => _LanguageDialogState();
+  State<ScheduleFitLanguageDialog> createState() => _ScheduleFitLanguageDialogState();
 }
 
-class _LanguageDialogState extends State<LanguageDialog> {
+class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
   late String _selectedLanguage;
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedLanguage = Provider.of<LocaleProvider>(context, listen: false)
+        .locale
+        .languageCode;
+  }
+
+  ///Select Language
   void _selectLanguage(String languageCode) {
     setState(() {
       _selectedLanguage = languageCode;
@@ -39,6 +48,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
         child: SizedBox(
           width: double.maxFinite,
           child: ListView(shrinkWrap: true, children: [
+            ///Italian
             GestureDetector(
               onTap: () => _selectLanguage('it'),
               child: Container(
@@ -77,6 +87,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+            ///English
             GestureDetector(
               onTap: () => _selectLanguage('en'),
               child: Container(
@@ -115,6 +126,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+            ///French
             GestureDetector(
               onTap: () => _selectLanguage('fr'),
               child: Container(
@@ -153,6 +165,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+            ///Spanish
             GestureDetector(
               onTap: () => _selectLanguage('es'),
               child: Container(
@@ -191,6 +204,7 @@ class _LanguageDialogState extends State<LanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+            ///German
             GestureDetector(
               onTap: () => _selectLanguage('de'),
               child: Container(

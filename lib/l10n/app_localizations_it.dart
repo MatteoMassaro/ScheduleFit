@@ -2,9 +2,11 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
+
 /// The translations for Italian (`it`).
 class AppLocalizationsIt extends AppLocalizations {
-  AppLocalizationsIt([super.locale = 'it']);
+  AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
   String get info => 'Info';
@@ -77,7 +79,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String temp0 = intl.Intl.selectLogic(
+    String _temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Adduttori',
@@ -99,11 +101,14 @@ class AppLocalizationsIt extends AppLocalizations {
         'other': 'Altro',
       },
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
   String get creaScheda => 'Crea scheda';
+
+  @override
+  String get modificaScheda => 'Modifica scheda';
 
   @override
   String get mioAllenamento => 'Il mio allenamento';

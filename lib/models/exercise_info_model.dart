@@ -1,4 +1,4 @@
-class ExerciseInfo {
+class ExerciseInfoModel {
   int? id;
   String nomeEsercizio;
   String categoriaEsercizio;
@@ -6,7 +6,7 @@ class ExerciseInfo {
   int serieTotali;
   int serieCompletate;
 
-  ExerciseInfo(
+  ExerciseInfoModel(
       {this.id,
       required this.nomeEsercizio,
       required this.categoriaEsercizio,
@@ -25,8 +25,8 @@ class ExerciseInfo {
     };
   }
 
-  factory ExerciseInfo.fromMap(Map<String, dynamic> map) {
-    return ExerciseInfo(
+  factory ExerciseInfoModel.fromMap(Map<String, dynamic> map) {
+    return ExerciseInfoModel(
       id: map['id'],
       nomeEsercizio: map['nomeEsercizio'],
       immagine: map['immagine'],

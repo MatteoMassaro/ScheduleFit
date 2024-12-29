@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomDrawerHeader extends StatelessWidget {
-  const CustomDrawerHeader({super.key});
+class ScheduleFitDrawerHeader extends StatelessWidget {
+  const ScheduleFitDrawerHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

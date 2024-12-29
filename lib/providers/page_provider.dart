@@ -7,6 +7,7 @@ class PageProvider extends ChangeNotifier {
 
   String get paginaCorrente => _paginaCorrente;
 
+  ///Set Current Page
   void setCurrentPage(String page) {
     _paginaCorrente = page;
     notifyListeners();

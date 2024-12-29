@@ -2,9 +2,11 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
+
 /// The translations for Spanish Castilian (`es`).
 class AppLocalizationsEs extends AppLocalizations {
-  AppLocalizationsEs([super.locale = 'es']);
+  AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
   String get info => 'Info';
@@ -77,7 +79,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String nomeMuscolo(String nomeMuscolo) {
-    String temp0 = intl.Intl.selectLogic(
+    String _temp0 = intl.Intl.selectLogic(
       nomeMuscolo,
       {
         'adduttori': 'Aductores',
@@ -99,11 +101,14 @@ class AppLocalizationsEs extends AppLocalizations {
         'other': 'Otro',
       },
     );
-    return temp0;
+    return '$_temp0';
   }
 
   @override
   String get creaScheda => 'Crear tarjeta';
+
+  @override
+  String get modificaScheda => 'Editar tarjeta';
 
   @override
   String get mioAllenamento => 'Mi entrenamiento';

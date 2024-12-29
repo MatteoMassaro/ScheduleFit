@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedule_fit/widgets/drawer_header.dart';
-import 'package:schedule_fit/widgets/exercises_dialog.dart';
-import 'package:schedule_fit/widgets/language_dialog.dart';
+import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
+import 'package:schedule_fit/widgets/schedule_fit_drawer_header.dart';
+import 'package:schedule_fit/widgets/schedule_fit_exercises_dialog.dart';
+import 'package:schedule_fit/widgets/schedule_fit_language_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
@@ -10,15 +11,16 @@ import '../pages/home_page.dart';
 import '../providers/locale_provider.dart';
 import '../providers/page_provider.dart';
 
-class AppDrawer extends StatefulWidget {
+class ScheduleFitDrawer extends StatefulWidget {
   final VoidCallback onSave;
-  const AppDrawer({super.key, required this.onSave});
+
+  const ScheduleFitDrawer({super.key, required this.onSave});
 
   @override
-  State<AppDrawer> createState() => _AppDrawerState();
+  State<ScheduleFitDrawer> createState() => _ScheduleFitDrawerState();
 }
 
-class _AppDrawerState extends State<AppDrawer> {
+class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
   late LocaleProvider provider;
 
   @override
@@ -35,18 +37,18 @@ class _AppDrawerState extends State<AppDrawer> {
         return ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const CustomDrawerHeader(),
+            const ScheduleFitDrawerHeader(),
+
+            ///My Exercise Page
             GestureDetector(
               onTap: () {
                 if (pageProvider.paginaCorrente !=
-                    (AppLocalizations.of(context)?.mioAllenamento ??
-                        'Il mio allenamento')) {
+                    (AppLocalizations.of(context)?.mioAllenamento ?? '')) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       pageProvider.setCurrentPage(
-                          AppLocalizations.of(context)?.mioAllenamento ??
-                              'Il mio allenamento');
+                          AppLocalizations.of(context)?.mioAllenamento ?? '');
                       return HomePage(
                           title: AppLocalizations.of(context)!.mioAllenamento);
                     },
@@ -78,12 +80,14 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+
+            ///Create Exercise Card Page
             GestureDetector(
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return ExercisesDialog(onSave: widget.onSave);
+                    return ScheduleFitExercisesDialog(onSave: widget.onSave);
                   },
                 );
               },
@@ -108,6 +112,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+
+            ///Calendar Page
             GestureDetector(
               onTap: () {
                 showDialog(
@@ -139,12 +145,14 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+
+            ///Language Page
             GestureDetector(
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return const LanguageDialog();
+                    return const ScheduleFitLanguageDialog();
                   },
                 );
               },
@@ -169,6 +177,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+
+            ///Contacts Page
             GestureDetector(
               onTap: () {
                 showDialog(
@@ -191,7 +201,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             InkWell(
                               onTap: () {
                                 launchUrl(Uri.parse(
-                                    'https://www.instagram.com/matteo__massaro/'));
+                                    getAppInfo(AppInfo.developerInstagram)));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -225,7 +235,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               onTap: () async {
                                 final Uri emailLaunchUri = Uri(
                                     scheme: 'mailto',
-                                    path: 'massaromatteo21@gmail.com');
+                                    path: getAppInfo(AppInfo.developerMail));
                                 if (await canLaunchUrl(emailLaunchUri)) {
                                   await launchUrl(emailLaunchUri);
                                 } else {
@@ -263,7 +273,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             InkWell(
                               onTap: () {
                                 launchUrl(Uri.parse(
-                                    'https://matteomassaro.altervista.org/'));
+                                    getAppInfo(AppInfo.developerWebSite)));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -331,6 +341,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+
+            ///Info Page
             GestureDetector(
               onTap: () {
                 showDialog(
@@ -396,9 +408,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                                 color: Colors.white,
                                               ),
                                             ),
-                                            const Text(
-                                              "1.0.0",
-                                              style: TextStyle(
+                                            Text(
+                                              getAppInfo(AppInfo.appVersion),
+                                              style: const TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white,
                                               ),
@@ -415,11 +427,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                                     color: Colors.white,
                                                   ),
                                                 ),
-                                                const Text(
+                                                Text(
                                                   maxLines: 2,
                                                   textAlign: TextAlign.start,
-                                                  "Matteo Massaro",
-                                                  style: TextStyle(
+                                                  getAppInfo(
+                                                      AppInfo.developerName),
+                                                  style: const TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.white,
                                                   ),
@@ -456,19 +469,19 @@ class _AppDrawerState extends State<AppDrawer> {
                   },
                 );
               },
-              child: const Padding(
-                padding: EdgeInsets.only(top: 5),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.info,
                     color: Colors.white,
                     size: 30,
                   ),
                   title: Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Text(
-                      "Info",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.info,
+                      style: const TextStyle(
                         fontSize: 24,
                         color: Colors.white,
                       ),

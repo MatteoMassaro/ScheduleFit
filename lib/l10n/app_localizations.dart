@@ -11,6 +11,8 @@ import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_it.dart';
 
+// ignore_for_file: type=lint
+
 /// Callers can lookup localized strings with an instance of AppLocalizations
 /// returned by `AppLocalizations.of(context)`.
 ///
@@ -248,6 +250,12 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Crea scheda'**
   String get creaScheda;
+
+  /// No description provided for @modificaScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'Modifica scheda'**
+  String get modificaScheda;
 
   /// No description provided for @mioAllenamento.
   ///

@@ -6,6 +6,7 @@ import 'package:schedule_fit/widgets/schedule_fit_exercises_dialog.dart';
 import 'package:schedule_fit/widgets/schedule_fit_language_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../enums/schedule_fit_images.dart';
 import '../l10n/app_localizations.dart';
 import '../pages/home_page.dart';
 import '../providers/locale_provider.dart';
@@ -58,8 +59,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
-                  leading: const ImageIcon(
-                    AssetImage("assets/images/myTraining.png"),
+                  leading: ImageIcon(
+                    AssetImage(getImage(Images.myTraining)),
                     size: 30,
                     color: Colors.white,
                   ),
@@ -94,8 +95,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
-                  leading: const ImageIcon(
-                    AssetImage("assets/images/createCard.png"),
+                  leading: ImageIcon(
+                    AssetImage(getImage(Images.createCard)),
                     size: 30,
                     color: Colors.white,
                   ),
@@ -127,8 +128,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
-                  leading: const ImageIcon(
-                    AssetImage("assets/images/calendar.png"),
+                  leading: ImageIcon(
+                    AssetImage(getImage(Images.calendar)),
                     size: 30,
                     color: Colors.white,
                   ),
@@ -211,11 +212,12 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   children: [
-                                    const Padding(
-                                        padding: EdgeInsets.only(right: 15),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 15),
                                         child: Image(
                                           image: AssetImage(
-                                              "assets/images/instagram.png"),
+                                              getImage(Images.instagram)),
                                           width: 40,
                                           height: 40,
                                         )),
@@ -250,11 +252,12 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   children: [
-                                    const Padding(
-                                        padding: EdgeInsets.only(right: 15),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 15),
                                         child: Image(
                                           image: AssetImage(
-                                              "assets/images/email.png"),
+                                              getImage(Images.email)),
                                           width: 40,
                                           height: 40,
                                         )),
@@ -283,11 +286,12 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   children: [
-                                    const Padding(
-                                        padding: EdgeInsets.only(right: 8),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
                                         child: Image(
                                           image: AssetImage(
-                                              "assets/images/website.png"),
+                                              getImage(Images.website)),
                                           width: 45,
                                           height: 45,
                                         )),
@@ -323,8 +327,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
-                  leading: const ImageIcon(
-                    AssetImage("assets/images/social.png"),
+                  leading: ImageIcon(
+                    AssetImage(getImage(Images.social)),
                     size: 30,
                     color: Colors.white,
                   ),
@@ -371,7 +375,7 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.asset(
-                                    'assets/images/icon.png',
+                                    getImage(Images.icon),
                                     width: 80,
                                     height: 80,
                                     fit: BoxFit.contain,

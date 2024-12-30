@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../enums/schedule_fit_images.dart';
+
 class ScheduleFitDrawerHeader extends StatelessWidget {
   const ScheduleFitDrawerHeader({super.key});
 
@@ -10,7 +12,7 @@ class ScheduleFitDrawerHeader extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            'assets/images/icon.png',
+            getImage(Images.icon),
             width: 80,
             height: 80,
             fit: BoxFit.contain,

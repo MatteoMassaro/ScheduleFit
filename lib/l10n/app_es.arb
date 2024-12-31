@@ -39,5 +39,7 @@
   "numeroRipetizioni": "Número de repeticiones",
   "eliminaSerie": "ELIMINAR SERIE",
   "suggerimentoAggiungiScheda": "Haga clic en '+' para agregar una tarjeta",
-  "erroreCaricamentoSchede": "Error al cargar tarjetas"
+  "erroreCaricamentoSchede": "Error al cargar tarjetas",
+  "mese": "Mes",
+  "anno": "Año"
 }

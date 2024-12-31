@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
+import 'package:schedule_fit/pages/calendar_page.dart';
 import 'package:schedule_fit/widgets/schedule_fit_drawer_header.dart';
 import 'package:schedule_fit/widgets/schedule_fit_exercises_dialog.dart';
 import 'package:schedule_fit/widgets/schedule_fit_language_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_images.dart';
 import '../l10n/app_localizations.dart';
 import '../pages/home_page.dart';
@@ -33,14 +35,14 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFF556EAA),
+      backgroundColor: getAppColors(AppColors.primaryColor),
       child: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             const ScheduleFitDrawerHeader(),
 
-            ///My Exercise Page
+            ///My Training Page
             GestureDetector(
               onTap: () {
                 if (pageProvider.paginaCorrente !=
@@ -50,8 +52,7 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                     builder: (BuildContext context) {
                       pageProvider.setCurrentPage(
                           AppLocalizations.of(context)?.mioAllenamento ?? '');
-                      return HomePage(
-                          title: AppLocalizations.of(context)!.mioAllenamento);
+                      return const HomePage();
                     },
                   );
                 }
@@ -117,13 +118,17 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
             ///Calendar Page
             GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return HomePage(
-                        title: AppLocalizations.of(context)!.mioAllenamento);
-                  },
-                );
+                if (pageProvider.paginaCorrente !=
+                    (AppLocalizations.of(context)?.calendario ?? '')) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      pageProvider.setCurrentPage(
+                          AppLocalizations.of(context)?.calendario ?? '');
+                      return const CalendarPage();
+                    },
+                  );
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
@@ -133,6 +138,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                     size: 30,
                     color: Colors.white,
                   ),
+                  tileColor: pageProvider.paginaCorrente ==
+                          AppLocalizations.of(context)?.calendario
+                      ? Colors.black12
+                      : null,
                   title: Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
@@ -186,7 +195,7 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      backgroundColor: const Color(0xFF556EAA),
+                      backgroundColor: getAppColors(AppColors.primaryColor),
                       title: Text(
                         AppLocalizations.of(context)!.contatti,
                         textAlign: TextAlign.center,
@@ -223,9 +232,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                         )),
                                     Text(
                                       AppLocalizations.of(context)!.instagram,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 24,
-                                        color: Color(0xFFfbc24c),
+                                        color: getAppColors(
+                                            AppColors.secondaryColor),
                                       ),
                                     )
                                   ],
@@ -263,9 +273,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                         )),
                                     Text(
                                       AppLocalizations.of(context)!.email,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 24,
-                                        color: Color(0xFFfbc24c),
+                                        color: getAppColors(
+                                            AppColors.secondaryColor),
                                       ),
                                     )
                                   ],
@@ -297,9 +308,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                         )),
                                     Text(
                                       AppLocalizations.of(context)!.sitoWeb,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 24,
-                                        color: Color(0xFFfbc24c),
+                                        color: getAppColors(
+                                            AppColors.secondaryColor),
                                       ),
                                     )
                                   ],
@@ -353,7 +365,7 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      backgroundColor: const Color(0xFF556EAA),
+                      backgroundColor: getAppColors(AppColors.primaryColor),
                       title: Text(
                         AppLocalizations.of(context)!.info,
                         textAlign: TextAlign.center,
@@ -387,8 +399,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Row(children: [
-                                            Text(
+                                          Row(children: [
+                                            const Text(
                                               "SCHEDULE",
                                               style: TextStyle(
                                                 fontSize: 24,
@@ -399,7 +411,8 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                               "FIT",
                                               style: TextStyle(
                                                 fontSize: 24,
-                                                color: Color(0xFFfbc24c),
+                                                color: getAppColors(
+                                                    AppColors.secondaryColor),
                                               ),
                                             )
                                           ]),
@@ -450,9 +463,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                                 child: Text(
                                   AppLocalizations.of(context)!.descrizioneApp,
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 20,
-                                    color: Color(0xFFfbc24c),
+                                    color:
+                                        getAppColors(AppColors.secondaryColor),
                                   ),
                                 )),
                           ]),

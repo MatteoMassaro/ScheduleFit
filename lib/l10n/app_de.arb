@@ -39,5 +39,7 @@
   "numeroRipetizioni": "Anzahl der wiederholungen",
   "eliminaSerie": "SERIE LÖSCHEN",
   "suggerimentoAggiungiScheda": "Klicken sie auf '+' um eine registerkarte hinzuzufügen",
-  "erroreCaricamentoSchede": "Fehler beim laden der karten"
+  "erroreCaricamentoSchede": "Fehler beim laden der karten",
+  "mese": "Monat",
+  "anno": "Jahr"
 }

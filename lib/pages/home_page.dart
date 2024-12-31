@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
+import 'package:schedule_fit/providers/page_provider.dart';
 
 import '../providers/exercise_info_provider.dart';
 import '../widgets/schedule_fit_drawer.dart';
@@ -8,9 +9,7 @@ import '../widgets/schedule_fit_exercise_card.dart';
 import '../widgets/schedule_fit_exercises_dialog.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,12 +17,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late ExerciseInfoProvider _exerciseInfoProvider;
+  late PageProvider _pageProvider;
 
   @override
   void initState() {
     super.initState();
     _exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     _exerciseInfoProvider.loadExercises();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _pageProvider = context.read<PageProvider>();
+    _pageProvider
+        .setCurrentPage(AppLocalizations.of(context)?.mioAllenamento ?? '');
   }
 
   ///Show Exercises Dialog
@@ -47,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         title: Text(
-          widget.title,
+          AppLocalizations.of(context)?.mioAllenamento ?? '',
           style: const TextStyle(color: Colors.white),
         ),
       ),
@@ -60,6 +68,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, provider, child) {
           return provider.exerciseList.isEmpty
               ?
+
               ///Text Tip
               Center(
                   child: Padding(
@@ -73,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               :
+
               ///Exercise Card List
               ListView.builder(
                   itemCount: provider.exerciseList.length,

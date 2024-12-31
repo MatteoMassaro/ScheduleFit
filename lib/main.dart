@@ -3,6 +3,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
 import 'package:schedule_fit/pages/home_page.dart';
+import 'package:schedule_fit/providers/calendar_provider.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/providers/series_info_provider.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
                   Provider.of<ScheduleFitDatabase>(context, listen: false)),
               update: (context, db, previous) => SeriesInfoProvider(db),
             ),
+            ChangeNotifierProvider(create: (_) => CalendarProvider()),
           ],
           builder: (context, child) {
             final provider = Provider.of<LocaleProvider>(context);
@@ -75,12 +77,6 @@ class MyApp extends StatelessWidget {
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 themeMode: ThemeMode.system,
-                home: Builder(
-                  builder: (context) {
-                    final localizations = AppLocalizations.of(context);
-                    final title = localizations?.mioAllenamento ?? '';
-                    return HomePage(title: title);
-                  },
-                ));
+                home: Builder(builder: (context) => const HomePage()));
           });
 }

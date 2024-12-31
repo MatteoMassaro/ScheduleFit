@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../pages/edit_card_page.dart';
 import '../providers/exercise_info_provider.dart';
@@ -29,14 +31,13 @@ class ScheduleFitExerciseCard extends StatefulWidget {
 }
 
 class _CardState extends State<ScheduleFitExerciseCard> {
-
   ///Open Dialog
   _openDialog(ExerciseInfoProvider exerciseInfoProvider) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF556EAA),
+          backgroundColor: getAppColors(AppColors.primaryColor),
           title: Center(
             child: Text(
               AppLocalizations.of(context)!.eliminaScheda,
@@ -45,7 +46,8 @@ class _CardState extends State<ScheduleFitExerciseCard> {
           ),
           content: Text(
             AppLocalizations.of(context)!.confermaEliminaScheda,
-            style: const TextStyle(color: Color(0xFFfbc24c), fontSize: 15),
+            style: TextStyle(
+                color: getAppColors(AppColors.secondaryColor), fontSize: 15),
           ),
           actions: <Widget>[
             TextButton(
@@ -79,7 +81,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
           child: Card(
             elevation: 10,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: const Color(0xFF556EAA),
+            color: getAppColors(AppColors.primaryColor),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
@@ -94,8 +96,9 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                           Text(
                             widget.nomeEsercizio,
                             textAlign: TextAlign.start,
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFFfbc24c)),
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: getAppColors(AppColors.secondaryColor)),
                           ),
                           const SizedBox(height: 10),
                           Text(
@@ -106,6 +109,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                         ],
                       ),
                       const Spacer(),
+
                       ///Exercise Category
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,9 +117,9 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                           Text(
                             widget.categoriaEsercizio,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xFFfbc24c),
+                              color: getAppColors(AppColors.secondaryColor),
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -130,6 +134,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                     ],
                   ),
                   const SizedBox(height: 20),
+
                   ///Buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

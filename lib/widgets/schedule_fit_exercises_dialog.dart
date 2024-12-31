@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_fit/pages/edit_card_page.dart';
 
+import '../enums/schedule_fit_colors.dart';
 import '../icon_assets.dart';
 import '../l10n/app_localizations.dart';
 
@@ -49,7 +50,7 @@ class _ScheduleFitExercisesDialogState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: const Color(0xFF556EAA),
+      backgroundColor: getAppColors(AppColors.primaryColor),
       title: Center(
           child: Text(
         AppLocalizations.of(context)!.scegliGruppoMuscolare,
@@ -70,8 +71,9 @@ class _ScheduleFitExercisesDialogState
                     child: Text(
                       AppLocalizations.of(context)!
                           .nomeMuscolo(iconData['name']!),
-                      style: const TextStyle(
-                          fontSize: 20, color: Color(0xFFfbc24c)),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: getAppColors(AppColors.secondaryColor)),
                     ),
                   ),
                   onTap: () => {

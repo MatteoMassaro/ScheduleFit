@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
 
 import '../database/schedule_fit_database.dart';
+import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/series_info_provider.dart';
 
@@ -79,7 +80,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
         child: Card(
           elevation: 10,
           margin: const EdgeInsets.only(top: 5, left: 15, right: 15, bottom: 5),
-          color: const Color(0xFF556EAA),
+          color: getAppColors(AppColors.primaryColor),
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: Column(
@@ -88,8 +89,9 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                 Row(children: [
                   Text(AppLocalizations.of(context)!.serie(widget.index + 1),
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 25, color: Color(0xFFfbc24c))),
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: getAppColors(AppColors.secondaryColor))),
                   const Spacer(),
                   Switch(
                     value: _switchValue,
@@ -104,6 +106,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                     },
                   ),
                 ]),
+
                 ///Number Of Repetitions
                 Row(children: [
                   Text(AppLocalizations.of(context)!.numeroRipetizioni,
@@ -120,8 +123,9 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       maxLines: 1,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      style: const TextStyle(
-                          fontSize: 20, color: Color(0xFFfbc24c)),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: getAppColors(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
                           hintStyle: TextStyle(color: Colors.grey),
@@ -133,6 +137,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                     ),
                   )
                 ]),
+
                 ///Weight
                 Row(children: [
                   DropdownButtonHideUnderline(
@@ -163,8 +168,9 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       maxLines: 1,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      style: const TextStyle(
-                          fontSize: 20, color: Color(0xFFfbc24c)),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: getAppColors(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
                           hintStyle: TextStyle(color: Colors.grey),
@@ -177,6 +183,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                   )
                 ]),
                 const SizedBox(height: 5),
+
                 ///Delete Button
                 Row(
                   children: [

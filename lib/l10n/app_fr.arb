@@ -39,5 +39,7 @@
   "numeroRipetizioni": "Nombre de répétitions",
   "eliminaSerie": "SUPPRIMER LA SÉRIE",
   "suggerimentoAggiungiScheda": "Cliquez sur '+' pour ajouter un onglet",
-  "erroreCaricamentoSchede": "Erreur lors du chargement des cartes"
+  "erroreCaricamentoSchede": "Erreur lors du chargement des cartes",
+  "mese": "Mois",
+  "anno": "Année"
 }

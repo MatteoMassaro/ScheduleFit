@@ -39,5 +39,7 @@
   "numeroRipetizioni": "Numero ripetizioni",
   "eliminaSerie": "ELIMINA SERIE",
   "suggerimentoAggiungiScheda": "Clicca su '+' per aggiungere una scheda",
-  "erroreCaricamentoSchede": "Errore nel caricamento delle schede"
+  "erroreCaricamentoSchede": "Errore nel caricamento delle schede",
+  "mese": "Mese",
+  "anno": "Anno"
 }

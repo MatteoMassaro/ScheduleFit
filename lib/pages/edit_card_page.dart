@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:schedule_fit/widgets/schedule_fit_series_card.dart';
 
 import '../database/schedule_fit_database.dart';
+import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/series_info_provider.dart';
@@ -189,9 +190,9 @@ class _EditCardPageState extends State<EditCardPage> {
                             Text(
                               (widget.nomeMuscolo),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFFfbc24c),
+                                color: getAppColors(AppColors.secondaryColor),
                               ),
                             ),
                             const SizedBox(height: 5),
@@ -206,13 +207,15 @@ class _EditCardPageState extends State<EditCardPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
+
                     ///Title
                     Expanded(
                       flex: 3,
                       child: AutoSizeTextField(
                         controller: _nomeEsercizioController,
-                        style: const TextStyle(
-                            fontSize: 25, color: Color(0xFFfbc24c)),
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: getAppColors(AppColors.secondaryColor)),
                         decoration: InputDecoration(
                             hintText:
                                 AppLocalizations.of(context)!.inserisciTitolo,
@@ -248,6 +251,7 @@ class _EditCardPageState extends State<EditCardPage> {
                 ),
               ),
             ),
+
             ///Series Card List
             Expanded(
               flex: 6,
@@ -279,6 +283,7 @@ class _EditCardPageState extends State<EditCardPage> {
                       ),
                     ),
             ),
+
             ///Buttons
             Expanded(
               flex: 1,
@@ -292,7 +297,7 @@ class _EditCardPageState extends State<EditCardPage> {
                         fixedSize: const Size(150, 65),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: const Color(0xFF556EAA),
+                        backgroundColor: getAppColors(AppColors.primaryColor),
                         padding: const EdgeInsets.all(10),
                       ),
                       onPressed: _addSeriesCard,

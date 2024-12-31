@@ -2,6 +2,7 @@ import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/locale_provider.dart';
 
@@ -9,7 +10,8 @@ class ScheduleFitLanguageDialog extends StatefulWidget {
   const ScheduleFitLanguageDialog({super.key});
 
   @override
-  State<ScheduleFitLanguageDialog> createState() => _ScheduleFitLanguageDialogState();
+  State<ScheduleFitLanguageDialog> createState() =>
+      _ScheduleFitLanguageDialogState();
 }
 
 class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
@@ -18,9 +20,8 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
   @override
   void initState() {
     super.initState();
-    _selectedLanguage = Provider.of<LocaleProvider>(context, listen: false)
-        .locale
-        .languageCode;
+    _selectedLanguage =
+        Provider.of<LocaleProvider>(context, listen: false).locale.languageCode;
   }
 
   ///Select Language
@@ -35,7 +36,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: const Color(0xFF556EAA),
+      backgroundColor: getAppColors(AppColors.primaryColor),
       title: Text(
         AppLocalizations.of(context)!.lingua,
         textAlign: TextAlign.center,
@@ -70,9 +71,9 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.italiano,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFfbc24c),
+                        color: getAppColors(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -87,6 +88,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+
             ///English
             GestureDetector(
               onTap: () => _selectLanguage('en'),
@@ -109,9 +111,9 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.inglese,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFfbc24c),
+                        color: getAppColors(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -126,6 +128,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+
             ///French
             GestureDetector(
               onTap: () => _selectLanguage('fr'),
@@ -148,9 +151,9 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.francese,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFfbc24c),
+                        color: getAppColors(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -165,6 +168,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+
             ///Spanish
             GestureDetector(
               onTap: () => _selectLanguage('es'),
@@ -187,9 +191,9 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.spagnolo,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFfbc24c),
+                        color: getAppColors(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -204,6 +208,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
               ),
             ),
             const SizedBox(height: 10),
+
             ///German
             GestureDetector(
               onTap: () => _selectLanguage('de'),
@@ -226,9 +231,9 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.tedesco,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Color(0xFFfbc24c),
+                        color: getAppColors(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),

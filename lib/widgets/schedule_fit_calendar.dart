@@ -5,10 +5,13 @@ import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../enums/schedule_fit_colors.dart';
+import '../providers/exercise_info_provider.dart';
 import '../providers/locale_provider.dart';
 
 class ScheduleFitCalendar extends StatefulWidget {
-  const ScheduleFitCalendar({super.key});
+  final void Function(DateTime selectedDay)? onDaySelected;
+
+  const ScheduleFitCalendar({super.key, this.onDaySelected});
 
   @override
   State<ScheduleFitCalendar> createState() => _ScheduleFitCalendarState();
@@ -61,7 +64,6 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
   @override
   Widget build(BuildContext context) {
     Locale locale = Provider.of<LocaleProvider>(context, listen: false).locale;
-
     return TableCalendar(
       focusedDay: _focusedDay,
       firstDay: DateTime.utc(1900),
@@ -74,18 +76,14 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
         formatButtonShowsNext: false,
       ),
       calendarStyle: CalendarStyle(
-        todayDecoration: BoxDecoration(
-          color: getAppColors(AppColors.secondaryColor),
-          shape: BoxShape.circle,
-        ),
-        todayTextStyle: const TextStyle(fontSize: 14, color: Colors.white),
-        selectedDecoration: BoxDecoration(
-          color: getAppColors(AppColors.selectedDayCalendarColor),
-          shape: BoxShape.circle,
-        ),
-        outsideDaysVisible: false,
-        weekendTextStyle: const TextStyle(color: Colors.black45),
-      ),
+          selectedDecoration: BoxDecoration(
+            color: getAppColors(AppColors.selectedDayCalendarColor),
+            shape: BoxShape.circle,
+          ),
+          outsideDaysVisible: false,
+          weekendTextStyle: const TextStyle(color: Colors.black45),
+          markerMargin: const EdgeInsets.only(top: 5),
+          markersMaxCount: 2),
       daysOfWeekStyle: const DaysOfWeekStyle(
         weekdayStyle:
             TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
@@ -101,6 +99,9 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
         });
+        if (widget.onDaySelected != null) {
+          widget.onDaySelected!(selectedDay);
+        }
       },
       calendarBuilders: CalendarBuilders(
         headerTitleBuilder: (context, date) {
@@ -141,10 +142,64 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
             ],
           );
         },
+        todayBuilder: (context, day, focusedDay) {
+          return Container(
+            margin: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: isSameDay(_selectedDay, DateTime.now())
+                  ? getAppColors(AppColors.selectedDayCalendarColor)
+                  : getAppColors(AppColors.secondaryColor),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${day.day}',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          );
+        },
+        markerBuilder: (context, day, events) {
+          final exercisesForDay =
+              context.read<ExerciseInfoProvider>().getExercisesForDate(day);
+          final markers = exercisesForDay.take(3).toList();
+
+          return Positioned(
+            top: 45,
+            child: Row(
+              children: [
+                ...markers.map((event) {
+                  return Container(
+                    width: 5,
+                    height: 5,
+                    margin: const EdgeInsets.symmetric(horizontal: 1),
+                    decoration: BoxDecoration(
+                      color: getAppColors(AppColors.secondaryColor),
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                }),
+                if (exercisesForDay.length > 3)
+                  Container(
+                    margin: const EdgeInsets.only(top: 1, left: 2),
+                    child: Text(
+                      "+${exercisesForDay.length - 3}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 7,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
         defaultBuilder: (context, day, focusedDay) {
           if (_selectedDay != null && isSameDay(day, _selectedDay)) {
             return Container(
-              margin: const EdgeInsets.all(5.0),
+              margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 color: getAppColors(AppColors.selectedDayCalendarColor),
                 shape: BoxShape.circle,

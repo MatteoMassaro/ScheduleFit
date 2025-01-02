@@ -41,5 +41,6 @@
   "suggerimentoAggiungiScheda": "Haga clic en '+' para agregar una tarjeta",
   "erroreCaricamentoSchede": "Error al cargar tarjetas",
   "mese": "Mes",
-  "anno": "Año"
+  "anno": "Año",
+  "nessunEsercizio": "Sin ejercicio"
 }

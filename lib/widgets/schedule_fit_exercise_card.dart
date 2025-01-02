@@ -13,7 +13,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final String immagine;
   final int serieCompletate;
   final int serieTotali;
-  final Function onDelete;
+  final Function? onDelete;
 
   const ScheduleFitExerciseCard({
     super.key,
@@ -52,7 +52,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
           actions: <Widget>[
             TextButton(
               onPressed: () async {
-                widget.onDelete();
+                widget.onDelete!();
                 Navigator.of(context).pop();
               },
               child: Text(AppLocalizations.of(context)!.si,
@@ -139,13 +139,16 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          _openDialog(exerciseInfoProvider);
-                        },
-                        child: Text(AppLocalizations.of(context)!.eliminaScheda,
-                            style: const TextStyle(color: Colors.red)),
-                      ),
+                      widget.onDelete != null
+                          ? GestureDetector(
+                              onTap: () {
+                                _openDialog(exerciseInfoProvider);
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.eliminaScheda,
+                                  style: const TextStyle(color: Colors.red)),
+                            )
+                          : Container(),
                       const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {

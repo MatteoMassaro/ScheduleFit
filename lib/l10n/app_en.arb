@@ -41,5 +41,6 @@
   "suggerimentoAggiungiScheda": "Click on '+' to add a tab",
   "erroreCaricamentoSchede": "Error loading cards",
   "mese": "Month",
-  "anno": "Year"
+  "anno": "Year",
+  "nessunEsercizio": "No exercise"
 }

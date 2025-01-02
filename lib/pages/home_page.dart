@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 
+import '../enums/schedule_fit_pages.dart';
 import '../providers/exercise_info_provider.dart';
 import '../widgets/schedule_fit_drawer.dart';
 import '../widgets/schedule_fit_exercise_card.dart';
@@ -22,16 +23,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _pageProvider = context.read<PageProvider>();
+    _pageProvider.setCurrentPage(Pages.mioAllenamento.name);
     _exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     _exerciseInfoProvider.loadExercises();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _pageProvider = context.read<PageProvider>();
-    _pageProvider
-        .setCurrentPage(AppLocalizations.of(context)?.mioAllenamento ?? '');
   }
 
   ///Show Exercises Dialog

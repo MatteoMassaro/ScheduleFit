@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_fit/database/schedule_fit_database.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class ExerciseInfoProvider extends ChangeNotifier {
   final ScheduleFitDatabase _database;
@@ -19,6 +20,11 @@ class ExerciseInfoProvider extends ChangeNotifier {
   Future<void> loadExercises() async {
     _exerciseList = await _database.getAllExercisesInfo;
     notifyListeners();
+  }
+
+  ///Get Execises For Date
+  List<ExerciseInfoData> getExercisesForDate(DateTime date) {
+    return _exerciseList.where((exercise) => isSameDay(exercise.data, date)).toList();
   }
 
   ///Upsert Exercise

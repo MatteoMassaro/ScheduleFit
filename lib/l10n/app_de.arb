@@ -41,5 +41,6 @@
   "suggerimentoAggiungiScheda": "Klicken sie auf '+' um eine registerkarte hinzuzufügen",
   "erroreCaricamentoSchede": "Fehler beim laden der karten",
   "mese": "Monat",
-  "anno": "Jahr"
+  "anno": "Jahr",
+  "nessunEsercizio": "Keine übung"
 }

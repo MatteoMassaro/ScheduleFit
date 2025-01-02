@@ -41,5 +41,6 @@
   "suggerimentoAggiungiScheda": "Clicca su '+' per aggiungere una scheda",
   "erroreCaricamentoSchede": "Errore nel caricamento delle schede",
   "mese": "Mese",
-  "anno": "Anno"
+  "anno": "Anno",
+  "nessunEsercizio": "Nessun esercizio"
 }

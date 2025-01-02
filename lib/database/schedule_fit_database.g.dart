@@ -61,6 +61,13 @@ class $ExerciseInfoTable extends ExerciseInfo
       type: DriftSqlType.int,
       requiredDuringInsert: false,
       defaultValue: const Constant(0));
+  static const VerificationMeta _dataMeta = const VerificationMeta('data');
+  @override
+  late final GeneratedColumn<DateTime> data = GeneratedColumn<DateTime>(
+      'data', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDate);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -68,7 +75,8 @@ class $ExerciseInfoTable extends ExerciseInfo
         categoriaEsercizio,
         immagine,
         serieTotali,
-        serieCompletate
+        serieCompletate,
+        data
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -117,6 +125,10 @@ class $ExerciseInfoTable extends ExerciseInfo
           serieCompletate.isAcceptableOrUnknown(
               data['serie_completate']!, _serieCompletateMeta));
     }
+    if (data.containsKey('data')) {
+      context.handle(
+          _dataMeta, this.data.isAcceptableOrUnknown(data['data']!, _dataMeta));
+    }
     return context;
   }
 
@@ -138,6 +150,8 @@ class $ExerciseInfoTable extends ExerciseInfo
           .read(DriftSqlType.int, data['${effectivePrefix}serie_totali'])!,
       serieCompletate: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}serie_completate'])!,
+      data: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}data'])!,
     );
   }
 
@@ -155,13 +169,15 @@ class ExerciseInfoData extends DataClass
   String immagine;
   int serieTotali;
   int serieCompletate;
+  DateTime data;
   ExerciseInfoData(
       {this.id,
       required this.nomeEsercizio,
       required this.categoriaEsercizio,
       required this.immagine,
       required this.serieTotali,
-      required this.serieCompletate});
+      required this.serieCompletate,
+      required this.data});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -173,6 +189,7 @@ class ExerciseInfoData extends DataClass
     map['immagine'] = Variable<String>(immagine);
     map['serie_totali'] = Variable<int>(serieTotali);
     map['serie_completate'] = Variable<int>(serieCompletate);
+    map['data'] = Variable<DateTime>(data);
     return map;
   }
 
@@ -184,6 +201,7 @@ class ExerciseInfoData extends DataClass
       immagine: Value(immagine),
       serieTotali: Value(serieTotali),
       serieCompletate: Value(serieCompletate),
+      data: Value(data),
     );
   }
 
@@ -198,6 +216,7 @@ class ExerciseInfoData extends DataClass
       immagine: serializer.fromJson<String>(json['immagine']),
       serieTotali: serializer.fromJson<int>(json['serieTotali']),
       serieCompletate: serializer.fromJson<int>(json['serieCompletate']),
+      data: serializer.fromJson<DateTime>(json['data']),
     );
   }
   @override
@@ -210,6 +229,7 @@ class ExerciseInfoData extends DataClass
       'immagine': serializer.toJson<String>(immagine),
       'serieTotali': serializer.toJson<int>(serieTotali),
       'serieCompletate': serializer.toJson<int>(serieCompletate),
+      'data': serializer.toJson<DateTime>(data),
     };
   }
 
@@ -219,7 +239,8 @@ class ExerciseInfoData extends DataClass
           String? categoriaEsercizio,
           String? immagine,
           int? serieTotali,
-          int? serieCompletate}) =>
+          int? serieCompletate,
+          DateTime? data}) =>
       ExerciseInfoData(
         id: id.present ? id.value : this.id,
         nomeEsercizio: nomeEsercizio ?? this.nomeEsercizio,
@@ -227,6 +248,7 @@ class ExerciseInfoData extends DataClass
         immagine: immagine ?? this.immagine,
         serieTotali: serieTotali ?? this.serieTotali,
         serieCompletate: serieCompletate ?? this.serieCompletate,
+        data: data ?? this.data,
       );
   ExerciseInfoData copyWithCompanion(ExerciseInfoCompanion data) {
     return ExerciseInfoData(
@@ -243,6 +265,7 @@ class ExerciseInfoData extends DataClass
       serieCompletate: data.serieCompletate.present
           ? data.serieCompletate.value
           : this.serieCompletate,
+      data: data.data.present ? data.data.value : this.data,
     );
   }
 
@@ -254,14 +277,15 @@ class ExerciseInfoData extends DataClass
           ..write('categoriaEsercizio: $categoriaEsercizio, ')
           ..write('immagine: $immagine, ')
           ..write('serieTotali: $serieTotali, ')
-          ..write('serieCompletate: $serieCompletate')
+          ..write('serieCompletate: $serieCompletate, ')
+          ..write('data: $data')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, nomeEsercizio, categoriaEsercizio,
-      immagine, serieTotali, serieCompletate);
+      immagine, serieTotali, serieCompletate, data);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -271,7 +295,8 @@ class ExerciseInfoData extends DataClass
           other.categoriaEsercizio == this.categoriaEsercizio &&
           other.immagine == this.immagine &&
           other.serieTotali == this.serieTotali &&
-          other.serieCompletate == this.serieCompletate);
+          other.serieCompletate == this.serieCompletate &&
+          other.data == this.data);
 }
 
 class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
@@ -281,6 +306,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
   Value<String> immagine;
   Value<int> serieTotali;
   Value<int> serieCompletate;
+  Value<DateTime> data;
   ExerciseInfoCompanion({
     this.id = const Value.absent(),
     this.nomeEsercizio = const Value.absent(),
@@ -288,6 +314,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
     this.immagine = const Value.absent(),
     this.serieTotali = const Value.absent(),
     this.serieCompletate = const Value.absent(),
+    this.data = const Value.absent(),
   });
   ExerciseInfoCompanion.insert({
     this.id = const Value.absent(),
@@ -296,6 +323,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
     required String immagine,
     this.serieTotali = const Value.absent(),
     this.serieCompletate = const Value.absent(),
+    this.data = const Value.absent(),
   })  : nomeEsercizio = Value(nomeEsercizio),
         categoriaEsercizio = Value(categoriaEsercizio),
         immagine = Value(immagine);
@@ -306,6 +334,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
     Expression<String>? immagine,
     Expression<int>? serieTotali,
     Expression<int>? serieCompletate,
+    Expression<DateTime>? data,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -314,6 +343,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
       if (immagine != null) 'immagine': immagine,
       if (serieTotali != null) 'serie_totali': serieTotali,
       if (serieCompletate != null) 'serie_completate': serieCompletate,
+      if (data != null) 'data': data,
     });
   }
 
@@ -323,7 +353,8 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
       Value<String>? categoriaEsercizio,
       Value<String>? immagine,
       Value<int>? serieTotali,
-      Value<int>? serieCompletate}) {
+      Value<int>? serieCompletate,
+      Value<DateTime>? data}) {
     return ExerciseInfoCompanion(
       id: id ?? this.id,
       nomeEsercizio: nomeEsercizio ?? this.nomeEsercizio,
@@ -331,6 +362,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
       immagine: immagine ?? this.immagine,
       serieTotali: serieTotali ?? this.serieTotali,
       serieCompletate: serieCompletate ?? this.serieCompletate,
+      data: data ?? this.data,
     );
   }
 
@@ -355,6 +387,9 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
     if (serieCompletate.present) {
       map['serie_completate'] = Variable<int>(serieCompletate.value);
     }
+    if (data.present) {
+      map['data'] = Variable<DateTime>(data.value);
+    }
     return map;
   }
 
@@ -366,7 +401,8 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
           ..write('categoriaEsercizio: $categoriaEsercizio, ')
           ..write('immagine: $immagine, ')
           ..write('serieTotali: $serieTotali, ')
-          ..write('serieCompletate: $serieCompletate')
+          ..write('serieCompletate: $serieCompletate, ')
+          ..write('data: $data')
           ..write(')'))
         .toString();
   }
@@ -749,6 +785,7 @@ typedef $$ExerciseInfoTableCreateCompanionBuilder = ExerciseInfoCompanion
   required String immagine,
   Value<int> serieTotali,
   Value<int> serieCompletate,
+  Value<DateTime> data,
 });
 typedef $$ExerciseInfoTableUpdateCompanionBuilder = ExerciseInfoCompanion
     Function({
@@ -758,6 +795,7 @@ typedef $$ExerciseInfoTableUpdateCompanionBuilder = ExerciseInfoCompanion
   Value<String> immagine,
   Value<int> serieTotali,
   Value<int> serieCompletate,
+  Value<DateTime> data,
 });
 
 final class $$ExerciseInfoTableReferences extends BaseReferences<
@@ -808,6 +846,9 @@ class $$ExerciseInfoTableFilterComposer
   ColumnFilters<int> get serieCompletate => $composableBuilder(
       column: $table.serieCompletate,
       builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get data => $composableBuilder(
+      column: $table.data, builder: (column) => ColumnFilters(column));
 
   Expression<bool> seriesInfoRefs(
       Expression<bool> Function($$SeriesInfoTableFilterComposer f) f) {
@@ -860,6 +901,9 @@ class $$ExerciseInfoTableOrderingComposer
   ColumnOrderings<int> get serieCompletate => $composableBuilder(
       column: $table.serieCompletate,
       builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get data => $composableBuilder(
+      column: $table.data, builder: (column) => ColumnOrderings(column));
 }
 
 class $$ExerciseInfoTableAnnotationComposer
@@ -888,6 +932,9 @@ class $$ExerciseInfoTableAnnotationComposer
 
   GeneratedColumn<int> get serieCompletate => $composableBuilder(
       column: $table.serieCompletate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get data =>
+      $composableBuilder(column: $table.data, builder: (column) => column);
 
   Expression<T> seriesInfoRefs<T extends Object>(
       Expression<T> Function($$SeriesInfoTableAnnotationComposer a) f) {
@@ -941,6 +988,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             Value<String> immagine = const Value.absent(),
             Value<int> serieTotali = const Value.absent(),
             Value<int> serieCompletate = const Value.absent(),
+            Value<DateTime> data = const Value.absent(),
           }) =>
               ExerciseInfoCompanion(
             id: id,
@@ -949,6 +997,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             immagine: immagine,
             serieTotali: serieTotali,
             serieCompletate: serieCompletate,
+            data: data,
           ),
           createCompanionCallback: ({
             Value<int?> id = const Value.absent(),
@@ -957,6 +1006,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             required String immagine,
             Value<int> serieTotali = const Value.absent(),
             Value<int> serieCompletate = const Value.absent(),
+            Value<DateTime> data = const Value.absent(),
           }) =>
               ExerciseInfoCompanion.insert(
             id: id,
@@ -965,6 +1015,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             immagine: immagine,
             serieTotali: serieTotali,
             serieCompletate: serieCompletate,
+            data: data,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (

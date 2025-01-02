@@ -101,7 +101,8 @@ class _EditCardPageState extends State<EditCardPage> {
         categoriaEsercizio: drift.Value(widget.nomeMuscolo),
         immagine: drift.Value(widget.immagineMuscolo),
         serieCompletate: drift.Value(widget.serieCompletate),
-        serieTotali: drift.Value(widget.serieTotali));
+        serieTotali: drift.Value(widget.serieTotali),
+        data: drift.Value(DateTime.now()));
     final exerciseId = await exerciseInfoProvider.upsertExercise(exerciseInfo);
     widget.id = exerciseId;
   }

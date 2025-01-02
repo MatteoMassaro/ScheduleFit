@@ -7,6 +7,7 @@ class ExerciseInfo extends Table {
   TextColumn get immagine => text().withLength(min: 1, max: 50)();
   IntColumn get serieTotali => integer().withDefault(const Constant(0))();
   IntColumn get serieCompletate => integer().withDefault(const Constant(0))();
+  DateTimeColumn get data => dateTime().withDefault(currentDate)();
 }
 
 class SeriesInfo extends Table {

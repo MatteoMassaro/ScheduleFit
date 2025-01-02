@@ -81,7 +81,8 @@ class _ScheduleFitExercisesDialogState
                     Navigator.of(context).push(_createRoute(
                         AppLocalizations.of(context)!
                             .nomeMuscolo(iconData['name']!),
-                        iconData['path']!))
+                        iconData['path']!)),
+                    Scaffold.of(context).closeDrawer(),
                   },
                 ),
                 const SizedBox(height: 20)

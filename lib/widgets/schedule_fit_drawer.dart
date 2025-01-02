@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/enums/schedule_fit_pages.dart';
 import 'package:schedule_fit/pages/calendar_page.dart';
 import 'package:schedule_fit/widgets/schedule_fit_contacts_dialog.dart';
 import 'package:schedule_fit/widgets/schedule_fit_drawer_header.dart';
@@ -46,12 +47,13 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
             GestureDetector(
               onTap: () {
                 if (pageProvider.paginaCorrente !=
-                    (AppLocalizations.of(context)?.mioAllenamento ?? '')) {
+                    (Pages.mioAllenamento.name)) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      pageProvider.setCurrentPage(
-                          AppLocalizations.of(context)?.mioAllenamento ?? '');
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        pageProvider.setCurrentPage(Pages.mioAllenamento.name);
+                      });
                       return const HomePage();
                     },
                   );
@@ -65,10 +67,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                     size: 30,
                     color: Colors.white,
                   ),
-                  tileColor: pageProvider.paginaCorrente ==
-                          AppLocalizations.of(context)?.mioAllenamento
-                      ? Colors.black12
-                      : null,
+                  tileColor:
+                      pageProvider.paginaCorrente == Pages.mioAllenamento.name
+                          ? Colors.black12
+                          : null,
                   title: Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
@@ -118,13 +120,13 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
             ///Calendar Page
             GestureDetector(
               onTap: () {
-                if (pageProvider.paginaCorrente !=
-                    (AppLocalizations.of(context)?.calendario ?? '')) {
+                if (pageProvider.paginaCorrente != (Pages.calendario.name)) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      pageProvider.setCurrentPage(
-                          AppLocalizations.of(context)?.calendario ?? '');
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        pageProvider.setCurrentPage(Pages.calendario.name);
+                      });
                       return const CalendarPage();
                     },
                   );
@@ -138,10 +140,10 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
                     size: 30,
                     color: Colors.white,
                   ),
-                  tileColor: pageProvider.paginaCorrente ==
-                          AppLocalizations.of(context)?.calendario
-                      ? Colors.black12
-                      : null,
+                  tileColor:
+                      pageProvider.paginaCorrente == Pages.calendario.name
+                          ? Colors.black12
+                          : null,
                   title: Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(

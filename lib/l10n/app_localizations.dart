@@ -316,6 +316,24 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Errore nel caricamento delle schede'**
   String get erroreCaricamentoSchede;
+
+  /// No description provided for @mese.
+  ///
+  /// In it, this message translates to:
+  /// **'Mese'**
+  String get mese;
+
+  /// No description provided for @anno.
+  ///
+  /// In it, this message translates to:
+  /// **'Anno'**
+  String get anno;
+
+  /// No description provided for @nessunEsercizio.
+  ///
+  /// In it, this message translates to:
+  /// **'Nessun esercizio'**
+  String get nessunEsercizio;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

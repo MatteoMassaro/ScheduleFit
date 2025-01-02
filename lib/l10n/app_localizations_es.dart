@@ -141,4 +141,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get erroreCaricamentoSchede => 'Error al cargar tarjetas';
+
+  @override
+  String get mese => 'Mes';
+
+  @override
+  String get anno => 'Año';
+
+  @override
+  String get nessunEsercizio => 'Sin ejercicio';
 }

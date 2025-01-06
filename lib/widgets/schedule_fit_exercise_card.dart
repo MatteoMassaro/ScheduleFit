@@ -13,6 +13,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final String immagine;
   final int serieCompletate;
   final int serieTotali;
+  final List<int> giorniSettimana;
   final Function? onDelete;
 
   const ScheduleFitExerciseCard({
@@ -23,6 +24,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
     required this.immagine,
     required this.serieCompletate,
     required this.serieTotali,
+    required this.giorniSettimana,
     required this.onDelete,
   });
 
@@ -31,6 +33,8 @@ class ScheduleFitExerciseCard extends StatefulWidget {
 }
 
 class _CardState extends State<ScheduleFitExerciseCard> {
+  bool _isPressed = false;
+
   ///Open Dialog
   _openDialog(ExerciseInfoProvider exerciseInfoProvider) {
     showDialog(
@@ -77,11 +81,18 @@ class _CardState extends State<ScheduleFitExerciseCard> {
   Widget build(BuildContext context) {
     return Consumer<ExerciseInfoProvider>(
       builder: (context, exerciseInfoProvider, child) {
-        return Center(
+        return GestureDetector(
+          onLongPress: () {
+            setState(() {
+              _isPressed = !_isPressed;
+            });
+          },
           child: Card(
             elevation: 10,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: getAppColors(AppColors.primaryColor),
+            color: _isPressed
+                ? getAppColors(AppColors.primaryColor)?.withOpacity(0.7)
+                : getAppColors(AppColors.primaryColor),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
@@ -105,7 +116,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                               '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  fontSize: 15, color: Colors.white)),
+                                  fontSize: 16, color: Colors.white)),
                         ],
                       ),
                       const Spacer(),
@@ -115,10 +126,11 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            widget.categoriaEsercizio,
+                            AppLocalizations.of(context)!
+                                .nomeMuscolo(widget.categoriaEsercizio.toLowerCase()),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 16,
                               color: getAppColors(AppColors.secondaryColor),
                             ),
                           ),
@@ -162,6 +174,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                 immagineMuscolo: widget.immagine,
                                 serieTotali: widget.serieTotali,
                                 serieCompletate: widget.serieCompletate,
+                                giorniSettimana: widget.giorniSettimana,
                                 onSave: () {
                                   exerciseInfoProvider.loadExercises();
                                 },

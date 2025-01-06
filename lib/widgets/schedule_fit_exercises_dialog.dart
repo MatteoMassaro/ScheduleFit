@@ -27,6 +27,7 @@ class _ScheduleFitExercisesDialogState
           immagineMuscolo: muscleIconPath,
           serieTotali: 0,
           serieCompletate: 0,
+          giorniSettimana: const [],
           onSave: widget.onSave),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);

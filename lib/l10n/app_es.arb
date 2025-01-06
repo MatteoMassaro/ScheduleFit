@@ -2,8 +2,8 @@
   "info": "Info",
   "versione": "Versión: ",
   "autore": "Autor: ",
-  "descrizioneApp" : "¡Crea tus propios programas de entrenamiento para seguir tu progreso todos los días!",
-  "chiudi" : "CERCA",
+  "descrizioneApp": "¡Crea tus propios programas de entrenamiento para seguir tu progreso todos los días!",
+  "chiudi": "CERCA",
   "lingua": "Idioma",
   "italiano": "Italian",
   "inglese": "Inglés",
@@ -42,5 +42,16 @@
   "erroreCaricamentoSchede": "Error al cargar tarjetas",
   "mese": "Mes",
   "anno": "Año",
-  "nessunEsercizio": "Sin ejercicio"
+  "nessunEsercizio": "Sin ejercicio",
+  "conferma": "CONFIRMA",
+  "giorniAllenamento": "Jornadas de entrenamiento",
+  "lunedi": "lunes",
+  "martedi": "martes",
+  "mercoledi": "miércoles",
+  "giovedi": "jueves",
+  "venerdi": "viernes",
+  "sabato": "sábado",
+  "domenica": "domingo",
+  "ogni": "Todos los",
+  "oggi": "Hoy"
 }

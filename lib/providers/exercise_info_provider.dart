@@ -22,9 +22,18 @@ class ExerciseInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  ///Get Today Exercises
+  List<ExerciseInfoData> getTodayExercises() {
+    return _exerciseList
+        .where((exercise) => (isSameDay(exercise.data, DateTime.now()) && exercise.giorniSettimana.isEmpty) || exercise.giorniSettimana.contains(DateTime.now().weekday))
+        .toList();
+  }
+
   ///Get Execises For Date
   List<ExerciseInfoData> getExercisesForDate(DateTime date) {
-    return _exerciseList.where((exercise) => isSameDay(exercise.data, date)).toList();
+    return _exerciseList
+        .where((exercise) => isSameDay(exercise.data, date))
+        .toList();
   }
 
   ///Upsert Exercise

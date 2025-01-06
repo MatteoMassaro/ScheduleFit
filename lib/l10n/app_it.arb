@@ -42,5 +42,16 @@
   "erroreCaricamentoSchede": "Errore nel caricamento delle schede",
   "mese": "Mese",
   "anno": "Anno",
-  "nessunEsercizio": "Nessun esercizio"
+  "nessunEsercizio": "Nessun esercizio",
+  "conferma": "CONFERMA",
+  "giorniAllenamento": "Giorni dell'allenamento",
+  "lunedi": "lunedì",
+  "martedi": "martedì",
+  "mercoledi": "mercoledì",
+  "giovedi": "giovedì",
+  "venerdi": "venerdì",
+  "sabato": "sabato",
+  "domenica": "domenica",
+  "ogni": "Ogni",
+  "oggi": "Oggi"
 }

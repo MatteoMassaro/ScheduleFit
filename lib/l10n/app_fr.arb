@@ -42,5 +42,16 @@
   "erroreCaricamentoSchede": "Erreur lors du chargement des cartes",
   "mese": "Mois",
   "anno": "Année",
-  "nessunEsercizio": "Pas d'exercice"
+  "nessunEsercizio": "Pas d'exercice",
+  "conferma": "CONFIRMER",
+  "giorniAllenamento": "Journées de entrainement",
+  "lunedi": "lundi",
+  "martedi": "mardi",
+  "mercoledi": "mercredi",
+  "giovedi": "jeudi",
+  "venerdi": "vendredi",
+  "sabato": "samedi",
+  "domenica": "dimanche",
+  "ogni": "Tous les",
+  "oggi": "Aujourd'hui"
 }

@@ -7,7 +7,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
-import '../providers/calendar_provider.dart';
 import '../providers/exercise_info_provider.dart';
 
 class ScheduleFitSlidingPanel extends StatefulWidget {
@@ -27,7 +26,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
         context.read<ExerciseInfoProvider>().getExercisesForDate(_selectedDate);
 
     return SlidingUpPanel(
-      isDraggable: true,
+      isDraggable: exerciseList.isNotEmpty ? true : false,
       minHeight: 200,
       maxHeight: MediaQuery.of(context).size.height * 0.9,
       renderPanelSheet: false,
@@ -95,6 +94,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                           immagine: exerciseList[index].immagine,
                           serieTotali: exerciseList[index].serieTotali,
                           serieCompletate: exerciseList[index].serieCompletate,
+                          giorniSettimana: exerciseList[index].giorniSettimana,
                           onDelete: null,
                         );
                       },
@@ -122,26 +122,24 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
           ],
         ),
       ),
-      body: Consumer<CalendarProvider>(
-          builder: (context, calendarProvider, child) {
-        return Column(
-          children: [
-            Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    color: getAppColors(AppColors.primaryColor),
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: ScheduleFitCalendar(
-                  onDaySelected: (selectedDay) {
-                    setState(() {
-                      _selectedDate = selectedDay;
-                    });
-                  },
-                )),
-          ],
-        );
-      }),
+      body: Column(
+        children: [
+          ///Calendar
+          Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  color: getAppColors(AppColors.primaryColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: ScheduleFitCalendar(
+                onDaySelected: (selectedDay) {
+                  setState(() {
+                    _selectedDate = selectedDay;
+                  });
+                },
+              )),
+        ],
+      ),
     );
   }
 }

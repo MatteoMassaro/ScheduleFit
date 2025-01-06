@@ -109,10 +109,10 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
 
                 ///Number Of Repetitions
                 Row(children: [
-                  Text(AppLocalizations.of(context)!.numeroRipetizioni,
+                  Text('${AppLocalizations.of(context)!.numeroRipetizioni}:',
                       textAlign: TextAlign.center,
                       style:
-                          const TextStyle(fontSize: 15, color: Colors.white)),
+                          const TextStyle(fontSize: 16, color: Colors.white)),
                   const SizedBox(width: 10),
                   SizedBox(
                     height: 50,
@@ -124,11 +124,12 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: getAppColors(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          hintStyle:
+                              TextStyle(fontSize: 16, color: Colors.grey),
                           counterText: "",
                           border: InputBorder.none),
                       onChanged: (value) {
@@ -169,11 +170,12 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: getAppColors(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          hintStyle:
+                              TextStyle(fontSize: 16, color: Colors.grey),
                           counterText: "",
                           border: InputBorder.none),
                       onChanged: (value) {

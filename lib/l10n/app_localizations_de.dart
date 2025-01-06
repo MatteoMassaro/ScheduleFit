@@ -150,4 +150,37 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nessunEsercizio => 'Keine übung';
+
+  @override
+  String get conferma => 'BESTÄTIGT';
+
+  @override
+  String get giorniAllenamento => 'Trainingstage';
+
+  @override
+  String get lunedi => 'montag';
+
+  @override
+  String get martedi => 'dienstag';
+
+  @override
+  String get mercoledi => 'mittwoch';
+
+  @override
+  String get giovedi => 'donnerstag';
+
+  @override
+  String get venerdi => 'freitag';
+
+  @override
+  String get sabato => 'samstag';
+
+  @override
+  String get domenica => 'sonntag';
+
+  @override
+  String get ogni => 'Jeden';
+
+  @override
+  String get oggi => 'Heute';
 }

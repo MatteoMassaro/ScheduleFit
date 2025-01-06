@@ -1,5 +1,9 @@
+import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/database/schedule_fit_database.dart';
+import 'package:schedule_fit/enums/schedule_fit_colors.dart';
+import 'package:schedule_fit/enums/schedule_fit_days_of_week.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 
@@ -19,14 +23,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late ExerciseInfoProvider _exerciseInfoProvider;
   late PageProvider _pageProvider;
+  late List<ExerciseInfoData> todayExercises;
+  List<int> daysOfWeek = getDaysOfWeek();
 
   @override
   void initState() {
     super.initState();
     _pageProvider = context.read<PageProvider>();
-    _pageProvider.setCurrentPage(Pages.mioAllenamento.name);
     _exerciseInfoProvider = context.read<ExerciseInfoProvider>();
-    _exerciseInfoProvider.loadExercises();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pageProvider.setCurrentPage(Pages.mioAllenamento.name);
+      _exerciseInfoProvider.loadExercises();
+    });
   }
 
   ///Show Exercises Dialog
@@ -46,7 +54,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         title: Text(
@@ -60,8 +67,10 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       body: Consumer<ExerciseInfoProvider>(
-        builder: (context, provider, child) {
-          return provider.exerciseList.isEmpty
+        builder: (context, exerciseInfoProvider, child) {
+          todayExercises = exerciseInfoProvider.getTodayExercises();
+
+          return exerciseInfoProvider.exerciseList.isEmpty
               ?
 
               ///Text Tip
@@ -79,25 +88,94 @@ class _HomePageState extends State<HomePage> {
               :
 
               ///Exercise Card List
-              ListView.builder(
-                  itemCount: provider.exerciseList.length,
-                  itemBuilder: (context, index) {
-                    return ScheduleFitExerciseCard(
-                      id: provider.exerciseList[index].id ?? -1,
-                      nomeEsercizio: provider.exerciseList[index].nomeEsercizio,
-                      categoriaEsercizio:
-                          provider.exerciseList[index].categoriaEsercizio,
-                      immagine: provider.exerciseList[index].immagine,
-                      serieTotali: provider.exerciseList[index].serieTotali,
-                      serieCompletate:
-                          provider.exerciseList[index].serieCompletate,
-                      onDelete: () {
-                        provider.deleteExercise(
-                            provider.exerciseList[index].id ?? -1);
-                      },
+              Accordion(
+                initialOpeningSequenceDelay: 100,
+                headerBackgroundColor: Colors.blueAccent,
+                headerPadding: const EdgeInsets.all(10),
+                contentBackgroundColor: Colors.white,
+                children: [
+                  AccordionSection(
+                    index: 1,
+                    isOpen: true,
+                    headerBackgroundColor:
+                        getAppColors(AppColors.primaryColor),
+                    header: Text(
+                      AppLocalizations.of(context)!.oggi,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    content: ListView(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      children: todayExercises.map((exercise) {
+                        return ScheduleFitExerciseCard(
+                          id: exercise.id ?? -1,
+                          nomeEsercizio: exercise.nomeEsercizio,
+                          categoriaEsercizio: exercise.categoriaEsercizio,
+                          immagine: exercise.immagine,
+                          serieTotali: exercise.serieTotali,
+                          serieCompletate: exercise.serieCompletate,
+                          giorniSettimana: exercise.giorniSettimana,
+                          onDelete: () {
+                            exerciseInfoProvider
+                                .deleteExercise(exercise.id ?? -1);
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+
+                  /// Days Of Week Accordions
+                  ...List.generate(7, (index) {
+                    int day = daysOfWeek[index];
+                    var filteredExercises =
+                        exerciseInfoProvider.exerciseList
+                            .where(
+                              (exercise) =>
+                                  exercise.giorniSettimana.contains(day),
+                            )
+                            .toList();
+
+                    if (filteredExercises.isEmpty) {
+                      return AccordionSection(
+                        header: Container(),
+                        content: Container(),
+                      );
+                    }
+
+                    return AccordionSection(
+                      index: index + 2,
+                      headerBackgroundColor:
+                          getAppColors(AppColors.primaryColor),
+                      header: Text(
+                        getDayOfWeekTranslated(context, day),
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      content: ListView(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        children: filteredExercises.map((exercise) {
+                          return ScheduleFitExerciseCard(
+                            id: exercise.id ?? -1,
+                            nomeEsercizio: exercise.nomeEsercizio,
+                            categoriaEsercizio:
+                                exercise.categoriaEsercizio,
+                            immagine: exercise.immagine,
+                            serieTotali: exercise.serieTotali,
+                            serieCompletate: exercise.serieCompletate,
+                            giorniSettimana: exercise.giorniSettimana,
+                            onDelete: () {
+                              exerciseInfoProvider
+                                  .deleteExercise(exercise.id ?? -1);
+                            },
+                          );
+                        }).toList(),
+                      ),
                     );
-                  },
-                );
+                  }).where((section) => section.index != 0),
+                ],
+              );
         },
       ),
       floatingActionButton: FloatingActionButton(

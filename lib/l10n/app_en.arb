@@ -2,7 +2,7 @@
   "info": "Info",
   "versione": "Version: ",
   "autore": "Author: ",
-  "descrizioneApp" : "Create your own training programs to track your progress every day!",
+  "descrizioneApp": "Create your own training programs to track your progress every day!",
   "chiudi": "CLOSE",
   "lingua": "Language",
   "italiano": "Italian",
@@ -42,5 +42,16 @@
   "erroreCaricamentoSchede": "Error loading cards",
   "mese": "Month",
   "anno": "Year",
-  "nessunEsercizio": "No exercise"
+  "nessunEsercizio": "No exercise",
+  "conferma": "CONFIRM",
+  "giorniAllenamento": "Training days",
+  "lunedi": "monday",
+  "martedi": "tuesday",
+  "mercoledi": "wednesday",
+  "giovedi": "thursday",
+  "venerdi": "friday",
+  "sabato": "saturday",
+  "domenica": "sunday",
+  "ogni": "Every",
+  "oggi": "Today"
 }

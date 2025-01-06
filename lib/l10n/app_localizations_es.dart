@@ -150,4 +150,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nessunEsercizio => 'Sin ejercicio';
+
+  @override
+  String get conferma => 'CONFIRMA';
+
+  @override
+  String get giorniAllenamento => 'Jornadas de entrenamiento';
+
+  @override
+  String get lunedi => 'lunes';
+
+  @override
+  String get martedi => 'martes';
+
+  @override
+  String get mercoledi => 'miércoles';
+
+  @override
+  String get giovedi => 'jueves';
+
+  @override
+  String get venerdi => 'viernes';
+
+  @override
+  String get sabato => 'sábado';
+
+  @override
+  String get domenica => 'domingo';
+
+  @override
+  String get ogni => 'Todos los';
+
+  @override
+  String get oggi => 'Hoy';
 }

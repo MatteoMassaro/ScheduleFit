@@ -334,6 +334,72 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Nessun esercizio'**
   String get nessunEsercizio;
+
+  /// No description provided for @conferma.
+  ///
+  /// In it, this message translates to:
+  /// **'CONFERMA'**
+  String get conferma;
+
+  /// No description provided for @giorniAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'Giorni dell\'allenamento'**
+  String get giorniAllenamento;
+
+  /// No description provided for @lunedi.
+  ///
+  /// In it, this message translates to:
+  /// **'lunedì'**
+  String get lunedi;
+
+  /// No description provided for @martedi.
+  ///
+  /// In it, this message translates to:
+  /// **'martedì'**
+  String get martedi;
+
+  /// No description provided for @mercoledi.
+  ///
+  /// In it, this message translates to:
+  /// **'mercoledì'**
+  String get mercoledi;
+
+  /// No description provided for @giovedi.
+  ///
+  /// In it, this message translates to:
+  /// **'giovedì'**
+  String get giovedi;
+
+  /// No description provided for @venerdi.
+  ///
+  /// In it, this message translates to:
+  /// **'venerdì'**
+  String get venerdi;
+
+  /// No description provided for @sabato.
+  ///
+  /// In it, this message translates to:
+  /// **'sabato'**
+  String get sabato;
+
+  /// No description provided for @domenica.
+  ///
+  /// In it, this message translates to:
+  /// **'domenica'**
+  String get domenica;
+
+  /// No description provided for @ogni.
+  ///
+  /// In it, this message translates to:
+  /// **'Ogni'**
+  String get ogni;
+
+  /// No description provided for @oggi.
+  ///
+  /// In it, this message translates to:
+  /// **'Oggi'**
+  String get oggi;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

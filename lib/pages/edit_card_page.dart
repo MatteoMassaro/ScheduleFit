@@ -1,7 +1,9 @@
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/enums/schedule_fit_days_of_week.dart';
 import 'package:schedule_fit/widgets/schedule_fit_series_card.dart';
 
 import '../database/schedule_fit_database.dart';
@@ -17,6 +19,7 @@ class EditCardPage extends StatefulWidget {
   final String immagineMuscolo;
   int serieTotali;
   int serieCompletate;
+  List<int> giorniSettimana;
   final Function onSave;
 
   EditCardPage({
@@ -27,6 +30,7 @@ class EditCardPage extends StatefulWidget {
     required this.immagineMuscolo,
     required this.serieTotali,
     required this.serieCompletate,
+    required this.giorniSettimana,
     required this.onSave,
   });
 
@@ -39,6 +43,7 @@ class _EditCardPageState extends State<EditCardPage> {
   late ExerciseInfoProvider exerciseInfoProvider;
   late TextEditingController _nomeEsercizioController;
   late List<SeriesInfoData> seriesList = [];
+  late List<String> daysOfWeek = [];
   bool _isSaveButtonEnabled = false;
   bool _isLoading = false;
 
@@ -50,6 +55,11 @@ class _EditCardPageState extends State<EditCardPage> {
     seriesInfoProvider.clearSeries();
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      daysOfWeek =
+          widget.giorniSettimana.map((g) => getDayOfWeekTranslated(context, g))
+              .toList();
+    });
     _getSeries();
   }
 
@@ -102,6 +112,9 @@ class _EditCardPageState extends State<EditCardPage> {
         immagine: drift.Value(widget.immagineMuscolo),
         serieCompletate: drift.Value(widget.serieCompletate),
         serieTotali: drift.Value(widget.serieTotali),
+        giorniSettimana: drift.Value(daysOfWeek
+            .map((g) => getDayOfWeekTranslatedFromString(context, g))
+            .toList()),
         data: drift.Value(DateTime.now()));
     final exerciseId = await exerciseInfoProvider.upsertExercise(exerciseInfo);
     widget.id = exerciseId;
@@ -189,7 +202,8 @@ class _EditCardPageState extends State<EditCardPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              (widget.nomeMuscolo),
+                              AppLocalizations.of(context)!.nomeMuscolo(
+                                  widget.nomeMuscolo.toLowerCase()),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12,
@@ -253,9 +267,84 @@ class _EditCardPageState extends State<EditCardPage> {
               ),
             ),
 
+            ///Days Of Week Dropdown
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: MultiSelectDialogField(
+                initialValue: daysOfWeek,
+                items: getDaysOfWeekTranslated(context)
+                    .map((e) => MultiSelectItem(e, e))
+                    .toList(),
+                listType: MultiSelectListType.LIST,
+                backgroundColor: getAppColors(AppColors.primaryColor),
+                checkColor: Colors.white,
+                selectedColor: getAppColors(AppColors.secondaryColor),
+                searchable: true,
+                dialogHeight: MediaQuery.of(context).size.height * 0.5,
+                itemsTextStyle: TextStyle(
+                    color: getAppColors(AppColors.secondaryColor),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                selectedItemsTextStyle: TextStyle(
+                    color: getAppColors(AppColors.secondaryColor),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                title: Text(
+                  AppLocalizations.of(context)?.giorniAllenamento ?? '',
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                barrierColor: Colors.transparent,
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(width: 2, color: Colors.white)),
+                buttonIcon: const Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                buttonText: Text(
+                  AppLocalizations.of(context)?.giorniAllenamento ?? '',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                confirmText: Text(
+                  AppLocalizations.of(context)?.conferma ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                cancelText: Text(
+                  AppLocalizations.of(context)?.chiudi ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+                onConfirm: (values) {
+                  values.isNotEmpty
+                      ? daysOfWeek = values
+                      : daysOfWeek = [];
+                  _updateSaveButtonState();
+                },
+                chipDisplay: MultiSelectChipDisplay(
+                  scroll: true,
+                  scrollBar: HorizontalScrollBar(isAlwaysShown: false),
+                  chipColor: getAppColors(AppColors.primaryColor),
+                  textStyle: const TextStyle(color: Colors.white, fontSize: 14),
+                  items: getDaysOfWeekTranslated(context)
+                      .map((d) => MultiSelectItem(d, d))
+                      .toList(),
+                ),
+              ),
+            ),
+
             ///Series Card List
             Expanded(
-              flex: 6,
+              flex: 5,
               child: _isLoading
                   ? const Center(
                       child: CircularProgressIndicator(),

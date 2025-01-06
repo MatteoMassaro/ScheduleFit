@@ -42,5 +42,16 @@
   "erroreCaricamentoSchede": "Fehler beim laden der karten",
   "mese": "Monat",
   "anno": "Jahr",
-  "nessunEsercizio": "Keine übung"
+  "nessunEsercizio": "Keine übung",
+  "conferma": "BESTÄTIGT",
+  "giorniAllenamento": "Trainingstage",
+  "lunedi": "montag",
+  "martedi": "dienstag",
+  "mercoledi": "mittwoch",
+  "giovedi": "donnerstag",
+  "venerdi": "freitag",
+  "sabato": "samstag",
+  "domenica": "sonntag",
+  "ogni": "Jeden",
+  "oggi": "Heute"
 }

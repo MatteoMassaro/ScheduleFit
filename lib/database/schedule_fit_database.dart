@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:schedule_fit/database/tables.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
+import 'integer_list_converter.dart';
 
 part 'schedule_fit_database.g.dart';
 

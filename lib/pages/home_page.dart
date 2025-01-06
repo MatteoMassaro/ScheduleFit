@@ -89,7 +89,6 @@ class _HomePageState extends State<HomePage> {
 
               ///Exercise Card List
               Accordion(
-                initialOpeningSequenceDelay: 100,
                 headerBackgroundColor: Colors.blueAccent,
                 headerPadding: const EdgeInsets.all(10),
                 contentBackgroundColor: Colors.white,

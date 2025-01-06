@@ -126,8 +126,16 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!
-                                .nomeMuscolo(widget.categoriaEsercizio.toLowerCase()),
+                            AppLocalizations.of(context)!.nomeMuscolo(widget
+                                    .categoriaEsercizio[0]
+                                    .toLowerCase() +
+                                widget.categoriaEsercizio
+                                    .substring(1)
+                                    .replaceAllMapped(
+                                      RegExp(r' \w'),
+                                      (match) =>
+                                          match.group(0)!.toUpperCase().trim(),
+                                    )),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 16,

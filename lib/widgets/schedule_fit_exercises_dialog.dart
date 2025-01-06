@@ -80,8 +80,7 @@ class _ScheduleFitExercisesDialogState
                   onTap: () => {
                     Navigator.of(context).pop(),
                     Navigator.of(context).push(_createRoute(
-                        AppLocalizations.of(context)!
-                            .nomeMuscolo(iconData['name']!),
+                        iconData['name']!,
                         iconData['path']!)),
                     Scaffold.of(context).closeDrawer(),
                   },

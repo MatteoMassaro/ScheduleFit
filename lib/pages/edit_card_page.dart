@@ -56,9 +56,9 @@ class _EditCardPageState extends State<EditCardPage> {
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      daysOfWeek =
-          widget.giorniSettimana.map((g) => getDayOfWeekTranslated(context, g))
-              .toList();
+      daysOfWeek = widget.giorniSettimana
+          .map((g) => getDayOfWeekTranslated(context, g))
+          .toList();
     });
     _getSeries();
   }
@@ -203,7 +203,17 @@ class _EditCardPageState extends State<EditCardPage> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.nomeMuscolo(
-                                  widget.nomeMuscolo.toLowerCase()),
+                                widget.nomeMuscolo[0].toLowerCase() +
+                                    widget.nomeMuscolo
+                                        .substring(1)
+                                        .replaceAllMapped(
+                                          RegExp(r' \w'),
+                                          (match) => match
+                                              .group(0)!
+                                              .toUpperCase()
+                                              .trim(),
+                                        ),
+                              ),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12,
@@ -325,9 +335,7 @@ class _EditCardPageState extends State<EditCardPage> {
                   ),
                 ),
                 onConfirm: (values) {
-                  values.isNotEmpty
-                      ? daysOfWeek = values
-                      : daysOfWeek = [];
+                  values.isNotEmpty ? daysOfWeek = values : daysOfWeek = [];
                   _updateSaveButtonState();
                 },
                 chipDisplay: MultiSelectChipDisplay(

@@ -13,7 +13,7 @@ class CalendarPage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         drawerEnableOpenDragGesture: true,
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)?.calendario ?? ''),
+          title: Text(AppLocalizations.of(context)!.calendario),
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(

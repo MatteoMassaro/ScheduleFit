@@ -22,11 +22,18 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
 
   @override
   Widget build(BuildContext context) {
-    List<ExerciseInfoData> exerciseList =
+    List<ExerciseInfoData> periodicExercises = context
+        .read<ExerciseInfoProvider>()
+        .getPeriodicExercises(_selectedDate.weekday);
+
+    List<ExerciseInfoData> exerciseListForDate =
         context.read<ExerciseInfoProvider>().getExercisesForDate(_selectedDate);
 
     return SlidingUpPanel(
-      isDraggable: exerciseList.isNotEmpty ? true : false,
+      isDraggable:
+          periodicExercises.isNotEmpty || exerciseListForDate.isNotEmpty
+              ? true
+              : false,
       minHeight: 200,
       maxHeight: MediaQuery.of(context).size.height * 0.9,
       renderPanelSheet: false,
@@ -80,21 +87,24 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
               color: Colors.transparent,
             ),
 
-            ///Exercise Card List
-            exerciseList.isNotEmpty
+            ///Exercise For Date Card List
+            exerciseListForDate.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ScheduleFitExerciseCard(
-                          id: exerciseList[index].id ?? -1,
-                          nomeEsercizio: exerciseList[index].nomeEsercizio,
+                          id: exerciseListForDate[index].id ?? -1,
+                          nomeEsercizio:
+                              exerciseListForDate[index].nomeEsercizio,
                           categoriaEsercizio:
-                              exerciseList[index].categoriaEsercizio,
-                          immagine: exerciseList[index].immagine,
-                          serieTotali: exerciseList[index].serieTotali,
-                          serieCompletate: exerciseList[index].serieCompletate,
-                          giorniSettimana: exerciseList[index].giorniSettimana,
+                              exerciseListForDate[index].categoriaEsercizio,
+                          immagine: exerciseListForDate[index].immagine,
+                          serieTotali: exerciseListForDate[index].serieTotali,
+                          serieCompletate:
+                              exerciseListForDate[index].serieCompletate,
+                          giorniSettimana:
+                              exerciseListForDate[index].giorniSettimana,
                           onDelete: null,
                         );
                       },
@@ -105,20 +115,58 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                         );
                       },
                       shrinkWrap: true,
-                      itemCount: exerciseList.length,
+                      itemCount: exerciseListForDate.length,
                     ),
                   )
-                : Padding(
+                : Container(),
+
+            ///Periodic Exercise Card List
+            periodicExercises.isNotEmpty
+                ? Expanded(
+                    child: ListView.separated(
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index1) {
+                        return ScheduleFitExerciseCard(
+                          id: periodicExercises[index1].id ?? -1,
+                          nomeEsercizio:
+                              periodicExercises[index1].nomeEsercizio,
+                          categoriaEsercizio:
+                              periodicExercises[index1].categoriaEsercizio,
+                          immagine: periodicExercises[index1].immagine,
+                          serieTotali: periodicExercises[index1].serieTotali,
+                          serieCompletate:
+                              periodicExercises[index1].serieCompletate,
+                          giorniSettimana:
+                              periodicExercises[index1].giorniSettimana,
+                          onDelete: null,
+                        );
+                      },
+                      separatorBuilder: (context, index1) {
+                        return const Divider(
+                          height: 0.5,
+                          color: Colors.transparent,
+                        );
+                      },
+                      shrinkWrap: true,
+                      itemCount: periodicExercises.length,
+                    ),
+                  )
+                : Container(),
+
+            ///No Exercises Text
+            periodicExercises.isEmpty && exerciseListForDate.isEmpty
+                ? Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      AppLocalizations.of(context)?.nessunEsercizio ?? '',
+                      AppLocalizations.of(context)!.nessunEsercizio,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  )
+                : Container(),
           ],
         ),
       ),

@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)?.mioAllenamento ?? '',
+          AppLocalizations.of(context)!.mioAllenamento,
           style: const TextStyle(color: Colors.white),
         ),
       ),
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    content: ListView(
+                    content: todayExercises.isNotEmpty ? ListView(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       children: todayExercises.map((exercise) {
@@ -121,7 +121,8 @@ class _HomePageState extends State<HomePage> {
                           },
                         );
                       }).toList(),
-                    ),
+                    ) : Text(AppLocalizations.of(context)
+                        !.nessunEsercizio, style: TextStyle(color: Colors.black26),),
                   ),
 
                   /// Days Of Week Accordions
@@ -179,7 +180,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showExercisesDialog,
-        tooltip: AppLocalizations.of(context)?.creaScheda,
+        tooltip: AppLocalizations.of(context)!.creaScheda,
         child: const Icon(Icons.add),
       ),
     );

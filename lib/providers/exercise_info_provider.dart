@@ -25,14 +25,25 @@ class ExerciseInfoProvider extends ChangeNotifier {
   ///Get Today Exercises
   List<ExerciseInfoData> getTodayExercises() {
     return _exerciseList
-        .where((exercise) => (isSameDay(exercise.data, DateTime.now()) && exercise.giorniSettimana.isEmpty) || exercise.giorniSettimana.contains(DateTime.now().weekday))
+        .where((exercise) =>
+            (isSameDay(exercise.data, DateTime.now()) &&
+                exercise.giorniSettimana.isEmpty) ||
+            exercise.giorniSettimana.contains(DateTime.now().weekday))
+        .toList();
+  }
+
+  ///Get Periodic Exercises
+  List<ExerciseInfoData> getPeriodicExercises(int day) {
+    return _exerciseList
+        .where((exercise) => exercise.giorniSettimana.contains(day))
         .toList();
   }
 
   ///Get Execises For Date
   List<ExerciseInfoData> getExercisesForDate(DateTime date) {
     return _exerciseList
-        .where((exercise) => isSameDay(exercise.data, date))
+        .where((exercise) =>
+            isSameDay(exercise.data, date) && exercise.giorniSettimana.isEmpty)
         .toList();
   }
 

@@ -300,7 +300,7 @@ class _EditCardPageState extends State<EditCardPage> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
                 title: Text(
-                  AppLocalizations.of(context)?.giorniAllenamento ?? '',
+                  AppLocalizations.of(context)!.giorniAllenamento,
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 barrierColor: Colors.transparent,
@@ -313,7 +313,7 @@ class _EditCardPageState extends State<EditCardPage> {
                   size: 20,
                 ),
                 buttonText: Text(
-                  AppLocalizations.of(context)?.giorniAllenamento ?? '',
+                  AppLocalizations.of(context)!.giorniAllenamento,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -321,14 +321,14 @@ class _EditCardPageState extends State<EditCardPage> {
                   ),
                 ),
                 confirmText: Text(
-                  AppLocalizations.of(context)?.conferma ?? '',
+                  AppLocalizations.of(context)!.conferma,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
                 cancelText: Text(
-                  AppLocalizations.of(context)?.chiudi ?? '',
+                  AppLocalizations.of(context)!.chiudi ,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.red,

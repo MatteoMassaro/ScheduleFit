@@ -50,8 +50,8 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (_) => LocaleProvider()),
             ChangeNotifierProvider(
-                create: (_) => PageProvider(
-                    AppLocalizations.of(context)?.mioAllenamento ?? '')),
+                create: (_) =>
+                    PageProvider(AppLocalizations.of(context)?.mioAllenamento ?? '')),
             ChangeNotifierProxyProvider<ScheduleFitDatabase,
                 ExerciseInfoProvider>(
               create: (context) => ExerciseInfoProvider(

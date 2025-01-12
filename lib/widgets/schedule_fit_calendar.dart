@@ -76,14 +76,14 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
         formatButtonShowsNext: false,
       ),
       calendarStyle: CalendarStyle(
-          selectedDecoration: BoxDecoration(
-            color: getAppColors(AppColors.selectedDayCalendarColor),
-            shape: BoxShape.circle,
-          ),
-          outsideDaysVisible: false,
-          weekendTextStyle: const TextStyle(color: Colors.black45),
-          markerMargin: const EdgeInsets.only(top: 5),
-          markersMaxCount: 2),
+        selectedDecoration: BoxDecoration(
+          color: getAppColors(AppColors.selectedDayCalendarColor),
+          shape: BoxShape.circle,
+        ),
+        outsideDaysVisible: false,
+        weekendTextStyle: const TextStyle(color: Colors.black45),
+        markerMargin: const EdgeInsets.only(top: 5),
+      ),
       daysOfWeekStyle: const DaysOfWeekStyle(
         weekdayStyle:
             TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
@@ -129,8 +129,8 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
                         side: const BorderSide(color: Colors.white, width: 2))),
                 child: Text(
                   _changeCalendarFormat
-                      ? AppLocalizations.of(context)?.anno ?? ''
-                      : AppLocalizations.of(context)?.mese ?? '',
+                      ? AppLocalizations.of(context)!.anno
+                      : AppLocalizations.of(context)!.mese,
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -161,15 +161,21 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
           );
         },
         markerBuilder: (context, day, events) {
+          final periodicExercises = context
+              .read<ExerciseInfoProvider>()
+              .getPeriodicExercises(day.weekday);
           final exercisesForDay =
               context.read<ExerciseInfoProvider>().getExercisesForDate(day);
-          final markers = exercisesForDay.take(3).toList();
+          final periodicMarkers = periodicExercises.take(3).toList();
+          final markersForDay = periodicMarkers.length < 3
+              ? exercisesForDay.take(3 - periodicMarkers.length).toList()
+              : [];
 
           return Positioned(
             top: 45,
             child: Row(
               children: [
-                ...markers.map((event) {
+                ...periodicMarkers.map((event) {
                   return Container(
                     width: 5,
                     height: 5,
@@ -180,11 +186,22 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
                     ),
                   );
                 }),
-                if (exercisesForDay.length > 3)
+                ...markersForDay.map((event) {
+                  return Container(
+                    width: 5,
+                    height: 5,
+                    margin: const EdgeInsets.symmetric(horizontal: 1),
+                    decoration: BoxDecoration(
+                      color: getAppColors(AppColors.secondaryColor),
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                }),
+                if (periodicExercises.length + exercisesForDay.length > 3)
                   Container(
                     margin: const EdgeInsets.only(top: 1, left: 2),
                     child: Text(
-                      "+${exercisesForDay.length - 3}",
+                      "+${(periodicExercises.length + exercisesForDay.length) - 3}",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 7,

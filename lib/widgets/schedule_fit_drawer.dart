@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_pages.dart';
 import 'package:schedule_fit/pages/calendar_page.dart';
-import 'package:schedule_fit/widgets/schedule_fit_contacts_dialog.dart';
+import 'package:schedule_fit/pages/settings_page.dart';
 import 'package:schedule_fit/widgets/schedule_fit_drawer_header.dart';
 import 'package:schedule_fit/widgets/schedule_fit_exercises_dialog.dart';
-import 'package:schedule_fit/widgets/schedule_fit_info_dialog.dart';
-import 'package:schedule_fit/widgets/schedule_fit_language_dialog.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_images.dart';
@@ -14,6 +12,7 @@ import '../l10n/app_localizations.dart';
 import '../pages/home_page.dart';
 import '../providers/locale_provider.dart';
 import '../providers/page_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitDrawer extends StatefulWidget {
   final VoidCallback onSave;
@@ -36,7 +35,7 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: getAppColors(AppColors.primaryColor),
+      backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
       child: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return ListView(
           padding: EdgeInsets.zero,
@@ -46,16 +45,13 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
             ///My Training Page
             GestureDetector(
               onTap: () {
-                if (pageProvider.paginaCorrente !=
-                    (Pages.mioAllenamento.name)) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        pageProvider.setCurrentPage(Pages.mioAllenamento.name);
-                      });
-                      return const HomePage();
-                    },
+                if (pageProvider.paginaCorrente != Pages.mioAllenamento.name) {
+                  pageProvider.setCurrentPage(Pages.mioAllenamento.name);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
                   );
                 }
               },
@@ -120,15 +116,13 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
             ///Calendar Page
             GestureDetector(
               onTap: () {
-                if (pageProvider.paginaCorrente != (Pages.calendario.name)) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        pageProvider.setCurrentPage(Pages.calendario.name);
-                      });
-                      return const CalendarPage();
-                    },
+                if (pageProvider.paginaCorrente != Pages.calendario.name) {
+                  pageProvider.setCurrentPage(Pages.calendario.name);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CalendarPage(),
+                    ),
                   );
                 }
               },
@@ -158,92 +152,35 @@ class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
               ),
             ),
 
-            ///Language Page
+            ///Settings Page
             GestureDetector(
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const ScheduleFitLanguageDialog();
-                  },
-                );
+                if (pageProvider.paginaCorrente != Pages.impostazioni.name) {
+                  pageProvider.setCurrentPage(Pages.impostazioni.name);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  );
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: ListTile(
                   leading: const Icon(
-                    Icons.language,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      AppLocalizations.of(context)!.lingua,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            ///Contacts Page
-            GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const ScheduleFitContactsDialog();
-                  },
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: ListTile(
-                  leading: ImageIcon(
-                    AssetImage(getImage(Images.social)),
+                    Icons.settings,
                     size: 30,
                     color: Colors.white,
                   ),
+                  tileColor:
+                      pageProvider.paginaCorrente == Pages.impostazioni.name
+                          ? Colors.black12
+                          : null,
                   title: Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Text(
-                      AppLocalizations.of(context)!.contatti,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            ///Info Page
-            GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const ScheduleFitInfoDialog();
-                  },
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.info,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      AppLocalizations.of(context)!.info,
+                      AppLocalizations.of(context)!.impostazioni,
                       style: const TextStyle(
                         fontSize: 24,
                         color: Colors.white,

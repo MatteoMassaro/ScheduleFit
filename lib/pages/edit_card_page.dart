@@ -1,7 +1,6 @@
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_days_of_week.dart';
 import 'package:schedule_fit/widgets/schedule_fit_series_card.dart';
@@ -11,6 +10,8 @@ import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/series_info_provider.dart';
+import '../providers/theme_provider.dart';
+import '../widgets/schedule_fit_days_of_week_dropdown.dart';
 
 class EditCardPage extends StatefulWidget {
   int id;
@@ -43,7 +44,7 @@ class _EditCardPageState extends State<EditCardPage> {
   late ExerciseInfoProvider exerciseInfoProvider;
   late TextEditingController _nomeEsercizioController;
   late List<SeriesInfoData> seriesList = [];
-  late List<String> daysOfWeek = [];
+  late List<String> giorniSettimanaTradotti = [];
   bool _isSaveButtonEnabled = false;
   bool _isLoading = false;
 
@@ -56,7 +57,7 @@ class _EditCardPageState extends State<EditCardPage> {
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      daysOfWeek = widget.giorniSettimana
+      giorniSettimanaTradotti = widget.giorniSettimana
           .map((g) => getDayOfWeekTranslated(context, g))
           .toList();
     });
@@ -92,11 +93,19 @@ class _EditCardPageState extends State<EditCardPage> {
     });
   }
 
-  ///Update CompletedSeries
+  ///Update Completed Series
   Future<void> _updateCompletedSeries(
       Map<String, dynamic> updatedValues, int index) async {
     setState(() {
       widget.serieCompletate = updatedValues['serieCompletate'];
+      _updateSaveButtonState();
+    });
+  }
+
+  ///Update Giorni Settimana
+  void _updateGiorniSettimana(List<String> updatedList) {
+    setState(() {
+      giorniSettimanaTradotti = updatedList;
       _updateSaveButtonState();
     });
   }
@@ -112,7 +121,7 @@ class _EditCardPageState extends State<EditCardPage> {
         immagine: drift.Value(widget.immagineMuscolo),
         serieCompletate: drift.Value(widget.serieCompletate),
         serieTotali: drift.Value(widget.serieTotali),
-        giorniSettimana: drift.Value(daysOfWeek
+        giorniSettimana: drift.Value(giorniSettimanaTradotti
             .map((g) => getDayOfWeekTranslatedFromString(context, g))
             .toList()),
         data: drift.Value(DateTime.now()));
@@ -187,168 +196,98 @@ class _EditCardPageState extends State<EditCardPage> {
         return Column(
           children: [
             ///Header
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    ///Icon
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.nomeMuscolo(
-                                widget.nomeMuscolo[0].toLowerCase() +
-                                    widget.nomeMuscolo
-                                        .substring(1)
-                                        .replaceAllMapped(
-                                          RegExp(r' \w'),
-                                          (match) => match
-                                              .group(0)!
-                                              .toUpperCase()
-                                              .trim(),
-                                        ),
-                              ),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: getAppColors(AppColors.secondaryColor),
-                              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  ///Icon
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.nomeMuscolo(
+                              widget.nomeMuscolo[0].toLowerCase() +
+                                  widget.nomeMuscolo
+                                      .substring(1)
+                                      .replaceAllMapped(
+                                        RegExp(r' \w'),
+                                        (match) => match
+                                            .group(0)!
+                                            .toUpperCase()
+                                            .trim(),
+                                      ),
                             ),
-                            const SizedBox(height: 5),
-                            Image.asset(
-                              widget.immagineMuscolo,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.contain,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 5),
+                          Image.asset(
+                            widget.immagineMuscolo,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.contain,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                  ),
+                  const SizedBox(width: 10),
 
-                    ///Title
-                    Expanded(
-                      flex: 3,
-                      child: AutoSizeTextField(
-                        controller: _nomeEsercizioController,
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: getAppColors(AppColors.secondaryColor)),
-                        decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(context)!.inserisciTitolo,
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            counterText: "",
-                            border: InputBorder.none),
-                        maxLines: 2,
-                        textInputAction: TextInputAction.done,
-                        scrollPhysics: const NeverScrollableScrollPhysics(),
-                        minFontSize: 23,
-                        maxFontSize: 25,
-                        maxLength: 30,
-                        textAlign: TextAlign.center,
-                        onChanged: (text) {
-                          setState(() {
-                            _isSaveButtonEnabled = text.isNotEmpty;
-                            if (text.isNotEmpty) {
-                              final newText =
-                                  text.substring(0, 1).toUpperCase() +
-                                      text.substring(1);
-                              _nomeEsercizioController.value = TextEditingValue(
-                                text: newText,
-                                selection: TextSelection.collapsed(
-                                    offset: newText.length),
-                              );
-                            }
-                            _updateSaveButtonState();
-                          });
-                        },
-                      ),
+                  ///Title
+                  Expanded(
+                    flex: 3,
+                    child: AutoSizeTextField(
+                      controller: _nomeEsercizioController,
+                      style: TextStyle(
+                          fontSize: 25,
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor)),
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.inserisciTitolo,
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          counterText: "",
+                          border: InputBorder.none),
+                      maxLines: 2,
+                      textInputAction: TextInputAction.done,
+                      scrollPhysics: const NeverScrollableScrollPhysics(),
+                      minFontSize: 23,
+                      maxFontSize: 25,
+                      maxLength: 30,
+                      textAlign: TextAlign.center,
+                      onChanged: (text) {
+                        setState(() {
+                          _isSaveButtonEnabled = text.isNotEmpty;
+                          if (text.isNotEmpty) {
+                            final newText = text.substring(0, 1).toUpperCase() +
+                                text.substring(1);
+                            _nomeEsercizioController.value = TextEditingValue(
+                              text: newText,
+                              selection: TextSelection.collapsed(
+                                  offset: newText.length),
+                            );
+                          }
+                          _updateSaveButtonState();
+                        });
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
 
             ///Days Of Week Dropdown
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: MultiSelectDialogField(
-                initialValue: daysOfWeek,
-                items: getDaysOfWeekTranslated(context)
-                    .map((e) => MultiSelectItem(e, e))
-                    .toList(),
-                listType: MultiSelectListType.LIST,
-                backgroundColor: getAppColors(AppColors.primaryColor),
-                checkColor: Colors.white,
-                selectedColor: getAppColors(AppColors.secondaryColor),
-                searchable: true,
-                dialogHeight: MediaQuery.of(context).size.height * 0.5,
-                itemsTextStyle: TextStyle(
-                    color: getAppColors(AppColors.secondaryColor),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                selectedItemsTextStyle: TextStyle(
-                    color: getAppColors(AppColors.secondaryColor),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                title: Text(
-                  AppLocalizations.of(context)!.giorniAllenamento,
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                barrierColor: Colors.transparent,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(width: 2, color: Colors.white)),
-                buttonIcon: const Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                buttonText: Text(
-                  AppLocalizations.of(context)!.giorniAllenamento,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                confirmText: Text(
-                  AppLocalizations.of(context)!.conferma,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                cancelText: Text(
-                  AppLocalizations.of(context)!.chiudi ,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
-                onConfirm: (values) {
-                  values.isNotEmpty ? daysOfWeek = values : daysOfWeek = [];
-                  _updateSaveButtonState();
-                },
-                chipDisplay: MultiSelectChipDisplay(
-                  scroll: true,
-                  scrollBar: HorizontalScrollBar(isAlwaysShown: false),
-                  chipColor: getAppColors(AppColors.primaryColor),
-                  textStyle: const TextStyle(color: Colors.white, fontSize: 14),
-                  items: getDaysOfWeekTranslated(context)
-                      .map((d) => MultiSelectItem(d, d))
-                      .toList(),
-                ),
-              ),
-            ),
+            ScheduleFitDaysOfWeekDropdown(
+                giorniSettimanaTradotti: giorniSettimanaTradotti,
+                onUpdate: _updateGiorniSettimana),
 
             ///Series Card List
             Expanded(
@@ -395,7 +334,8 @@ class _EditCardPageState extends State<EditCardPage> {
                         fixedSize: const Size(150, 65),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: getAppColors(AppColors.primaryColor),
+                        backgroundColor:
+                            ThemeProvider.getColor(AppColors.primaryColor),
                         padding: const EdgeInsets.all(10),
                       ),
                       onPressed: _addSeriesCard,

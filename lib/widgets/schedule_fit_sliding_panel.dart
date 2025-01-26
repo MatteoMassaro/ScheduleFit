@@ -8,6 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../providers/exercise_info_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitSlidingPanel extends StatefulWidget {
   const ScheduleFitSlidingPanel({super.key});
@@ -30,6 +31,9 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
         context.read<ExerciseInfoProvider>().getExercisesForDate(_selectedDate);
 
     return SlidingUpPanel(
+      backdropEnabled: true,
+      color: ThemeProvider.getColor(AppColors.primaryColor) ??
+          const Color(0xFF556EAA),
       isDraggable:
           periodicExercises.isNotEmpty || exerciseListForDate.isNotEmpty
               ? true
@@ -39,12 +43,10 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
       renderPanelSheet: false,
       margin: const EdgeInsets.symmetric(horizontal: 15.0),
       panel: Container(
-        decoration: const ShapeDecoration(
-          color: Colors.white,
-          shadows: [
-            BoxShadow(blurRadius: 5.0, spreadRadius: 2.0, color: Colors.black12)
-          ],
-          shape: RoundedRectangleBorder(
+        decoration: ShapeDecoration(
+          color: ThemeProvider.getColor(AppColors.primaryColor) ??
+              const Color(0xFF556EAA),
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
               topRight: Radius.circular(10.0),
@@ -58,9 +60,10 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
             Container(
               alignment: Alignment.center,
               height: 30.0,
-              decoration: const ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
+              decoration: ShapeDecoration(
+                color: ThemeProvider.getColor(AppColors.primaryColor) ??
+                    const Color(0xFF556EAA),
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.0),
                     topRight: Radius.circular(10.0),
@@ -91,6 +94,9 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
             exerciseListForDate.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
+                      padding: periodicExercises.isEmpty
+                          ? const EdgeInsets.only(bottom: 10)
+                          : null,
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ScheduleFitExerciseCard(
@@ -124,6 +130,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
             periodicExercises.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
+                      padding: const EdgeInsets.only(bottom: 10),
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index1) {
                         return ScheduleFitExerciseCard(
@@ -160,12 +167,13 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                     child: Text(
                       AppLocalizations.of(context)!.nessunEsercizio,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                  )
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            ThemeProvider.getColor(AppColors.noExercisesColor),
+                      ),
+                    ))
                 : Container(),
           ],
         ),
@@ -177,7 +185,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: getAppColors(AppColors.primaryColor),
+                  color: ThemeProvider.getColor(AppColors.primaryColor),
                   borderRadius: const BorderRadius.all(Radius.circular(10))),
               child: ScheduleFitCalendar(
                 onDaySelected: (selectedDay) {

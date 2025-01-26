@@ -1,8 +1,10 @@
 {
-  "info": "Info",
+  "info": "About Schedulefit",
   "versione": "Version: ",
   "autore": "Author: ",
-  "descrizioneApp": "Create your own training programs to track your progress every day!",
+  "valutami": "Rate me",
+  "politicaRiservatezza": "Privacy policy",
+  "cerca": "Search",
   "chiudi": "CLOSE",
   "lingua": "Language",
   "italiano": "Italian",
@@ -53,5 +55,8 @@
   "sabato": "saturday",
   "domenica": "sunday",
   "ogni": "Every",
-  "oggi": "Today"
+  "oggi": "Today",
+  "impostazioni": "Settings",
+  "notifiche": "Notifications",
+  "tema": "Theme"
 }

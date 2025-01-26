@@ -14,16 +14,6 @@ class CalendarPage extends StatelessWidget {
         drawerEnableOpenDragGesture: true,
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.calendario),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
         ),
         drawer: ScheduleFitDrawer(
           onSave: () {},

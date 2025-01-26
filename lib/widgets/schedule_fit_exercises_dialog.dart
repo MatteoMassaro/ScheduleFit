@@ -4,6 +4,7 @@ import 'package:schedule_fit/pages/edit_card_page.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../icon_assets.dart';
 import '../l10n/app_localizations.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitExercisesDialog extends StatefulWidget {
   final Function onSave;
@@ -51,7 +52,7 @@ class _ScheduleFitExercisesDialogState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: getAppColors(AppColors.primaryColor),
+      backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
       title: Center(
           child: Text(
         AppLocalizations.of(context)!.scegliGruppoMuscolare,
@@ -65,27 +66,31 @@ class _ScheduleFitExercisesDialogState
             final iconData = IconAssets.icons[index];
             return Column(
               children: [
-                ListTile(
-                  leading: Image.asset(iconData['path']!),
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: Image.asset(iconData['path']!),
+                    title: Text(
                       AppLocalizations.of(context)!
                           .nomeMuscolo(iconData['name']!),
                       style: TextStyle(
                           fontSize: 20,
-                          color: getAppColors(AppColors.secondaryColor)),
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor)),
                     ),
+                    onTap: () => {
+                      Navigator.of(context).pop(),
+                      Navigator.of(context).push(
+                          _createRoute(iconData['name']!, iconData['path']!)),
+                      Scaffold.of(context).closeDrawer(),
+                    },
                   ),
-                  onTap: () => {
-                    Navigator.of(context).pop(),
-                    Navigator.of(context).push(_createRoute(
-                        iconData['name']!,
-                        iconData['path']!)),
-                    Scaffold.of(context).closeDrawer(),
-                  },
                 ),
-                const SizedBox(height: 20)
+                const SizedBox(height: 10)
               ],
             );
           },
@@ -98,7 +103,8 @@ class _ScheduleFitExercisesDialogState
           },
           child: Text(
             AppLocalizations.of(context)!.annulla,
-            style: const TextStyle(color: Colors.red),
+            style:
+                TextStyle(color: ThemeProvider.getColor(AppColors.cancelColor)),
           ),
         ),
       ],

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/locale_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitLanguageDialog extends StatefulWidget {
   const ScheduleFitLanguageDialog({super.key});
@@ -36,7 +37,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: getAppColors(AppColors.primaryColor),
+      backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
       title: Text(
         AppLocalizations.of(context)!.lingua,
         textAlign: TextAlign.center,
@@ -73,7 +74,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                       AppLocalizations.of(context)!.italiano,
                       style: TextStyle(
                         fontSize: 24,
-                        color: getAppColors(AppColors.secondaryColor),
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -113,7 +114,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                       AppLocalizations.of(context)!.inglese,
                       style: TextStyle(
                         fontSize: 24,
-                        color: getAppColors(AppColors.secondaryColor),
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -153,7 +154,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                       AppLocalizations.of(context)!.francese,
                       style: TextStyle(
                         fontSize: 24,
-                        color: getAppColors(AppColors.secondaryColor),
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -193,7 +194,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                       AppLocalizations.of(context)!.spagnolo,
                       style: TextStyle(
                         fontSize: 24,
-                        color: getAppColors(AppColors.secondaryColor),
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),
@@ -233,7 +234,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                       AppLocalizations.of(context)!.tedesco,
                       style: TextStyle(
                         fontSize: 24,
-                        color: getAppColors(AppColors.secondaryColor),
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
                       ),
                     ),
                     const Spacer(),

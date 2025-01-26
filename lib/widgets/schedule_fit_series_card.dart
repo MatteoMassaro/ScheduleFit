@@ -6,6 +6,7 @@ import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/series_info_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitSeriesCard extends StatefulWidget {
   final int index;
@@ -80,7 +81,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
         child: Card(
           elevation: 10,
           margin: const EdgeInsets.only(top: 5, left: 15, right: 15, bottom: 5),
-          color: getAppColors(AppColors.primaryColor),
+          color: ThemeProvider.getColor(AppColors.primaryColor),
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: Column(
@@ -91,7 +92,8 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 25,
-                          color: getAppColors(AppColors.secondaryColor))),
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor))),
                   const Spacer(),
                   Switch(
                     value: _switchValue,
@@ -125,7 +127,8 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       keyboardType: TextInputType.number,
                       style: TextStyle(
                           fontSize: 16,
-                          color: getAppColors(AppColors.secondaryColor)),
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
                           hintStyle:
@@ -143,7 +146,14 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                 Row(children: [
                   DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ),
                       value: _unitaMisuraSelezionata,
+                      dropdownColor:
+                          ThemeProvider.getColor(AppColors.primaryColor),
+                      borderRadius: BorderRadius.circular(8),
                       onChanged: (String? newValue) {
                         setState(() {
                           _unitaMisuraSelezionata = newValue!;
@@ -154,7 +164,10 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -171,7 +184,8 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       keyboardType: TextInputType.number,
                       style: TextStyle(
                           fontSize: 16,
-                          color: getAppColors(AppColors.secondaryColor)),
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor)),
                       decoration: const InputDecoration(
                           hintText: '0',
                           hintStyle:
@@ -193,7 +207,9 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                     TextButton(
                       onPressed: widget.onDelete,
                       child: Text(AppLocalizations.of(context)!.eliminaSerie,
-                          style: const TextStyle(color: Colors.red)),
+                          style: TextStyle(
+                              color: ThemeProvider.getColor(
+                                  AppColors.cancelColor))),
                     ),
                   ],
                 )

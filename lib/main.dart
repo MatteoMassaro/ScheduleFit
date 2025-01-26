@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
+import 'package:schedule_fit/enums/schedule_fit_colors.dart';
 import 'package:schedule_fit/pages/home_page.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/providers/series_info_provider.dart';
+import 'package:schedule_fit/providers/theme_provider.dart';
 
 import 'database/schedule_fit_database.dart';
 import 'l10n/app_localizations.dart';
@@ -23,24 +26,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final ScheduleFitDatabase database;
 
-  MyApp({super.key, required this.database});
-
-  final ThemeData lightTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF556EAA)),
-      useMaterial3: true,
-      fontFamily: getAppInfo(AppInfo.fontFamily),
-      brightness: Brightness.light,
-      appBarTheme: const AppBarTheme(
-          color: Color(0xFF556EAA), foregroundColor: Colors.white));
-
-  final ThemeData darkTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF556EAA), brightness: Brightness.dark),
-      useMaterial3: true,
-      fontFamily: getAppInfo(AppInfo.fontFamily),
-      brightness: Brightness.dark,
-      appBarTheme: const AppBarTheme(
-          color: Color(0xFF556EAA), foregroundColor: Colors.white));
+  const MyApp({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) => MultiProvider(
@@ -49,9 +35,10 @@ class MyApp extends StatelessWidget {
               value: database,
             ),
             ChangeNotifierProvider(create: (_) => LocaleProvider()),
+            ChangeNotifierProvider(create: (context) => ThemeProvider()),
             ChangeNotifierProvider(
-                create: (_) =>
-                    PageProvider(AppLocalizations.of(context)?.mioAllenamento ?? '')),
+                create: (_) => PageProvider(
+                    AppLocalizations.of(context)?.mioAllenamento ?? '')),
             ChangeNotifierProxyProvider<ScheduleFitDatabase,
                 ExerciseInfoProvider>(
               create: (context) => ExerciseInfoProvider(
@@ -66,15 +53,57 @@ class MyApp extends StatelessWidget {
             ),
           ],
           builder: (context, child) {
-            final provider = Provider.of<LocaleProvider>(context);
+            ///Light Theme
+            final ThemeData lightTheme = ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: ThemeProvider.getColor(AppColors.primaryColor) ??
+                        const Color(0xFF556EAA)),
+                useMaterial3: true,
+                fontFamily: getAppInfo(AppInfo.fontFamily),
+                brightness: Brightness.light,
+                scaffoldBackgroundColor:
+                ThemeProvider.getColor(AppColors.pageBackgroundColor),
+                appBarTheme: AppBarTheme(
+                    color: ThemeProvider.getColor(AppColors.primaryColor) ??
+                        const Color(0xFF556EAA),
+                    foregroundColor: Colors.white));
+
+            ///Dark Theme
+            final ThemeData darkTheme = ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: ThemeProvider.getColor(AppColors.primaryColor) ??
+                        const Color(0xFF556EAA),
+                    brightness: Brightness.dark),
+                scaffoldBackgroundColor:
+                ThemeProvider.getColor(AppColors.pageBackgroundColor),
+                useMaterial3: true,
+                fontFamily: getAppInfo(AppInfo.fontFamily),
+                brightness: Brightness.dark,
+                appBarTheme: AppBarTheme(
+                    color: ThemeProvider.getColor(AppColors.primaryColor) ??
+                        const Color(0xFF556EAA),
+                    foregroundColor: Colors.white));
+
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+              statusBarColor: ThemeProvider.getColor(AppColors.primaryColor),
+              statusBarIconBrightness: ThemeProvider().isLightMode
+                  ? Brightness.light
+                  : Brightness.dark,
+              statusBarBrightness: ThemeProvider().isLightMode
+                  ? Brightness.dark
+                  : Brightness.light,
+            ));
+            final localeProvider = Provider.of<LocaleProvider>(context);
+            final themeProvider = Provider.of<ThemeProvider>(context);
             return MaterialApp(
                 title: getAppInfo(AppInfo.appName),
                 supportedLocales: AppLocalizations.supportedLocales,
-                locale: provider.locale,
+                locale: localeProvider.locale,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 theme: lightTheme,
                 darkTheme: darkTheme,
-                themeMode: ThemeMode.system,
+                themeMode: themeProvider.themeMode,
+                debugShowCheckedModeBanner: false,
                 home: Builder(builder: (context) => const HomePage()));
           });
 }

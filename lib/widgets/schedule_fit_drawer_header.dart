@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_images.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitDrawerHeader extends StatelessWidget {
   const ScheduleFitDrawerHeader({super.key});
@@ -9,7 +10,8 @@ class ScheduleFitDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DrawerHeader(
-      decoration: BoxDecoration(color: getAppColors(AppColors.primaryColor)),
+      decoration:
+          BoxDecoration(color: ThemeProvider.getColor(AppColors.primaryColor)),
       child: Row(
         children: [
           Image.asset(
@@ -34,7 +36,7 @@ class ScheduleFitDrawerHeader extends StatelessWidget {
               "FIT",
               style: TextStyle(
                 fontSize: 25,
-                color: getAppColors(AppColors.secondaryColor),
+                color: ThemeProvider.getColor(AppColors.secondaryColor),
               ),
             ),
           ),

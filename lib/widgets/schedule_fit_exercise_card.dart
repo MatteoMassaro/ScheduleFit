@@ -5,6 +5,7 @@ import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
 import '../pages/edit_card_page.dart';
 import '../providers/exercise_info_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitExerciseCard extends StatefulWidget {
   final int id;
@@ -41,7 +42,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: getAppColors(AppColors.primaryColor),
+          backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
           title: Center(
             child: Text(
               AppLocalizations.of(context)!.eliminaScheda,
@@ -51,7 +52,8 @@ class _CardState extends State<ScheduleFitExerciseCard> {
           content: Text(
             AppLocalizations.of(context)!.confermaEliminaScheda,
             style: TextStyle(
-                color: getAppColors(AppColors.secondaryColor), fontSize: 15),
+                color: ThemeProvider.getColor(AppColors.secondaryColor),
+                fontSize: 15),
           ),
           actions: <Widget>[
             TextButton(
@@ -68,7 +70,8 @@ class _CardState extends State<ScheduleFitExerciseCard> {
               },
               child: Text(
                 AppLocalizations.of(context)!.annulla,
-                style: const TextStyle(color: Colors.red),
+                style: TextStyle(
+                    color: ThemeProvider.getColor(AppColors.cancelColor)),
               ),
             ),
           ],
@@ -82,17 +85,10 @@ class _CardState extends State<ScheduleFitExerciseCard> {
     return Consumer<ExerciseInfoProvider>(
       builder: (context, exerciseInfoProvider, child) {
         return GestureDetector(
-          onLongPress: () {
-            setState(() {
-              _isPressed = !_isPressed;
-            });
-          },
           child: Card(
             elevation: 10,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            color: _isPressed
-                ? getAppColors(AppColors.primaryColor)?.withOpacity(0.7)
-                : getAppColors(AppColors.primaryColor),
+            color: ThemeProvider.getColor(AppColors.exerciseCardColor),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
@@ -109,14 +105,17 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 fontSize: 25,
-                                color: getAppColors(AppColors.secondaryColor)),
+                                color: ThemeProvider.getColor(
+                                    AppColors.secondaryColor)),
                           ),
                           const SizedBox(height: 10),
                           Text(
                               '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white)),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: ThemeProvider.getColor(
+                                      AppColors.exerciseCardTextColor))),
                         ],
                       ),
                       const Spacer(),
@@ -139,7 +138,8 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 16,
-                              color: getAppColors(AppColors.secondaryColor),
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -165,9 +165,11 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                 _openDialog(exerciseInfoProvider);
                               },
                               child: Text(
-                                  AppLocalizations.of(context)!.eliminaScheda,
-                                  style: const TextStyle(color: Colors.red)),
-                            )
+                                AppLocalizations.of(context)!.eliminaScheda,
+                                style: TextStyle(
+                                    color: ThemeProvider.getColor(
+                                        AppColors.cancelColor)),
+                              ))
                           : Container(),
                       const SizedBox(width: 10),
                       GestureDetector(
@@ -192,7 +194,9 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.apriScheda,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              color: ThemeProvider.getColor(
+                                  AppColors.exerciseCardTextColor)),
                         ),
                       ),
                     ],

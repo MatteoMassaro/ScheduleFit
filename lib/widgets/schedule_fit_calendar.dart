@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/locale_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitCalendar extends StatefulWidget {
   final void Function(DateTime selectedDay)? onDaySelected;
@@ -77,18 +78,23 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
       ),
       calendarStyle: CalendarStyle(
         selectedDecoration: BoxDecoration(
-          color: getAppColors(AppColors.selectedDayCalendarColor),
+          color: ThemeProvider.getColor(AppColors.calendarSelectedDayColor),
           shape: BoxShape.circle,
         ),
         outsideDaysVisible: false,
-        weekendTextStyle: const TextStyle(color: Colors.black45),
+        defaultTextStyle: TextStyle(
+            color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekColor)),
+        weekendTextStyle: TextStyle(
+            color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekendColor)),
         markerMargin: const EdgeInsets.only(top: 5),
       ),
-      daysOfWeekStyle: const DaysOfWeekStyle(
-        weekdayStyle:
-            TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-        weekendStyle:
-            TextStyle(color: Colors.black45, fontWeight: FontWeight.bold),
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekdayStyle: TextStyle(
+            color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekColor),
+            fontWeight: FontWeight.bold),
+        weekendStyle: TextStyle(
+            color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekendColor),
+            fontWeight: FontWeight.bold),
       ),
       calendarFormat: CalendarFormat.month,
       onPageChanged: (focusedDay) {
@@ -111,31 +117,46 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left),
+                color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekColor),
                 onPressed: _changeCalendarFormat
                     ? _goToPreviousYear
                     : _goToPreviousMonth,
               ),
               Text(
                 '${monthName[0].toUpperCase()}${monthName.substring(1)} ${date.year}',
-                style: const TextStyle(
-                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: ThemeProvider.getColor(
+                        AppColors.calendarDaysOfWeekColor),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: _toggleCalendarFormat,
                 style: TextButton.styleFrom(
-                    backgroundColor: getAppColors(AppColors.secondaryColor),
+                    backgroundColor:
+                        ThemeProvider.getColor(AppColors.secondaryColor),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
-                        side: const BorderSide(color: Colors.white, width: 2))),
+                        side: BorderSide(
+                            color: ThemeProvider.getColor(
+                                    AppColors.calendarDaysOfWeekColor) ??
+                                Colors.white,
+                            width: 2))),
                 child: Text(
                   _changeCalendarFormat
                       ? AppLocalizations.of(context)!.anno
                       : AppLocalizations.of(context)!.mese,
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: ThemeProvider.getColor(
+                          AppColors.calendarDaysOfWeekColor)),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: Icon(
+                  Icons.chevron_right,
+                  color:
+                      ThemeProvider.getColor(AppColors.calendarDaysOfWeekColor),
+                ),
                 onPressed:
                     _changeCalendarFormat ? _goToNextYear : _goToNextMonth,
               ),
@@ -147,15 +168,15 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
             margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: isSameDay(_selectedDay, DateTime.now())
-                  ? getAppColors(AppColors.selectedDayCalendarColor)
-                  : getAppColors(AppColors.secondaryColor),
+                  ? ThemeProvider.getColor(AppColors.calendarSelectedDayColor)
+                  : ThemeProvider.getColor(AppColors.secondaryColor),
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
             child: Text(
               '${day.day}',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: ThemeProvider.getColor(AppColors.calendarDaysOfWeekColor),
               ),
             ),
           );
@@ -181,7 +202,7 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
                     height: 5,
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     decoration: BoxDecoration(
-                      color: getAppColors(AppColors.secondaryColor),
+                      color: ThemeProvider.getColor(AppColors.secondaryColor),
                       shape: BoxShape.circle,
                     ),
                   );
@@ -192,7 +213,7 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
                     height: 5,
                     margin: const EdgeInsets.symmetric(horizontal: 1),
                     decoration: BoxDecoration(
-                      color: getAppColors(AppColors.secondaryColor),
+                      color: ThemeProvider.getColor(AppColors.secondaryColor),
                       shape: BoxShape.circle,
                     ),
                   );
@@ -202,8 +223,9 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
                     margin: const EdgeInsets.only(top: 1, left: 2),
                     child: Text(
                       "+${(periodicExercises.length + exercisesForDay.length) - 3}",
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: ThemeProvider.getColor(
+                            AppColors.calendarDaysOfWeekColor),
                         fontSize: 7,
                         fontWeight: FontWeight.bold,
                       ),
@@ -218,13 +240,16 @@ class _ScheduleFitCalendarState extends State<ScheduleFitCalendar> {
             return Container(
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: getAppColors(AppColors.selectedDayCalendarColor),
+                color:
+                    ThemeProvider.getColor(AppColors.calendarSelectedDayColor),
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
               child: Text(
                 '${day.day}',
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: ThemeProvider.getColor(
+                        AppColors.calendarDaysOfWeekColor)),
               ),
             );
           }

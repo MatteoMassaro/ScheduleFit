@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get info => 'Info';
+  String get info => 'Acerca de Schedulefit';
 
   @override
   String get versione => 'Versión: ';
@@ -18,7 +18,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get autore => 'Autor: ';
 
   @override
-  String get descrizioneApp => '¡Crea tus propios programas de entrenamiento para seguir tu progreso todos los días!';
+  String get valutami => 'Valutami';
+
+  @override
+  String get politicaRiservatezza => 'Política de privacidad';
+
+  @override
+  String get cerca => 'Buscar';
 
   @override
   String get chiudi => 'CERCA';
@@ -183,4 +189,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get oggi => 'Hoy';
+
+  @override
+  String get impostazioni => 'Ajustes';
+
+  @override
+  String get notifiche => 'Notificaciones';
+
+  @override
+  String get tema => 'Tema';
 }

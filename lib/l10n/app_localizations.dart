@@ -104,7 +104,7 @@ abstract class AppLocalizations {
   /// No description provided for @info.
   ///
   /// In it, this message translates to:
-  /// **'Info'**
+  /// **'Circa Schedulefit'**
   String get info;
 
   /// No description provided for @versione.
@@ -119,11 +119,23 @@ abstract class AppLocalizations {
   /// **'Autore: '**
   String get autore;
 
-  /// No description provided for @descrizioneApp.
+  /// No description provided for @valutami.
   ///
   /// In it, this message translates to:
-  /// **'Crea i tuoi programmi di allenamento  per tenere traccia ogni giorno dei tuoi progressi!'**
-  String get descrizioneApp;
+  /// **'Valutami'**
+  String get valutami;
+
+  /// No description provided for @politicaRiservatezza.
+  ///
+  /// In it, this message translates to:
+  /// **'Politica sulla riservatezza'**
+  String get politicaRiservatezza;
+
+  /// No description provided for @cerca.
+  ///
+  /// In it, this message translates to:
+  /// **'Cerca'**
+  String get cerca;
 
   /// No description provided for @chiudi.
   ///
@@ -400,6 +412,24 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Oggi'**
   String get oggi;
+
+  /// No description provided for @impostazioni.
+  ///
+  /// In it, this message translates to:
+  /// **'Impostazioni'**
+  String get impostazioni;
+
+  /// No description provided for @notifiche.
+  ///
+  /// In it, this message translates to:
+  /// **'Notifiche'**
+  String get notifiche;
+
+  /// No description provided for @tema.
+  ///
+  /// In it, this message translates to:
+  /// **'Tema'**
+  String get tema;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

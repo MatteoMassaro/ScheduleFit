@@ -2,7 +2,7 @@ enum Pages {
   mioAllenamento,
   creaScheda,
   calendario,
-  lingua,
+  impostazioni,
   contatti,
   info,
 }

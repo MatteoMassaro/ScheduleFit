@@ -117,6 +117,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get modificaScheda => 'Karte bearbeiten';
 
   @override
+  String get visualizzaScheda => 'Karte sicht';
+
+  @override
   String get mioAllenamento => 'Mein training';
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_fit/pages/edit_card_page.dart';
+import 'package:schedule_fit/pages/edit_exercise_page.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../icon_assets.dart';
@@ -21,7 +21,7 @@ class _ScheduleFitExercisesDialogState
   ///Create Route
   Route _createRoute(String muscleIconName, String muscleIconPath) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => EditCardPage(
+      pageBuilder: (context, animation, secondaryAnimation) => EditExercisePage(
           id: -1,
           nomeEsercizio: '',
           nomeMuscolo: muscleIconName,

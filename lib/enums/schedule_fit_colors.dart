@@ -11,6 +11,7 @@ enum AppColors {
   accordionBackgroundColor,
   exerciseCardColor,
   exerciseCardTextColor,
+  dropdownButtonTextColor,
   dropdownDaysOfWeekColor,
   cancelColor,
   checkColor,

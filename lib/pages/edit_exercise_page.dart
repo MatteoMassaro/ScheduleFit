@@ -13,7 +13,7 @@ import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/schedule_fit_days_of_week_dropdown.dart';
 
-class EditCardPage extends StatefulWidget {
+class EditExercisePage extends StatefulWidget {
   int id;
   String nomeEsercizio;
   final String nomeMuscolo;
@@ -23,7 +23,7 @@ class EditCardPage extends StatefulWidget {
   List<int> giorniSettimana;
   final Function onSave;
 
-  EditCardPage({
+  EditExercisePage({
     super.key,
     required this.id,
     required this.nomeEsercizio,
@@ -36,15 +36,15 @@ class EditCardPage extends StatefulWidget {
   });
 
   @override
-  State<EditCardPage> createState() => _EditCardPageState();
+  State<EditExercisePage> createState() => _EditExercisePageState();
 }
 
-class _EditCardPageState extends State<EditCardPage> {
+class _EditExercisePageState extends State<EditExercisePage> {
   late SeriesInfoProvider seriesInfoProvider;
   late ExerciseInfoProvider exerciseInfoProvider;
   late TextEditingController _nomeEsercizioController;
   late List<SeriesInfoData> seriesList = [];
-  late List<String> giorniSettimanaTradotti = [];
+  late List<String> weekDaysTranslated = [];
   bool _isSaveButtonEnabled = false;
   bool _isLoading = false;
 
@@ -57,7 +57,7 @@ class _EditCardPageState extends State<EditCardPage> {
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      giorniSettimanaTradotti = widget.giorniSettimana
+      weekDaysTranslated = widget.giorniSettimana
           .map((g) => getDayOfWeekTranslated(context, g))
           .toList();
     });
@@ -102,10 +102,10 @@ class _EditCardPageState extends State<EditCardPage> {
     });
   }
 
-  ///Update Giorni Settimana
-  void _updateGiorniSettimana(List<String> updatedList) {
+  ///Update Week Days
+  void _updateWeekDays(List<String> updatedList) {
     setState(() {
-      giorniSettimanaTradotti = updatedList;
+      weekDaysTranslated = updatedList;
       _updateSaveButtonState();
     });
   }
@@ -121,7 +121,7 @@ class _EditCardPageState extends State<EditCardPage> {
         immagine: drift.Value(widget.immagineMuscolo),
         serieCompletate: drift.Value(widget.serieCompletate),
         serieTotali: drift.Value(widget.serieTotali),
-        giorniSettimana: drift.Value(giorniSettimanaTradotti
+        giorniSettimana: drift.Value(weekDaysTranslated
             .map((g) => getDayOfWeekTranslatedFromString(context, g))
             .toList()),
         data: drift.Value(DateTime.now()));
@@ -197,7 +197,7 @@ class _EditCardPageState extends State<EditCardPage> {
           children: [
             ///Header
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
                 children: [
                   ///Icon
@@ -239,6 +239,7 @@ class _EditCardPageState extends State<EditCardPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(width: 10),
 
                   ///Title
@@ -285,9 +286,12 @@ class _EditCardPageState extends State<EditCardPage> {
             ),
 
             ///Days Of Week Dropdown
-            ScheduleFitDaysOfWeekDropdown(
-                giorniSettimanaTradotti: giorniSettimanaTradotti,
-                onUpdate: _updateGiorniSettimana),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 10, left: 24, right: 24),
+              child: ScheduleFitDaysOfWeekDropdown(
+                  giorniSettimanaTradotti: weekDaysTranslated,
+                  onUpdate: _updateWeekDays),
+            ),
 
             ///Series Card List
             Expanded(
@@ -296,28 +300,27 @@ class _EditCardPageState extends State<EditCardPage> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: ListView.builder(
-                        key: ValueKey(seriesList.length),
-                        itemCount: seriesList.length,
-                        itemBuilder: (context, index) {
-                          return ScheduleFitSeriesCard(
-                            key: ValueKey(seriesList[index].idEsercizio),
-                            index: index,
-                            onDelete: () => _removeSeries(
-                                seriesList[index].id ?? -1, index),
-                            ripetizioni: seriesList[index].ripetizioni,
-                            unitaMisura: seriesList[index].unitaMisura,
-                            peso: seriesList[index].peso,
-                            completata: seriesList[index].completata,
-                            serieCompletate: widget.serieCompletate,
-                            onUpdate: (updatedValues) {
-                              _updateCompletedSeries(updatedValues, index);
-                            },
-                          );
-                        },
-                      ),
+                  : ListView.builder(
+                      padding: const EdgeInsets.only(left:20, right: 20, bottom: 20),
+                      key: ValueKey(seriesList.length),
+                      shrinkWrap: true,
+                      itemCount: seriesList.length,
+                      itemBuilder: (context, index) {
+                        return ScheduleFitSeriesCard(
+                          key: ValueKey(seriesList[index].idEsercizio),
+                          index: index,
+                          onDelete: () => _removeSeries(
+                              seriesList[index].id ?? -1, index),
+                          ripetizioni: seriesList[index].ripetizioni,
+                          unitaMisura: seriesList[index].unitaMisura,
+                          peso: seriesList[index].peso,
+                          completata: seriesList[index].completata,
+                          serieCompletate: widget.serieCompletate,
+                          onUpdate: (updatedValues) {
+                            _updateCompletedSeries(updatedValues, index);
+                          },
+                        );
+                      },
                     ),
             ),
 
@@ -358,8 +361,8 @@ class _EditCardPageState extends State<EditCardPage> {
                       child: Text(
                         AppLocalizations.of(context)!.salva,
                         textAlign: TextAlign.center,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.white),
+                        style: const TextStyle(
+                            fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],

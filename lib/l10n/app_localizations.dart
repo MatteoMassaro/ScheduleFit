@@ -269,6 +269,12 @@ abstract class AppLocalizations {
   /// **'Modifica scheda'**
   String get modificaScheda;
 
+  /// No description provided for @visualizzaScheda.
+  ///
+  /// In it, this message translates to:
+  /// **'Visualizza scheda'**
+  String get visualizzaScheda;
+
   /// No description provided for @mioAllenamento.
   ///
   /// In it, this message translates to:

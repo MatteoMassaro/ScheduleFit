@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:schedule_fit/pages/view_exercise_page.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
-import '../pages/edit_card_page.dart';
+import '../pages/edit_exercise_page.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/theme_provider.dart';
 
@@ -34,8 +35,6 @@ class ScheduleFitExerciseCard extends StatefulWidget {
 }
 
 class _CardState extends State<ScheduleFitExerciseCard> {
-  bool _isPressed = false;
-
   ///Open Dialog
   _openDialog(ExerciseInfoProvider exerciseInfoProvider) {
     showDialog(
@@ -96,64 +95,76 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                 children: <Widget>[
                   ///Info
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ///Exercise Name & Completed Series
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.nomeEsercizio,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: ThemeProvider.getColor(
-                                    AppColors.secondaryColor)),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                              '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
-                              textAlign: TextAlign.center,
+                      Expanded(
+                        flex: 6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.nomeEsercizio,
+                              textAlign: TextAlign.start,
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 25,
                                   color: ThemeProvider.getColor(
-                                      AppColors.exerciseCardTextColor))),
-                        ],
+                                      AppColors.secondaryColor)),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                                '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
+                                textAlign: TextAlign.start,
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: ThemeProvider.getColor(
+                                        AppColors.exerciseCardTextColor))),
+                          ],
+                        ),
                       ),
-                      const Spacer(),
 
                       ///Exercise Category
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.nomeMuscolo(widget
-                                    .categoriaEsercizio[0]
-                                    .toLowerCase() +
-                                widget.categoriaEsercizio
-                                    .substring(1)
-                                    .replaceAllMapped(
-                                      RegExp(r' \w'),
-                                      (match) =>
-                                          match.group(0)!.toUpperCase().trim(),
-                                    )),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: ThemeProvider.getColor(
-                                  AppColors.secondaryColor),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.nomeMuscolo(widget
+                                      .categoriaEsercizio[0]
+                                      .toLowerCase() +
+                                  widget.categoriaEsercizio
+                                      .substring(1)
+                                      .replaceAllMapped(
+                                        RegExp(r' \w'),
+                                        (match) =>
+                                            match.group(0)!.toUpperCase().trim(),
+                                      )),
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              softWrap: true,
+                              overflow: TextOverflow.visible,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: ThemeProvider.getColor(
+                                    AppColors.secondaryColor),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Image.asset(
-                            widget.immagine,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-                        ],
+                            const SizedBox(height: 5),
+                            Image.asset(
+                              widget.immagine,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.contain,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 20),
 
                   ///Buttons
@@ -175,23 +186,38 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                       const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditCardPage(
-                                id: widget.id,
-                                nomeEsercizio: widget.nomeEsercizio,
-                                nomeMuscolo: widget.categoriaEsercizio,
-                                immagineMuscolo: widget.immagine,
-                                serieTotali: widget.serieTotali,
-                                serieCompletate: widget.serieCompletate,
-                                giorniSettimana: widget.giorniSettimana,
-                                onSave: () {
-                                  exerciseInfoProvider.loadExercises();
-                                },
-                              ),
-                            ),
-                          );
+                          widget.onDelete != null
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditExercisePage(
+                                      id: widget.id,
+                                      nomeEsercizio: widget.nomeEsercizio,
+                                      nomeMuscolo: widget.categoriaEsercizio,
+                                      immagineMuscolo: widget.immagine,
+                                      serieTotali: widget.serieTotali,
+                                      serieCompletate: widget.serieCompletate,
+                                      giorniSettimana: widget.giorniSettimana,
+                                      onSave: () {
+                                        exerciseInfoProvider.loadExercises();
+                                      },
+                                    ),
+                                  ),
+                                )
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewExercisePage(
+                                        id: widget.id,
+                                        nomeEsercizio: widget.nomeEsercizio,
+                                        nomeMuscolo: widget.categoriaEsercizio,
+                                        immagineMuscolo: widget.immagine,
+                                        serieTotali: widget.serieTotali,
+                                        serieCompletate: widget.serieCompletate,
+                                        giorniSettimana: widget.giorniSettimana,
+                                        onSave: () => ()),
+                                  ),
+                                );
                         },
                         child: Text(
                           AppLocalizations.of(context)!.apriScheda,

@@ -85,12 +85,13 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                 ],
               ),
             ),
+
             const Divider(
               height: 0.5,
               color: Colors.transparent,
             ),
 
-            ///Exercise For Date Card List
+            ///Exercise By Date Card List
             exerciseListForDate.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
@@ -186,7 +187,15 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                   color: ThemeProvider.getColor(AppColors.primaryColor),
-                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      offset: const Offset(1, 8),
+                      blurRadius: 6,
+                      spreadRadius: 0,
+                    ),
+                  ]),
               child: ScheduleFitCalendar(
                 onDaySelected: (selectedDay) {
                   setState(() {

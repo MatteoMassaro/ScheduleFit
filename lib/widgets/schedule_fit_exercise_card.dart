@@ -51,6 +51,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
           ),
           content: Text(
             AppLocalizations.of(context)!.confermaEliminaScheda,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: ThemeProvider.getColor(AppColors.secondaryColor),
                 fontSize: 15),

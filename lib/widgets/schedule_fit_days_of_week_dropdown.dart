@@ -22,7 +22,7 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
       child: MultiSelectDialogField(
         initialValue: giorniSettimanaTradotti,
         items: getDaysOfWeekTranslated(context)
@@ -55,10 +55,17 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
             color: ThemeProvider.getColor(AppColors.secondaryColor),
             fontSize: 18,
             fontWeight: FontWeight.bold),
-        title: Text(
-          AppLocalizations.of(context)!.giorniAllenamento,
-          style: const TextStyle(color: Colors.white, fontSize: 20),
+        title: Expanded(
+          child: Text(
+            AppLocalizations.of(context)!.giorniAllenamento,
+            softWrap: true,
+            overflow: TextOverflow.visible,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
+
         barrierColor: Colors.transparent,
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -74,6 +81,8 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
         ),
         buttonText: Text(
           AppLocalizations.of(context)!.giorniAllenamento,
+          softWrap: true,
+          maxLines: 2,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

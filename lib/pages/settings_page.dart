@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       AppColors.crossColor) ??
                                   const Color(0xFF850909),
                               currentValue: false,
-                              onChanged: () =>
+                              onChanged: (value) =>
                                   () //TODO implementare switch notifiche,
                               ),
                         )
@@ -136,7 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 const Color(0xFF556EAA),
                             currentValue:
                                 Provider.of<ThemeProvider>(context).isLightMode,
-                            onChanged: () => Provider.of<ThemeProvider>(context,
+                            onChanged: (value) => Provider.of<ThemeProvider>(context,
                                     listen: false)
                                 .toggleTheme(),
                           ),

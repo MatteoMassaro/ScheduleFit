@@ -11,7 +11,7 @@ class ScheduleFitSwitch extends StatefulWidget {
   final Color colorActive;
   final Color colorNotActive;
   final bool currentValue;
-  final Function() onChanged;
+  final Function(bool) onChanged;
 
   const ScheduleFitSwitch(
       {super.key,
@@ -63,7 +63,7 @@ class _ScheduleFitSwitchState extends State<ScheduleFitSwitch> {
       },
       borderWidth: 6.0,
       onChanged: (value) => setState(() {
-        widget.onChanged();
+        widget.onChanged(value);
       }),
       current: widget.currentValue,
     );

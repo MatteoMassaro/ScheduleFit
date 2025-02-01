@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
+import 'package:schedule_fit/widgets/schedule_fit_switch.dart';
 
 import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
+import '../enums/schedule_fit_images.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
@@ -92,112 +94,123 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 25,
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor))),
+                          color: ThemeProvider.getColor(
+                              AppColors.secondaryColor))),
                   const Spacer(),
-                  Switch(
-                    value: _switchValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _switchValue = newValue;
-                        newValue
-                            ? widget.serieCompletate++
-                            : widget.serieCompletate--;
-                        _updateValues();
-                      });
-                    },
-                  ),
+                  ScheduleFitSwitch(
+                      imageActive: Images.check,
+                      imageNotActive: Images.cross,
+                      colorActive:
+                          ThemeProvider.getColor(AppColors.checkColor) ??
+                              const Color(0xFF3A8A3D),
+                      colorNotActive:
+                          ThemeProvider.getColor(AppColors.crossColor) ??
+                              const Color(0xFF850909),
+                      currentValue: _switchValue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _switchValue = newValue;
+                          newValue
+                              ? widget.serieCompletate++
+                              : widget.serieCompletate--;
+                          _updateValues();
+                        });
+                      }),
                 ]),
 
                 ///Number Of Repetitions
-                Row(children: [
-                  Text('${AppLocalizations.of(context)!.numeroRipetizioni}:',
-                      textAlign: TextAlign.center,
-                      style:
-                          const TextStyle(fontSize: 16, color: Colors.white)),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    height: 50,
-                    width: 130,
-                    child: TextField(
-                      controller: _ripetizioniController,
-                      maxLength: 10,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor)),
-                      decoration: const InputDecoration(
-                          hintText: '0',
-                          hintStyle:
-                              TextStyle(fontSize: 16, color: Colors.grey),
-                          counterText: "",
-                          border: InputBorder.none),
-                      onChanged: (value) {
-                        _updateValues();
-                      },
-                    ),
-                  )
-                ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          '${AppLocalizations.of(context)!.numeroRipetizioni}:',
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.white)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _ripetizioniController,
+                          maxLength: 10,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor)),
+                          decoration: const InputDecoration(
+                              hintText: '0',
+                              hintStyle:
+                                  TextStyle(fontSize: 16, color: Colors.grey),
+                              counterText: "",
+                              border: InputBorder.none),
+                          onChanged: (value) {
+                            _updateValues();
+                          },
+                        ),
+                      )
+                    ]),
 
                 ///Weight
-                Row(children: [
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white,
-                      ),
-                      value: _unitaMisuraSelezionata,
-                      dropdownColor:
-                          ThemeProvider.getColor(AppColors.primaryColor),
-                      borderRadius: BorderRadius.circular(8),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _unitaMisuraSelezionata = newValue!;
-                          _updateValues();
-                        });
-                      },
-                      items: ['Kg', 'Lbs']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: const TextStyle(color: Colors.white),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white,
                           ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    height: 50,
-                    width: 130,
-                    child: TextField(
-                      controller: _pesoController,
-                      maxLength: 10,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor)),
-                      decoration: const InputDecoration(
-                          hintText: '0',
-                          hintStyle:
-                              TextStyle(fontSize: 16, color: Colors.grey),
-                          counterText: "",
-                          border: InputBorder.none),
-                      onChanged: (value) {
-                        _updateValues();
-                      },
-                    ),
-                  )
-                ]),
+                          value: _unitaMisuraSelezionata,
+                          dropdownColor:
+                              ThemeProvider.getColor(AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(8),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _unitaMisuraSelezionata = newValue!;
+                              _updateValues();
+                            });
+                          },
+                          items: ['Kg', 'Lbs']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _pesoController,
+                          maxLength: 10,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor)),
+                          decoration: const InputDecoration(
+                              hintText: '0',
+                              hintStyle:
+                                  TextStyle(fontSize: 16, color: Colors.grey),
+                              counterText: "",
+                              border: InputBorder.none),
+                          onChanged: (value) {
+                            _updateValues();
+                          },
+                        ),
+                      )
+                    ]),
                 const SizedBox(height: 5),
 
                 ///Delete Button

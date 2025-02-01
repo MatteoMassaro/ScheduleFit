@@ -325,7 +325,7 @@ class _EditCardPageState extends State<EditCardPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

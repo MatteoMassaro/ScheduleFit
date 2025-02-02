@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
 import 'package:schedule_fit/enums/schedule_fit_colors.dart';
 import 'package:schedule_fit/pages/home_page.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
+import 'package:schedule_fit/providers/notification_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/providers/series_info_provider.dart';
 import 'package:schedule_fit/providers/theme_provider.dart';
@@ -37,6 +37,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_) => LocaleProvider()),
             ChangeNotifierProvider(create: (context) => ThemeProvider()),
             ChangeNotifierProvider(
+              create: (context) => NotificationProvider()
+            ),
+            ChangeNotifierProvider(
                 create: (_) => PageProvider(
                     AppLocalizations.of(context)?.mioAllenamento ?? '')),
             ChangeNotifierProxyProvider<ScheduleFitDatabase,
@@ -53,6 +56,12 @@ class MyApp extends StatelessWidget {
             ),
           ],
           builder: (context, child) {
+            final localeProvider = Provider.of<LocaleProvider>(context);
+            final themeProvider = Provider.of<ThemeProvider>(context);
+            final notificationProvider = Provider.of<NotificationProvider>(context);
+
+            notificationProvider.init();
+
             ///Light Theme
             final ThemeData lightTheme = ThemeData(
                 colorScheme: ColorScheme.fromSeed(
@@ -62,7 +71,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: getAppInfo(AppInfo.fontFamily),
                 brightness: Brightness.light,
                 scaffoldBackgroundColor:
-                ThemeProvider.getColor(AppColors.pageBackgroundColor),
+                    ThemeProvider.getColor(AppColors.pageBackgroundColor),
                 appBarTheme: AppBarTheme(
                     color: ThemeProvider.getColor(AppColors.primaryColor) ??
                         const Color(0xFF556EAA),
@@ -75,7 +84,7 @@ class MyApp extends StatelessWidget {
                         const Color(0xFF556EAA),
                     brightness: Brightness.dark),
                 scaffoldBackgroundColor:
-                ThemeProvider.getColor(AppColors.pageBackgroundColor),
+                    ThemeProvider.getColor(AppColors.pageBackgroundColor),
                 useMaterial3: true,
                 fontFamily: getAppInfo(AppInfo.fontFamily),
                 brightness: Brightness.dark,
@@ -84,17 +93,6 @@ class MyApp extends StatelessWidget {
                         const Color(0xFF556EAA),
                     foregroundColor: Colors.white));
 
-            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-              statusBarColor: ThemeProvider.getColor(AppColors.primaryColor),
-              statusBarIconBrightness: ThemeProvider().isLightMode
-                  ? Brightness.light
-                  : Brightness.dark,
-              statusBarBrightness: ThemeProvider().isLightMode
-                  ? Brightness.dark
-                  : Brightness.light,
-            ));
-            final localeProvider = Provider.of<LocaleProvider>(context);
-            final themeProvider = Provider.of<ThemeProvider>(context);
             return MaterialApp(
                 title: getAppInfo(AppInfo.appName),
                 supportedLocales: AppLocalizations.supportedLocales,

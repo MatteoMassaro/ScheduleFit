@@ -15,13 +15,13 @@ class ScheduleFitDrawerHeader extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            getImage(Images.icon),
+            getImage(Images.appIcon),
             width: 80,
             height: 80,
             fit: BoxFit.contain,
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 10, left: 10),
             child: Text(
               "SCHEDULE",
               style: TextStyle(

@@ -18,7 +18,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get autore => 'Auteur: ';
 
   @override
-  String get valutami => 'Valutami';
+  String get valutami => 'Évaluez-moi';
 
   @override
   String get politicaRiservatezza => 'Politique de confidentialité';

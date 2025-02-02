@@ -7,6 +7,7 @@ import 'package:schedule_fit/providers/page_provider.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_pages.dart';
 import '../providers/exercise_info_provider.dart';
+import '../providers/notification_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/schedule_fit_accordion.dart';
 import '../widgets/schedule_fit_drawer.dart';

@@ -59,5 +59,10 @@
   "oggi": "Oggi",
   "impostazioni": "Impostazioni",
   "notifiche": "Notifiche",
-  "tema": "Tema"
+  "tema": "Tema",
+  "iniziaAllenamento": "INIZIA ALLENAMENTO",
+  "sospendiAllenamento": "SOSPENDI ALLENAMENTO",
+  "riprendiAllenamento": "RIPRENDI ALLENAMENTO",
+  "terminaAllenamento": "TERMINA ALLENAMENTO",
+  "confermaTerminaAllenamento": "Sei sicuro di voler terminare l'allenamento?"
 }

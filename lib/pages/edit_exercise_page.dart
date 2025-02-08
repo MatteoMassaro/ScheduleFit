@@ -53,7 +53,6 @@ class _EditExercisePageState extends State<EditExercisePage> {
     super.initState();
     exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     seriesInfoProvider = context.read<SeriesInfoProvider>();
-    seriesInfoProvider.clearSeries();
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -287,7 +286,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
 
             ///Days Of Week Dropdown
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 10, left: 24, right: 24),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 10, left: 24, right: 24),
               child: ScheduleFitDaysOfWeekDropdown(
                   giorniSettimanaTradotti: weekDaysTranslated,
                   onUpdate: _updateWeekDays),
@@ -301,7 +301,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
                       child: CircularProgressIndicator(),
                     )
                   : ListView.builder(
-                      padding: const EdgeInsets.only(left:20, right: 20, bottom: 20),
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 20),
                       key: ValueKey(seriesList.length),
                       shrinkWrap: true,
                       itemCount: seriesList.length,
@@ -309,8 +310,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
                         return ScheduleFitSeriesCard(
                           key: ValueKey(seriesList[index].idEsercizio),
                           index: index,
-                          onDelete: () => _removeSeries(
-                              seriesList[index].id ?? -1, index),
+                          onDelete: () =>
+                              _removeSeries(seriesList[index].id ?? -1, index),
                           ripetizioni: seriesList[index].ripetizioni,
                           unitaMisura: seriesList[index].unitaMisura,
                           peso: seriesList[index].peso,
@@ -319,6 +320,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
                           onUpdate: (updatedValues) {
                             _updateCompletedSeries(updatedValues, index);
                           },
+                          onlyView: false,
                         );
                       },
                     ),
@@ -361,8 +363,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
                       child: Text(
                         AppLocalizations.of(context)!.salva,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],

@@ -59,5 +59,10 @@
   "oggi": "Today",
   "impostazioni": "Settings",
   "notifiche": "Notifications",
-  "tema": "Theme"
+  "tema": "Theme",
+  "iniziaAllenamento": "START TRAINING",
+  "sospendiAllenamento": "PAUSE TRAINING",
+  "riprendiAllenamento": "RESUME TRAINING",
+  "terminaAllenamento": "END TRAINING",
+  "confermaTerminaAllenamento": "Are you sure you want to finish your training?"
 }

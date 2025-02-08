@@ -13,6 +13,7 @@ import '../l10n/app_localizations.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
+import 'edit_exercise_page.dart';
 
 class ViewExercisePage extends StatefulWidget {
   int id;
@@ -47,6 +48,9 @@ class _ViewExercisePageState extends State<ViewExercisePage> {
   late List<SeriesInfoData> seriesList = [];
   late List<String> giorniSettimanaTradotti = [];
   bool _isLoading = false;
+  bool startTraining = false;
+  String firstButtonText = '';
+  String secondButtonText = '';
 
   @override
   void initState() {
@@ -60,8 +64,18 @@ class _ViewExercisePageState extends State<ViewExercisePage> {
       giorniSettimanaTradotti = widget.giorniSettimana
           .map((g) => getDayOfWeekTranslated(context, g))
           .toList();
+      firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
+      secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
     });
     _getSeries();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isLoading == false && seriesList.isEmpty) {
+      _getSeries();
+    }
   }
 
   @override
@@ -81,6 +95,54 @@ class _ViewExercisePageState extends State<ViewExercisePage> {
           seriesList = seriesInfoProvider.seriesList;
           _isLoading = false;
         });
+      },
+    );
+  }
+
+  ///Open Dialog
+  _openDialog(ExerciseInfoProvider exerciseInfoProvider) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
+          title: Center(
+            child: Text(
+              AppLocalizations.of(context)!.terminaAllenamento,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          content: Text(
+            AppLocalizations.of(context)!.confermaTerminaAllenamento,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: ThemeProvider.getColor(AppColors.secondaryColor),
+                fontSize: 15),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => setState(() {
+                firstButtonText =
+                    AppLocalizations.of(context)!.iniziaAllenamento;
+                secondButtonText = AppLocalizations.of(context)!.modificaScheda;
+                startTraining = false;
+                Navigator.of(context).pop();
+              }),
+              child: Text(AppLocalizations.of(context)!.si,
+                  style: const TextStyle(color: Colors.white)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.annulla,
+                style: TextStyle(
+                    color: ThemeProvider.getColor(AppColors.cancelColor)),
+              ),
+            ),
+          ],
+        );
       },
     );
   }
@@ -213,18 +275,146 @@ class _ViewExercisePageState extends State<ViewExercisePage> {
                       itemCount: seriesList.length,
                       itemBuilder: (context, index) {
                         return ScheduleFitSeriesCard(
-                            key: ValueKey(seriesList[index].idEsercizio),
-                            index: index,
-                            ripetizioni: seriesList[index].ripetizioni,
-                            unitaMisura: seriesList[index].unitaMisura,
-                            peso: seriesList[index].peso,
-                            completata: seriesList[index].completata,
-                            serieCompletate: widget.serieCompletate,
-                            onDelete: null,
-                            onUpdate: (updatedValues) => ());
+                          key: ValueKey(seriesList[index].idEsercizio),
+                          index: index,
+                          ripetizioni: seriesList[index].ripetizioni,
+                          unitaMisura: seriesList[index].unitaMisura,
+                          peso: seriesList[index].peso,
+                          completata: seriesList[index].completata,
+                          serieCompletate: widget.serieCompletate,
+                          onDelete: null,
+                          onUpdate: (updatedValues) => (),
+                          onlyView: true,
+                        );
                       },
                     ),
             ),
+
+            ///Buttons
+            startTraining
+                ? Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(150, 65),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              backgroundColor: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            onPressed: () => setState(() {
+                              firstButtonText = firstButtonText ==
+                                      AppLocalizations.of(context)!
+                                          .sospendiAllenamento
+                                  ? AppLocalizations.of(context)!
+                                      .riprendiAllenamento
+                                  : AppLocalizations.of(context)!
+                                      .sospendiAllenamento;
+                            }),
+                            child: Text(firstButtonText,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.white)),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(150, 65),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              backgroundColor:
+                                  ThemeProvider.getColor(AppColors.cancelColor),
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            onPressed: () => setState(() {
+                              _openDialog(exerciseInfoProvider);
+                            }),
+                            child: Text(
+                              secondButtonText,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(150, 65),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              backgroundColor: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            onPressed: () => setState(() {
+                              startTraining = true;
+                              firstButtonText = AppLocalizations.of(context)!
+                                  .sospendiAllenamento;
+                              secondButtonText = AppLocalizations.of(context)!
+                                  .terminaAllenamento;
+                            }),
+                            child: Text(
+                                AppLocalizations.of(context)!.iniziaAllenamento,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.white)),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(150, 65),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              backgroundColor: ThemeProvider.getColor(
+                                  AppColors.primaryColor),
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditExercisePage(
+                                    id: widget.id,
+                                    nomeEsercizio: widget.nomeEsercizio,
+                                    nomeMuscolo: widget.nomeMuscolo,
+                                    immagineMuscolo: widget.immagineMuscolo,
+                                    serieTotali: widget.serieTotali,
+                                    serieCompletate: widget.serieCompletate,
+                                    giorniSettimana: widget.giorniSettimana,
+                                    onSave: () {
+                                      exerciseInfoProvider.loadExercises();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .modificaScheda
+                                  .toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
           ],
         );
       }),

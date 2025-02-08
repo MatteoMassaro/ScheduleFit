@@ -201,4 +201,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tema => 'Thème';
+
+  @override
+  String get iniziaAllenamento => 'DÉMARRER LA FORMATION';
+
+  @override
+  String get sospendiAllenamento => 'ARRÊTER LA FORMATION';
+
+  @override
+  String get riprendiAllenamento => 'REPRENDRE LA FORMATION';
+
+  @override
+  String get terminaAllenamento => 'FIN DE LA FORMATION';
+
+  @override
+  String get confermaTerminaAllenamento => 'Etes-vous sûr de vouloir mettre fin à l\'entraînement?';
 }

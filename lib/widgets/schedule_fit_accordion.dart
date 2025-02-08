@@ -58,6 +58,7 @@ class ScheduleFitAccordion extends StatelessWidget {
                       onDelete: () {
                         exerciseInfoProvider.deleteExercise(exercise.id ?? -1);
                       },
+                      onlyView: true,
                     );
                   }).toList(),
                 )
@@ -118,6 +119,7 @@ class ScheduleFitAccordion extends StatelessWidget {
                   onDelete: () {
                     exerciseInfoProvider.deleteExercise(exercise.id ?? -1);
                   },
+                  onlyView: true,
                 );
               }).toList(),
             ),

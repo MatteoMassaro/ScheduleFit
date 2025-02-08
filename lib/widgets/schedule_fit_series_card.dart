@@ -19,6 +19,7 @@ class ScheduleFitSeriesCard extends StatefulWidget {
   int serieCompletate;
   final VoidCallback? onDelete;
   final ValueChanged<Map<String, dynamic>> onUpdate;
+  final bool onlyView;
 
   ScheduleFitSeriesCard({
     super.key,
@@ -30,6 +31,7 @@ class ScheduleFitSeriesCard extends StatefulWidget {
     required this.serieCompletate,
     required this.onDelete,
     required this.onUpdate,
+    required this.onlyView,
   });
 
   @override
@@ -104,7 +106,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                       ThemeProvider.getColor(AppColors.crossColor) ??
                           const Color(0xFF850909),
                   currentValue: _switchValue,
-                  onChanged: (newValue) => widget.onDelete != null
+                  onChanged: (newValue) => !widget.onlyView
                       ? setState(() {
                           _switchValue = newValue;
                           newValue
@@ -127,7 +129,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextField(
-                    enabled: widget.onDelete != null,
+                    enabled: !widget.onlyView,
                     controller: _ripetizioniController,
                     maxLength: 10,
                     maxLines: 1,
@@ -151,7 +153,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
 
               ///Weight
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                widget.onDelete != null
+                !widget.onlyView
                     ? DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           icon: const Icon(
@@ -190,7 +192,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextField(
-                    enabled: widget.onDelete != null,
+                    enabled: !widget.onlyView,
                     controller: _pesoController,
                     maxLength: 10,
                     maxLines: 1,
@@ -214,7 +216,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
               const SizedBox(height: 5),
 
               ///Delete Button
-              widget.onDelete != null
+              !widget.onlyView
                   ? Row(
                       children: [
                         const Spacer(),

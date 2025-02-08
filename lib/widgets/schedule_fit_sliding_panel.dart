@@ -113,6 +113,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                           giorniSettimana:
                               exerciseListForDate[index].giorniSettimana,
                           onDelete: null,
+                          onlyView: true,
                         );
                       },
                       separatorBuilder: (context, index) {
@@ -147,6 +148,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                           giorniSettimana:
                               periodicExercises[index1].giorniSettimana,
                           onDelete: null,
+                          onlyView: true,
                         );
                       },
                       separatorBuilder: (context, index1) {

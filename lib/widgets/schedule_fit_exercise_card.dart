@@ -17,6 +17,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final int serieTotali;
   final List<int> giorniSettimana;
   final Function? onDelete;
+  final bool onlyView;
 
   const ScheduleFitExerciseCard({
     super.key,
@@ -28,6 +29,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
     required this.serieTotali,
     required this.giorniSettimana,
     required this.onDelete,
+    required this.onlyView,
   });
 
   @override
@@ -132,16 +134,17 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.nomeMuscolo(widget
-                                      .categoriaEsercizio[0]
-                                      .toLowerCase() +
-                                  widget.categoriaEsercizio
-                                      .substring(1)
-                                      .replaceAllMapped(
-                                        RegExp(r' \w'),
-                                        (match) =>
-                                            match.group(0)!.toUpperCase().trim(),
-                                      )),
+                              AppLocalizations.of(context)!.nomeMuscolo(
+                                  widget.categoriaEsercizio[0].toLowerCase() +
+                                      widget.categoriaEsercizio
+                                          .substring(1)
+                                          .replaceAllMapped(
+                                            RegExp(r' \w'),
+                                            (match) => match
+                                                .group(0)!
+                                                .toUpperCase()
+                                                .trim(),
+                                          )),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               softWrap: true,
@@ -186,7 +189,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                       const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          widget.onDelete != null
+                          !widget.onlyView
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(

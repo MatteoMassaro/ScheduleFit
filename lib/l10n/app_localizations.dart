@@ -436,6 +436,36 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Tema'**
   String get tema;
+
+  /// No description provided for @iniziaAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'INIZIA ALLENAMENTO'**
+  String get iniziaAllenamento;
+
+  /// No description provided for @sospendiAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'SOSPENDI ALLENAMENTO'**
+  String get sospendiAllenamento;
+
+  /// No description provided for @riprendiAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'RIPRENDI ALLENAMENTO'**
+  String get riprendiAllenamento;
+
+  /// No description provided for @terminaAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'TERMINA ALLENAMENTO'**
+  String get terminaAllenamento;
+
+  /// No description provided for @confermaTerminaAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'Sei sicuro di voler terminare l\'allenamento?'**
+  String get confermaTerminaAllenamento;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

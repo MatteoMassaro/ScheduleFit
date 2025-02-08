@@ -201,4 +201,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tema => 'Theme';
+
+  @override
+  String get iniziaAllenamento => 'START TRAINING';
+
+  @override
+  String get sospendiAllenamento => 'PAUSE TRAINING';
+
+  @override
+  String get riprendiAllenamento => 'RESUME TRAINING';
+
+  @override
+  String get terminaAllenamento => 'END TRAINING';
+
+  @override
+  String get confermaTerminaAllenamento => 'Are you sure you want to finish your training?';
 }

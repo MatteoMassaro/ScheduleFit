@@ -59,5 +59,11 @@
   "oggi": "Aujourd'hui",
   "impostazioni": "Paramètres",
   "notifiche": "Notifications",
-  "tema": "Thème"
+  "tema": "Thème",
+  "iniziaAllenamento": "DÉMARRER LA FORMATION",
+  "sospendiAllenamento": "ARRÊTER LA FORMATION",
+  "riprendiAllenamento": "REPRENDRE LA FORMATION",
+  "terminaAllenamento": "FIN DE LA FORMATION",
+  "confermaTerminaAllenamento": "Etes-vous sûr de vouloir mettre fin à l'entraînement?"
+
 }

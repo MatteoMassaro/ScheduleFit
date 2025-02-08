@@ -220,7 +220,7 @@ class _ViewExercisePageState extends State<ViewExercisePage> {
                             peso: seriesList[index].peso,
                             completata: seriesList[index].completata,
                             serieCompletate: widget.serieCompletate,
-                            onDelete: () => (),
+                            onDelete: null,
                             onUpdate: (updatedValues) => ());
                       },
                     ),

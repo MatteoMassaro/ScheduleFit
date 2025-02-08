@@ -11,7 +11,7 @@ class ScheduleFitSwitch extends StatefulWidget {
   final Color colorActive;
   final Color colorNotActive;
   final bool currentValue;
-  final Function(bool) onChanged;
+  final Function(bool)? onChanged;
 
   const ScheduleFitSwitch(
       {super.key,
@@ -30,7 +30,7 @@ class _ScheduleFitSwitchState extends State<ScheduleFitSwitch> {
   @override
   Widget build(BuildContext context) {
     return AnimatedToggleSwitch<bool>.dual(
-      active: true,
+      active: widget.onChanged != null,
       first: false,
       second: true,
       spacing: 5,
@@ -62,9 +62,11 @@ class _ScheduleFitSwitchState extends State<ScheduleFitSwitch> {
             indicatorColor: Colors.transparent);
       },
       borderWidth: 6.0,
-      onChanged: (value) => setState(() {
-        widget.onChanged(value);
-      }),
+      onChanged: (value) => widget.onChanged != null
+          ? setState(() {
+              widget.onChanged!(value);
+            })
+          : null,
       current: widget.currentValue,
     );
   }

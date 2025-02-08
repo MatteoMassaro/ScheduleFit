@@ -12,23 +12,23 @@ import '../providers/theme_provider.dart';
 
 class ScheduleFitSeriesCard extends StatefulWidget {
   final int index;
-  final VoidCallback onDelete;
   final int ripetizioni;
   final String unitaMisura;
   final double peso;
   final bool completata;
   int serieCompletate;
+  final VoidCallback? onDelete;
   final ValueChanged<Map<String, dynamic>> onUpdate;
 
   ScheduleFitSeriesCard({
     super.key,
     required this.index,
-    required this.onDelete,
     required this.ripetizioni,
     required this.unitaMisura,
     required this.peso,
     required this.completata,
     required this.serieCompletate,
+    required this.onDelete,
     required this.onUpdate,
   });
 
@@ -92,138 +92,143 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 25,
-                        color: ThemeProvider.getColor(
-                            AppColors.secondaryColor))),
+                        color:
+                            ThemeProvider.getColor(AppColors.secondaryColor))),
                 const Spacer(),
                 ScheduleFitSwitch(
-                    imageActive: Images.check,
-                    imageNotActive: Images.cross,
-                    colorActive:
-                        ThemeProvider.getColor(AppColors.checkColor) ??
-                            const Color(0xFF3A8A3D),
-                    colorNotActive:
-                        ThemeProvider.getColor(AppColors.crossColor) ??
-                            const Color(0xFF850909),
-                    currentValue: _switchValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _switchValue = newValue;
-                        newValue
-                            ? widget.serieCompletate++
-                            : widget.serieCompletate--;
-                        _updateValues();
-                      });
-                    }),
+                  imageActive: Images.check,
+                  imageNotActive: Images.cross,
+                  colorActive: ThemeProvider.getColor(AppColors.checkColor) ??
+                      const Color(0xFF3A8A3D),
+                  colorNotActive:
+                      ThemeProvider.getColor(AppColors.crossColor) ??
+                          const Color(0xFF850909),
+                  currentValue: _switchValue,
+                  onChanged: (newValue) => widget.onDelete != null
+                      ? setState(() {
+                          _switchValue = newValue;
+                          newValue
+                              ? widget.serieCompletate++
+                              : widget.serieCompletate--;
+                          _updateValues();
+                        })
+                      : null,
+                )
               ]),
 
               ///Number Of Repetitions
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                        '${AppLocalizations.of(context)!.numeroRipetizioni}:',
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text('${AppLocalizations.of(context)!.numeroRipetizioni}:',
+                    maxLines: 2,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(fontSize: 16, color: Colors.white)),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    enabled: widget.onDelete != null,
+                    controller: _ripetizioniController,
+                    maxLength: 10,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color:
+                            ThemeProvider.getColor(AppColors.secondaryColor)),
+                    decoration: const InputDecoration(
+                        hintText: '0',
+                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        counterText: "",
+                        border: InputBorder.none),
+                    onChanged: (value) {
+                      _updateValues();
+                    },
+                  ),
+                )
+              ]),
+
+              ///Weight
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                widget.onDelete != null
+                    ? DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white,
+                          ),
+                          value: _unitaMisuraSelezionata,
+                          dropdownColor:
+                              ThemeProvider.getColor(AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(8),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _unitaMisuraSelezionata = newValue!;
+                              _updateValues();
+                            });
+                          },
+                          items: ['Kg', 'Lbs']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    : Text('$_unitaMisuraSelezionata:',
                         maxLines: 2,
                         softWrap: true,
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.start,
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.white)),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        controller: _ripetizioniController,
-                        maxLength: 10,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: ThemeProvider.getColor(
-                                AppColors.secondaryColor)),
-                        decoration: const InputDecoration(
-                            hintText: '0',
-                            hintStyle:
-                                TextStyle(fontSize: 16, color: Colors.grey),
-                            counterText: "",
-                            border: InputBorder.none),
-                        onChanged: (value) {
-                          _updateValues();
-                        },
-                      ),
-                    )
-                  ]),
-
-              ///Weight
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.white,
-                        ),
-                        value: _unitaMisuraSelezionata,
-                        dropdownColor:
-                            ThemeProvider.getColor(AppColors.primaryColor),
-                        borderRadius: BorderRadius.circular(8),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _unitaMisuraSelezionata = newValue!;
-                            _updateValues();
-                          });
-                        },
-                        items: ['Kg', 'Lbs']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        controller: _pesoController,
-                        maxLength: 10,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: ThemeProvider.getColor(
-                                AppColors.secondaryColor)),
-                        decoration: const InputDecoration(
-                            hintText: '0',
-                            hintStyle:
-                                TextStyle(fontSize: 16, color: Colors.grey),
-                            counterText: "",
-                            border: InputBorder.none),
-                        onChanged: (value) {
-                          _updateValues();
-                        },
-                      ),
-                    )
-                  ]),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white)),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    enabled: widget.onDelete != null,
+                    controller: _pesoController,
+                    maxLength: 10,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color:
+                            ThemeProvider.getColor(AppColors.secondaryColor)),
+                    decoration: const InputDecoration(
+                        hintText: '0',
+                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        counterText: "",
+                        border: InputBorder.none),
+                    onChanged: (value) {
+                      _updateValues();
+                    },
+                  ),
+                )
+              ]),
               const SizedBox(height: 5),
 
               ///Delete Button
-              Row(
-                children: [
-                  const Spacer(),
-                  TextButton(
-                    onPressed: widget.onDelete,
-                    child: Text(AppLocalizations.of(context)!.eliminaSerie,
-                        style: TextStyle(
-                            color: ThemeProvider.getColor(
-                                AppColors.cancelColor))),
-                  ),
-                ],
-              )
+              widget.onDelete != null
+                  ? Row(
+                      children: [
+                        const Spacer(),
+                        TextButton(
+                          onPressed: widget.onDelete,
+                          child: Text(
+                              AppLocalizations.of(context)!.eliminaSerie,
+                              style: TextStyle(
+                                  color: ThemeProvider.getColor(
+                                      AppColors.cancelColor))),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink()
             ],
           ),
         ),

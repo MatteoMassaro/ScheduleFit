@@ -16,7 +16,8 @@ enum Images {
   sun,
   moon,
   check,
-  cross
+  cross,
+  stopwatch
 }
 
 Map<Images, String> imageUrl = {
@@ -38,6 +39,7 @@ Map<Images, String> imageUrl = {
   Images.moon: 'assets/images/moon.png',
   Images.check: 'assets/images/check.png',
   Images.cross: 'assets/images/cross.png',
+  Images.stopwatch: 'assets/images/stopwatch.png',
 };
 
 String getImage(Images image) {

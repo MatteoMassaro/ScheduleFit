@@ -8,6 +8,7 @@ import 'package:schedule_fit/providers/exercise_info_provider.dart';
 import 'package:schedule_fit/providers/notification_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 import 'package:schedule_fit/providers/series_info_provider.dart';
+import 'package:schedule_fit/providers/stopwatch_provider.dart';
 import 'package:schedule_fit/providers/theme_provider.dart';
 
 import 'database/schedule_fit_database.dart';
@@ -36,9 +37,7 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (_) => LocaleProvider()),
             ChangeNotifierProvider(create: (context) => ThemeProvider()),
-            ChangeNotifierProvider(
-              create: (context) => NotificationProvider()
-            ),
+            ChangeNotifierProvider(create: (context) => NotificationProvider()),
             ChangeNotifierProvider(
                 create: (_) => PageProvider(
                     AppLocalizations.of(context)?.mioAllenamento ?? '')),
@@ -54,11 +53,15 @@ class MyApp extends StatelessWidget {
                   Provider.of<ScheduleFitDatabase>(context, listen: false)),
               update: (context, db, previous) => SeriesInfoProvider(db),
             ),
+            ChangeNotifierProvider<StopwatchProvider>(
+              create: (context) => StopwatchProvider(),
+            )
           ],
           builder: (context, child) {
             final localeProvider = Provider.of<LocaleProvider>(context);
             final themeProvider = Provider.of<ThemeProvider>(context);
-            final notificationProvider = Provider.of<NotificationProvider>(context);
+            final notificationProvider =
+                Provider.of<NotificationProvider>(context);
 
             notificationProvider.init();
 

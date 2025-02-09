@@ -45,6 +45,7 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          ///App Name
                           Row(children: [
                             const Text(
                               "SCHEDULE",
@@ -62,6 +63,8 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                               ),
                             )
                           ]),
+
+                          ///Version
                           Row(children: [
                             Text(
                               AppLocalizations.of(context)!.versione,
@@ -78,6 +81,8 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                               ),
                             ),
                           ]),
+
+                          ///Author
                           Row(mainAxisSize: MainAxisSize.min, children: [
                             Text(
                               AppLocalizations.of(context)!.autore,
@@ -178,21 +183,11 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                 ),
               ),
             )
-
-            // Padding(
-            //     padding: const EdgeInsets.only(top: 15),
-            //     child: Text(
-            //       AppLocalizations.of(context)!.descrizioneApp,
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         color: getAppColors(AppColors.secondaryColor),
-            //       ),
-            //     )),
           ]),
         ),
       ),
       actions: <Widget>[
+        ///Close Button
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();

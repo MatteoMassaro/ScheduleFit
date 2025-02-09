@@ -15,5 +15,7 @@ enum AppColors {
   dropdownDaysOfWeekColor,
   cancelColor,
   checkColor,
-  crossColor
+  crossColor,
+  countdownColor,
+  stopwatchColor
 }

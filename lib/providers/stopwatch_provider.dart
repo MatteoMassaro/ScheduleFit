@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class StopwatchProvider extends ChangeNotifier {
-  late Timer _timer;
+  Timer? _timer;
   int _milliseconds = 0;
   bool _isRunning = false;
 
@@ -24,13 +24,13 @@ class StopwatchProvider extends ChangeNotifier {
   void stop() {
     if (_isRunning) {
       _isRunning = false;
-      _timer.cancel();
+      _timer?.cancel();
       notifyListeners();
     }
   }
 
   void reset() {
-    _timer.cancel();
+    _timer?.cancel() ;
     _milliseconds = 0;
     _isRunning = false;
     notifyListeners();
@@ -38,7 +38,7 @@ class StopwatchProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
 import 'package:schedule_fit/enums/schedule_fit_colors.dart';
 import 'package:schedule_fit/pages/home_page.dart';
+import 'package:schedule_fit/providers/calendar_provider.dart';
 import 'package:schedule_fit/providers/exercise_info_provider.dart';
 import 'package:schedule_fit/providers/notification_provider.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
@@ -42,20 +43,19 @@ class MyApp extends StatelessWidget {
                 create: (_) => PageProvider(
                     AppLocalizations.of(context)?.mioAllenamento ?? '')),
             ChangeNotifierProxyProvider<ScheduleFitDatabase,
-                ExerciseInfoProvider>(
-              create: (context) => ExerciseInfoProvider(
-                  Provider.of<ScheduleFitDatabase>(context, listen: false)),
-              update: (context, db, previous) => ExerciseInfoProvider(db),
-            ),
+                    ExerciseInfoProvider>(
+                create: (context) => ExerciseInfoProvider(
+                    Provider.of<ScheduleFitDatabase>(context, listen: false)),
+                update: (context, db, previous) => ExerciseInfoProvider(db)),
             ChangeNotifierProxyProvider<ScheduleFitDatabase,
-                SeriesInfoProvider>(
-              create: (context) => SeriesInfoProvider(
-                  Provider.of<ScheduleFitDatabase>(context, listen: false)),
-              update: (context, db, previous) => SeriesInfoProvider(db),
-            ),
+                    SeriesInfoProvider>(
+                create: (context) => SeriesInfoProvider(
+                    Provider.of<ScheduleFitDatabase>(context, listen: false)),
+                update: (context, db, previous) => SeriesInfoProvider(db)),
+            ChangeNotifierProvider<CalendarProvider>(
+                create: (context) => CalendarProvider()),
             ChangeNotifierProvider<StopwatchProvider>(
-              create: (context) => StopwatchProvider(),
-            )
+                create: (context) => StopwatchProvider())
           ],
           builder: (context, child) {
             final localeProvider = Provider.of<LocaleProvider>(context);

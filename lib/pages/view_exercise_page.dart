@@ -8,6 +8,7 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_days_of_week.dart';
 import 'package:schedule_fit/providers/stopwatch_provider.dart';
+import 'package:schedule_fit/widgets/schedule_fit_countdown_animation.dart';
 import 'package:schedule_fit/widgets/schedule_fit_series_card.dart';
 import 'package:schedule_fit/widgets/schedule_fit_stopwatch.dart';
 
@@ -18,6 +19,7 @@ import '../l10n/app_localizations.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
+import '../widgets/schedule_fit_alert_dialog.dart';
 import 'edit_exercise_page.dart';
 
 class ViewExercisePage extends StatefulWidget {
@@ -71,9 +73,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     seriesInfoProvider = context.read<SeriesInfoProvider>();
     stopwatchProvider = context.read<StopwatchProvider>();
-    seriesInfoProvider.clearSeries();
     _nomeEsercizioController =
         TextEditingController(text: widget.nomeEsercizio);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       giorniSettimanaTradotti = widget.giorniSettimana
           .map((g) => getDayOfWeekTranslated(context, g))
@@ -81,6 +83,8 @@ class _ViewExercisePageState extends State<ViewExercisePage>
       firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
       secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
     });
+
+    seriesInfoProvider.clearSeries();
     _getSeries();
     _countdownController = AnimationController(
       vsync: this,
@@ -100,6 +104,38 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     );
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _getSeries();
+  }
+
+  @override
+  void dispose() {
+    _nomeEsercizioController.dispose();
+    _countdownController.dispose();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      stopwatchProvider.reset();
+    });
+    super.dispose();
+  }
+
+  ///Get Series
+  Future<void> _getSeries() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await seriesInfoProvider.loadSeries(widget.id).then(
+      (value) {
+        setState(() {
+          seriesList = seriesInfoProvider.seriesList;
+          _isLoading = false;
+        });
+      },
+    );
+  }
+
+  ///Start Countdown
   void startCountdown() {
     setState(() {
       _showCountdown = true;
@@ -133,82 +169,23 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isLoading == false && seriesList.isEmpty) {
-      _getSeries();
-    }
-  }
-
-  @override
-  void dispose() {
-    _nomeEsercizioController.dispose();
-    _countdownController.dispose();
-    stopwatchProvider.reset();
-    super.dispose();
-  }
-
-  ///Get Series
-  Future<void> _getSeries() async {
-    setState(() {
-      _isLoading = true;
-    });
-    await seriesInfoProvider.loadSeries(widget.id).then(
-      (value) {
-        setState(() {
-          seriesList = seriesInfoProvider.seriesList;
-          _isLoading = false;
-        });
-      },
-    );
-  }
-
   ///Open Dialog
   _openDialog(ExerciseInfoProvider exerciseInfoProvider) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
-          title: Center(
-            child: Text(
-              AppLocalizations.of(context)!.terminaAllenamento,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          content: Text(
-            AppLocalizations.of(context)!.confermaTerminaAllenamento,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: ThemeProvider.getColor(AppColors.secondaryColor),
-                fontSize: 15),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => setState(() {
-                firstButtonText =
-                    AppLocalizations.of(context)!.iniziaAllenamento;
-                secondButtonText = AppLocalizations.of(context)!.modificaScheda;
-                startTraining = false;
-                stopwatchProvider.reset();
-                Navigator.of(context).pop();
-              }),
-              child: Text(AppLocalizations.of(context)!.si,
-                  style: const TextStyle(color: Colors.white)),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                AppLocalizations.of(context)!.annulla,
-                style: TextStyle(
-                    color: ThemeProvider.getColor(AppColors.cancelColor)),
-              ),
-            ),
-          ],
-        );
+        return ScheduleFitAlertDialog(
+            title: AppLocalizations.of(context)!.terminaAllenamento,
+            message: AppLocalizations.of(context)!.confermaTerminaAllenamento,
+            onPressed: () => setState(() {
+                  firstButtonText =
+                      AppLocalizations.of(context)!.iniziaAllenamento;
+                  secondButtonText =
+                      AppLocalizations.of(context)!.modificaScheda;
+                  startTraining = false;
+                  stopwatchProvider.reset();
+                  Navigator.of(context).pop();
+                }));
       },
     );
   }
@@ -359,7 +336,10 @@ class _ViewExercisePageState extends State<ViewExercisePage>
 
               ///Buttons
               startTraining
-                  ? Expanded(
+                  ?
+
+                  ///Stopwatch Buttons
+                  Expanded(
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -420,7 +400,10 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                         ),
                       ),
                     )
-                  : Expanded(
+                  :
+
+                  ///Only View Buttons
+                  Expanded(
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -479,7 +462,7 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                           },
                                         ),
                                       ),
-                                    )
+                                    ).then((values) => _getSeries())
                                   : null,
                               child: Text(
                                 AppLocalizations.of(context)!
@@ -496,30 +479,25 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                     )
             ],
           ),
-          if (_showCountdown)
-            Center(
-              child: AnimatedBuilder(
-                animation:
-                    Listenable.merge([_scaleAnimation, _opacityController]),
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _opacityAnimation.value,
-                    child: Transform.scale(
-                      scale: _scaleAnimation.value,
-                      child: Text(
-                        _countdown > 0 ? "$_countdown" : "INIZIO ALLENAMENTO",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+
+          ///Countdown Animation
+          ScheduleFitCountdownAnimation(
+            countdown: _countdown,
+            countdownController: _countdownController,
+            scaleAnimation: _scaleAnimation,
+            opacityAnimation: _opacityAnimation,
+            showCountdown: _showCountdown,
+            onCountdownFinished: () {
+              stopwatchProvider.start();
+              setState(() {
+                startTraining = true;
+                firstButtonText =
+                    AppLocalizations.of(context)!.sospendiAllenamento;
+                secondButtonText =
+                    AppLocalizations.of(context)!.terminaAllenamento;
+              });
+            },
+          ),
         ]);
       }),
     );

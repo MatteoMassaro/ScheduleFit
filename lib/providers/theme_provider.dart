@@ -34,6 +34,8 @@ class ThemeProvider with ChangeNotifier {
     AppColors.cancelColor: const Color(0xFFB00808),
     AppColors.checkColor: const Color(0xFF3A8A3D),
     AppColors.crossColor: const Color(0xFF850909),
+    AppColors.countdownColor: const Color(0xFF556EAA),
+    AppColors.stopwatchColor: const Color(0xFF556EAA),
   };
 
   static final Map<AppColors, Color> darkColors = {
@@ -54,6 +56,8 @@ class ThemeProvider with ChangeNotifier {
     AppColors.cancelColor: const Color(0xFFB00808),
     AppColors.checkColor: const Color(0xFF3A8A3D),
     AppColors.crossColor: const Color(0xFF850909),
+    AppColors.countdownColor: const Color(0xFFFFFFFF),
+    AppColors.stopwatchColor: const Color(0xFFFFFFFF),
   };
 
   static Color? getColor(AppColors color) {

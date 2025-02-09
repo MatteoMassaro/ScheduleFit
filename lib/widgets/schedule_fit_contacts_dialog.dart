@@ -147,6 +147,7 @@ class ScheduleFitContactsDialog extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
+        ///Close Button
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();

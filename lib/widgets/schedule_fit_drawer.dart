@@ -24,12 +24,12 @@ class ScheduleFitDrawer extends StatefulWidget {
 }
 
 class _ScheduleFitDrawerState extends State<ScheduleFitDrawer> {
-  late LocaleProvider provider;
+  late LocaleProvider localeProvider;
 
   @override
   void initState() {
     super.initState();
-    provider = Provider.of<LocaleProvider>(context, listen: false);
+    localeProvider = Provider.of<LocaleProvider>(context, listen: false);
   }
 
   @override

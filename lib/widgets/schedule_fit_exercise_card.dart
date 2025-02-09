@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/pages/view_exercise_page.dart';
+import 'package:schedule_fit/widgets/schedule_fit_alert_dialog.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../l10n/app_localizations.dart';
@@ -16,7 +17,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final int serieCompletate;
   final int serieTotali;
   final List<int> giorniSettimana;
-  final Function? onDelete;
+  final VoidCallback? onDelete;
   final bool onlyView;
 
   const ScheduleFitExerciseCard({
@@ -42,42 +43,10 @@ class _CardState extends State<ScheduleFitExerciseCard> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
-          title: Center(
-            child: Text(
-              AppLocalizations.of(context)!.eliminaScheda,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          content: Text(
-            AppLocalizations.of(context)!.confermaEliminaScheda,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: ThemeProvider.getColor(AppColors.secondaryColor),
-                fontSize: 15),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () async {
-                widget.onDelete!();
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.si,
-                  style: const TextStyle(color: Colors.white)),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                AppLocalizations.of(context)!.annulla,
-                style: TextStyle(
-                    color: ThemeProvider.getColor(AppColors.cancelColor)),
-              ),
-            ),
-          ],
-        );
+        return ScheduleFitAlertDialog(
+            title: AppLocalizations.of(context)!.eliminaScheda,
+            message: AppLocalizations.of(context)!.confermaEliminaScheda,
+            onPressed: () => {widget.onDelete!(), Navigator.of(context).pop()});
       },
     );
   }

@@ -71,7 +71,6 @@ class _HomePageState extends State<HomePage> {
 
           return exerciseInfoProvider.exerciseList.isEmpty
               ?
-
               ///Text Tip
               Center(
                   child: Padding(
@@ -85,7 +84,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               :
-
               ///Days Of Week Accordions
               ScheduleFitAccordion(todayExercises: todayExercises);
         },

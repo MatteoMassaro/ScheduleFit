@@ -88,6 +88,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             ///English
@@ -128,6 +129,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             ///French
@@ -168,6 +170,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             ///Spanish
@@ -208,6 +211,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             ///German
@@ -252,6 +256,7 @@ class _ScheduleFitLanguageDialogState extends State<ScheduleFitLanguageDialog> {
         ),
       ),
       actions: <Widget>[
+        ///Close Button
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();

@@ -203,6 +203,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tema => 'Thème';
 
   @override
+  String get inizioAllenamento => 'COMMENCER LA FORMATION';
+
+  @override
   String get iniziaAllenamento => 'DÉMARRER LA FORMATION';
 
   @override

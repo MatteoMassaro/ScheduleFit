@@ -27,6 +27,7 @@ class ScheduleFitAccordion extends StatelessWidget {
       contentBackgroundColor:
           ThemeProvider.getColor(AppColors.accordionBackgroundColor),
       children: [
+        ///Today Accordion
         AccordionSection(
           index: 1,
           isOpen: true,
@@ -55,9 +56,8 @@ class ScheduleFitAccordion extends StatelessWidget {
                       serieTotali: exercise.serieTotali,
                       serieCompletate: exercise.serieCompletate,
                       giorniSettimana: exercise.giorniSettimana,
-                      onDelete: () {
-                        exerciseInfoProvider.deleteExercise(exercise.id ?? -1);
-                      },
+                      onDelete: () => exerciseInfoProvider
+                          .deleteExercise(exercise.id ?? -1),
                       onlyView: true,
                     );
                   }).toList(),

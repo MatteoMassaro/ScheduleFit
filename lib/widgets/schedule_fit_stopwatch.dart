@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../enums/schedule_fit_colors.dart';
 import '../providers/stopwatch_provider.dart';
+import '../providers/theme_provider.dart';
 
 class ScheduleFitStopwatch extends StatelessWidget {
   const ScheduleFitStopwatch({super.key});
@@ -28,7 +30,7 @@ class ScheduleFitStopwatch extends StatelessWidget {
           children: <Widget>[
             Text(
               timeString,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: ThemeProvider.getColor(AppColors.stopwatchColor)),
             ),
           ],
         );

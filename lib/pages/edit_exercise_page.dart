@@ -310,13 +310,13 @@ class _EditExercisePageState extends State<EditExercisePage> {
                         return ScheduleFitSeriesCard(
                           key: ValueKey(seriesList[index].idEsercizio),
                           index: index,
-                          onDelete: () =>
-                              _removeSeries(seriesList[index].id ?? -1, index),
                           ripetizioni: seriesList[index].ripetizioni,
                           unitaMisura: seriesList[index].unitaMisura,
                           peso: seriesList[index].peso,
                           completata: seriesList[index].completata,
                           serieCompletate: widget.serieCompletate,
+                          onDelete: () =>
+                              _removeSeries(seriesList[index].id ?? -1, index),
                           onUpdate: (updatedValues) {
                             _updateCompletedSeries(updatedValues, index);
                           },

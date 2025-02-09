@@ -437,6 +437,12 @@ abstract class AppLocalizations {
   /// **'Tema'**
   String get tema;
 
+  /// No description provided for @inizioAllenamento.
+  ///
+  /// In it, this message translates to:
+  /// **'INIZIO ALLENAMENTO'**
+  String get inizioAllenamento;
+
   /// No description provided for @iniziaAllenamento.
   ///
   /// In it, this message translates to:

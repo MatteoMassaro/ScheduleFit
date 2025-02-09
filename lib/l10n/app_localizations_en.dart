@@ -203,6 +203,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tema => 'Theme';
 
   @override
+  String get inizioAllenamento => 'TRAINING START';
+
+  @override
   String get iniziaAllenamento => 'START TRAINING';
 
   @override

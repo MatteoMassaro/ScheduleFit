@@ -9,7 +9,7 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
-  String get info => 'Circa Schedulefit';
+  String get info => 'Circa ScheduleFit';
 
   @override
   String get versione => 'Versione: ';

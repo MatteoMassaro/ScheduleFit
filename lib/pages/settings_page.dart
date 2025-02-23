@@ -50,30 +50,33 @@ class _SettingsPageState extends State<SettingsPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: Image(
-                              image: AssetImage(getImage(Images.notification)),
-                              width: 38,
-                              height: 38,
-                            ),
-                            horizontalTitleGap: 30,
-                            title: Text(
-                              AppLocalizations.of(context)!.notifiche,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: ThemeProvider.getColor(
-                                    AppColors.secondaryColor),
-                              ),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: ListTile(
+                          leading: Image(
+                            image: AssetImage(getImage(Images.notification)),
+                            width: 38,
+                            height: 38,
+                          ),
+                          horizontalTitleGap: 25,
+                          title: Text(
+                            AppLocalizations.of(context)!.notifiche,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
+                              height: 1.2
                             ),
                           ),
                         ),
-                        Padding(
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
                           padding: const EdgeInsets.only(right: 15),
                           child: ScheduleFitSwitch(
                               imageActive: Images.check,
@@ -88,9 +91,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               onChanged: (value) =>
                                   () //TODO implementare switch notifiche,
                               ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
 
@@ -101,29 +104,31 @@ class _SettingsPageState extends State<SettingsPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            leading: Image(
-                              image: AssetImage(getImage(Images.theme)),
-                              width: 38,
-                              height: 38,
-                            ),
-                            horizontalTitleGap: 26,
-                            title: Text(
-                              AppLocalizations.of(context)!.tema,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: ThemeProvider.getColor(
-                                    AppColors.secondaryColor),
-                              ),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: ListTile(
+                          leading: Image(
+                            image: AssetImage(getImage(Images.theme)),
+                            width: 36,
+                            height: 36,
+                          ),
+                          horizontalTitleGap: 25,
+                          title: Text(
+                            AppLocalizations.of(context)!.tema,
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor),
                             ),
                           ),
                         ),
-                        Padding(
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
                           padding: const EdgeInsets.only(right: 15),
                           child: ScheduleFitSwitch(
                             imageActive: Images.sun,
@@ -136,13 +141,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                 const Color(0xFF556EAA),
                             currentValue:
                                 Provider.of<ThemeProvider>(context).isLightMode,
-                            onChanged: (value) => Provider.of<ThemeProvider>(context,
+                            onChanged: (value) => Provider.of<ThemeProvider>(
+                                    context,
                                     listen: false)
                                 .toggleTheme(),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
 
@@ -157,6 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     right: 20,
                     top: 10,
                   ),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
@@ -166,22 +173,20 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: ListTile(
-                        leading: Image(
-                          image: AssetImage(getImage(Images.language)),
-                          width: 38,
-                          height: 38,
-                        ),
-                        horizontalTitleGap: 28,
-                        title: Text(
-                          AppLocalizations.of(context)!.lingua,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: ThemeProvider.getColor(
-                                AppColors.secondaryColor),
-                          ),
+                    child: ListTile(
+                      leading: Image(
+                        image: AssetImage(getImage(Images.language)),
+                        width: 38,
+                        height: 38,
+                      ),
+                      horizontalTitleGap: 25,
+                      title: Text(
+                        AppLocalizations.of(context)!.lingua,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor),
                         ),
                       ),
                     ),
@@ -199,6 +204,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     right: 20,
                     top: 10,
                   ),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
@@ -208,22 +214,20 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: ListTile(
-                        leading: Image(
-                          image: AssetImage(getImage(Images.social)),
-                          width: 38,
-                          height: 38,
-                        ),
-                        horizontalTitleGap: 28,
-                        title: Text(
-                          AppLocalizations.of(context)!.contatti,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: ThemeProvider.getColor(
-                                AppColors.secondaryColor),
-                          ),
+                    child: ListTile(
+                      leading: Image(
+                        image: AssetImage(getImage(Images.social)),
+                        width: 38,
+                        height: 38,
+                      ),
+                      horizontalTitleGap: 22,
+                      title: Text(
+                        AppLocalizations.of(context)!.contatti,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor),
                         ),
                       ),
                     ),
@@ -238,6 +242,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   margin: const EdgeInsets.only(
                       left: 20, right: 20, top: 10, bottom: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
@@ -247,22 +252,20 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.info,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                        horizontalTitleGap: 26,
-                        title: Text(
-                          AppLocalizations.of(context)!.info,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: ThemeProvider.getColor(
-                                AppColors.secondaryColor),
-                          ),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.info,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                      horizontalTitleGap: 20,
+                      title: Text(
+                        AppLocalizations.of(context)!.info,
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 24,
+                          color:
+                              ThemeProvider.getColor(AppColors.secondaryColor),
                         ),
                       ),
                     ),

@@ -22,6 +22,8 @@ class ScheduleFitAlertDialog extends StatelessWidget {
       title: Center(
         child: Text(
           title,
+          maxLines: 2,
+          textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white),
         ),
       ),

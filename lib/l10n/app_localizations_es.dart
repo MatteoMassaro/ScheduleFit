@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get info => 'Acerca de Schedulefit';
+  String get info => 'Acerca de ScheduleFit';
 
   @override
   String get versione => 'Versión: ';

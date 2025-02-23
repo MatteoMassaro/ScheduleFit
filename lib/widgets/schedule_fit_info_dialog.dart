@@ -31,77 +31,56 @@ class ScheduleFitInfoDialog extends StatelessWidget {
           child: Column(children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    getImage(Images.appIcon),
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.contain,
-                  ),
+                ///App Icon
+                Image.asset(
+                  getImage(Images.appIcon),
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.contain,
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ///App Name
-                          Row(children: [
-                            const Text(
-                              "SCHEDULE",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              "FIT",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: ThemeProvider.getColor(
-                                    AppColors.secondaryColor),
-                              ),
-                            )
-                          ]),
+                const SizedBox(width: 10),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  ///App Name
+                  Row(children: [
+                    const Text(
+                      maxLines: 1,
+                      "SCHEDULE",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      maxLines: 1,
+                      "FIT",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: ThemeProvider.getColor(AppColors.secondaryColor),
+                      ),
+                    )
+                  ]),
 
-                          ///Version
-                          Row(children: [
-                            Text(
-                              AppLocalizations.of(context)!.versione,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              getAppInfo(AppInfo.appVersion),
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ]),
+                  ///Version
+                  Text(
+                    maxLines: 1,
+                    '${AppLocalizations.of(context)!.versione} ${getAppInfo(AppInfo.appVersion)}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
 
-                          ///Author
-                          Row(mainAxisSize: MainAxisSize.min, children: [
-                            Text(
-                              AppLocalizations.of(context)!.autore,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              maxLines: 2,
-                              textAlign: TextAlign.start,
-                              getAppInfo(AppInfo.developerName),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ])
-                        ]))
+                  ///Author
+                  Text(
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    '${AppLocalizations.of(context)!.autore} ${getAppInfo(AppInfo.developerName)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  )
+                ])
               ],
             ),
 
@@ -158,7 +137,6 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(10),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 15),
@@ -170,6 +148,7 @@ class ScheduleFitInfoDialog extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
+                        maxLines: 3,
                         AppLocalizations.of(context)!.politicaRiservatezza,
                         style: TextStyle(
                           fontSize: 24,

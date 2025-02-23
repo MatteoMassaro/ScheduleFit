@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_fit/enums/schedule_fit_app_info.dart';
@@ -22,7 +23,9 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Future.delayed(const Duration(seconds: 2));
   FlutterNativeSplash.remove();
-  runApp(MyApp(database: db));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) => runApp(MyApp(database: db)));
 }
 
 class MyApp extends StatelessWidget {

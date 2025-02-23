@@ -104,7 +104,7 @@ abstract class AppLocalizations {
   /// No description provided for @info.
   ///
   /// In it, this message translates to:
-  /// **'Circa Schedulefit'**
+  /// **'Circa ScheduleFit'**
   String get info;
 
   /// No description provided for @versione.

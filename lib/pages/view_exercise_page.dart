@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/horizontal_scrollbar.dart';
@@ -16,6 +17,7 @@ import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_images.dart';
 import '../l10n/app_localizations.dart';
+import '../managers/countdown_manager.dart';
 import '../providers/exercise_info_provider.dart';
 import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
@@ -24,23 +26,11 @@ import 'edit_exercise_page.dart';
 
 class ViewExercisePage extends StatefulWidget {
   int id;
-  String nomeEsercizio;
-  final String nomeMuscolo;
-  final String immagineMuscolo;
-  int serieTotali;
-  int serieCompletate;
-  List<int> giorniSettimana;
   final Function onSave;
 
   ViewExercisePage({
     super.key,
     required this.id,
-    required this.nomeEsercizio,
-    required this.nomeMuscolo,
-    required this.immagineMuscolo,
-    required this.serieTotali,
-    required this.serieCompletate,
-    required this.giorniSettimana,
     required this.onSave,
   });
 
@@ -50,22 +40,24 @@ class ViewExercisePage extends StatefulWidget {
 
 class _ViewExercisePageState extends State<ViewExercisePage>
     with TickerProviderStateMixin {
+  late ExerciseInfoData exercise;
   late SeriesInfoProvider seriesInfoProvider;
   late ExerciseInfoProvider exerciseInfoProvider;
   late StopwatchProvider stopwatchProvider;
+  late CountdownManager countdownManager;
   late TextEditingController _nomeEsercizioController;
   late List<SeriesInfoData> seriesList = [];
   late List<String> giorniSettimanaTradotti = [];
+  late AnimationController _countdownController;
+  late AnimationController _opacityController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _opacityAnimation;
   bool _isLoading = false;
   bool startTraining = false;
   String firstButtonText = '';
   String secondButtonText = '';
   int _countdown = 3;
   bool _showCountdown = false;
-  late AnimationController _countdownController;
-  late AnimationController _opacityController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
@@ -73,28 +65,45 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     seriesInfoProvider = context.read<SeriesInfoProvider>();
     stopwatchProvider = context.read<StopwatchProvider>();
-    _nomeEsercizioController =
-        TextEditingController(text: widget.nomeEsercizio);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      giorniSettimanaTradotti = widget.giorniSettimana
-          .map((g) => getDayOfWeekTranslated(context, g))
-          .toList();
-      firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
-      secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
-    });
-
+    _getExercise();
     seriesInfoProvider.clearSeries();
     _getSeries();
+
+    _nomeEsercizioController =
+        TextEditingController(text: exercise.nomeEsercizio);
     _countdownController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-
     _opacityController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+
+    countdownManager = CountdownManager(
+      countdownController: _countdownController,
+      opacityController: _opacityController,
+      onCountdownUpdate: (int remainingTime) =>
+          setState(() => _countdown = remainingTime),
+      onTrainingStart: () => setState(() {
+        _showCountdown = true;
+        _countdown = 3;
+      }),
+      onCountdownFinished: () => setState(() {
+        _showCountdown = false;
+        startTraining = true;
+        stopwatchProvider.start();
+        firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
+        secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
+      }),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getDaysOfWeekTranslated();
+      firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
+      secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
+    });
 
     _scaleAnimation = Tween<double>(begin: 1, end: 0.2).animate(
       CurvedAnimation(parent: _countdownController, curve: Curves.easeOut),
@@ -102,12 +111,6 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     _opacityAnimation = Tween<double>(begin: 1, end: 0).animate(
       CurvedAnimation(parent: _countdownController, curve: Curves.easeOut),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _getSeries();
   }
 
   @override
@@ -120,11 +123,23 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     super.dispose();
   }
 
+  ///Get Days of Week Translated
+  Future<void> _getDaysOfWeekTranslated() async {
+    giorniSettimanaTradotti = exercise.giorniSettimana
+        .where((g) => g != -1)
+        .map((g) => getDayOfWeekTranslatedFromInt(context, g))
+        .toList();
+  }
+
+  ///Get Exercise
+  void _getExercise() {
+    setState(() =>
+        exercise = exerciseInfoProvider.getExerciseById(widget.id) ?? exercise);
+  }
+
   ///Get Series
   Future<void> _getSeries() async {
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
     await seriesInfoProvider.loadSeries(widget.id).then(
       (value) {
         setState(() {
@@ -135,38 +150,33 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     );
   }
 
-  ///Start Countdown
-  void startCountdown() {
-    setState(() {
-      _showCountdown = true;
-      _countdown = 3;
-    });
+  ///Update Completed Series
+  Future<void> _updateCompletedSeries(
+      Map<String, dynamic> updatedValues, int index) async {
+    setState(() => exercise.serieCompletate = updatedValues['serieCompletate']);
+  }
 
-    _countdownController.reset();
-    _countdownController.forward();
+  ///Upsert Exercise
+  Future<void> _upsertExercise() async {
+    ExerciseInfoCompanion exerciseInfo = ExerciseInfoCompanion(
+        id: widget.id != -1
+            ? drift.Value(widget.id)
+            : const drift.Value.absent(),
+        serieCompletate: drift.Value(exercise.serieCompletate));
+    final exerciseId = await exerciseInfoProvider.upsertExercise(exerciseInfo);
+    widget.id = exerciseId;
+  }
 
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_countdown > 0) {
-        setState(() {
-          _countdown--;
-        });
-        _countdownController.forward(from: 0);
-      } else {
-        stopwatchProvider.start();
-        setState(() {
-          startTraining = true;
-          firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
-          secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
-        });
-        timer.cancel();
-        _opacityController.forward();
-        Future.delayed(const Duration(seconds: 1), () {
-          setState(() {
-            _showCountdown = false;
-          });
-        });
-      }
-    });
+  ///Upsert Series
+  Future<void> _upsertSeries() async {
+    for (var series in seriesList) {
+      series.id = await seriesInfoProvider.upsertSeries(SeriesInfoCompanion(
+        id: drift.Value(series.id),
+        idEsercizio: drift.Value(
+            series.idEsercizio != -1 ? series.idEsercizio : widget.id),
+        completata: drift.Value(series.completata),
+      ));
+    }
   }
 
   ///Open Dialog
@@ -177,15 +187,18 @@ class _ViewExercisePageState extends State<ViewExercisePage>
         return ScheduleFitAlertDialog(
             title: AppLocalizations.of(context)!.terminaAllenamento,
             message: AppLocalizations.of(context)!.confermaTerminaAllenamento,
-            onPressed: () => setState(() {
-                  firstButtonText =
-                      AppLocalizations.of(context)!.iniziaAllenamento;
-                  secondButtonText =
-                      AppLocalizations.of(context)!.modificaScheda;
-                  startTraining = false;
-                  stopwatchProvider.reset();
-                  Navigator.of(context).pop();
-                }));
+            onPressed: () async {
+              setState(() {
+                firstButtonText =
+                    AppLocalizations.of(context)!.iniziaAllenamento;
+                secondButtonText = AppLocalizations.of(context)!.modificaScheda;
+                startTraining = false;
+                stopwatchProvider.reset();
+                Navigator.of(context).pop();
+              });
+              await _upsertSeries();
+              await _upsertExercise();
+            });
       },
     );
   }
@@ -217,8 +230,8 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                           children: [
                             Text(
                               AppLocalizations.of(context)!.nomeMuscolo(
-                                widget.nomeMuscolo[0].toLowerCase() +
-                                    widget.nomeMuscolo
+                                exercise.categoriaEsercizio[0].toLowerCase() +
+                                    exercise.categoriaEsercizio
                                         .substring(1)
                                         .replaceAllMapped(
                                           RegExp(r' \w'),
@@ -237,7 +250,7 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                             ),
                             const SizedBox(height: 5),
                             Image.asset(
-                              widget.immagineMuscolo,
+                              exercise.immagine,
                               width: 40,
                               height: 40,
                               fit: BoxFit.contain,
@@ -325,10 +338,12 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                             unitaMisura: seriesList[index].unitaMisura,
                             peso: seriesList[index].peso,
                             completata: seriesList[index].completata,
-                            serieCompletate: widget.serieCompletate,
+                            serieCompletate: exercise.serieCompletate,
                             onDelete: null,
-                            onUpdate: (updatedValues) => (),
+                            onUpdate: (updatedValues) =>
+                                _updateCompletedSeries(updatedValues, index),
                             onlyView: true,
+                            startTraining: startTraining,
                           );
                         },
                       ),
@@ -355,23 +370,21 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                     AppColors.secondaryColor),
                                 padding: const EdgeInsets.all(10),
                               ),
-                              onPressed: () => setState(() {
-                                firstButtonText ==
-                                        AppLocalizations.of(context)!
-                                            .sospendiAllenamento
-                                    ? {
-                                        firstButtonText =
-                                            AppLocalizations.of(context)!
-                                                .riprendiAllenamento,
-                                        stopwatchProvider.stop()
-                                      }
-                                    : {
-                                        firstButtonText =
-                                            AppLocalizations.of(context)!
-                                                .sospendiAllenamento,
-                                        stopwatchProvider.start()
-                                      };
-                              }),
+                              onPressed: () => setState(() => firstButtonText ==
+                                      AppLocalizations.of(context)!
+                                          .sospendiAllenamento
+                                  ? {
+                                      firstButtonText =
+                                          AppLocalizations.of(context)!
+                                              .riprendiAllenamento,
+                                      stopwatchProvider.stop()
+                                    }
+                                  : {
+                                      firstButtonText =
+                                          AppLocalizations.of(context)!
+                                              .sospendiAllenamento,
+                                      stopwatchProvider.start()
+                                    }),
                               child: Text(firstButtonText,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
@@ -386,9 +399,8 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                     AppColors.cancelColor),
                                 padding: const EdgeInsets.all(10),
                               ),
-                              onPressed: () => setState(() {
-                                _openDialog(exerciseInfoProvider);
-                              }),
+                              onPressed: () =>
+                                  _openDialog(exerciseInfoProvider),
                               child: Text(
                                 secondButtonText,
                                 textAlign: TextAlign.center,
@@ -421,8 +433,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                     : Colors.grey.withOpacity(0.2),
                                 padding: const EdgeInsets.all(10),
                               ),
-                              onPressed: () =>
-                                  !_showCountdown ? startCountdown() : null,
+                              onPressed: () => !_showCountdown
+                                  ? countdownManager.startCountdown()
+                                  : null,
                               child: Text(
                                   AppLocalizations.of(context)!
                                       .iniziaAllenamento,
@@ -447,22 +460,18 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                       MaterialPageRoute(
                                         builder: (context) => EditExercisePage(
                                           id: widget.id,
-                                          nomeEsercizio: widget.nomeEsercizio,
-                                          nomeMuscolo: widget.nomeMuscolo,
-                                          immagineMuscolo:
-                                              widget.immagineMuscolo,
-                                          serieTotali: widget.serieTotali,
-                                          serieCompletate:
-                                              widget.serieCompletate,
-                                          giorniSettimana:
-                                              widget.giorniSettimana,
-                                          onSave: () {
-                                            exerciseInfoProvider
-                                                .loadExercises();
-                                          },
+                                          categoriaEsercizio:
+                                              exercise.categoriaEsercizio,
+                                          immagine: exercise.immagine,
+                                          onSave: () => exerciseInfoProvider
+                                              .loadExercises(),
                                         ),
                                       ),
-                                    ).then((values) => _getSeries())
+                                    ).then((values) => {
+                                        _getExercise(),
+                                        _getDaysOfWeekTranslated(),
+                                        _getSeries(),
+                                      })
                                   : null,
                               child: Text(
                                 AppLocalizations.of(context)!

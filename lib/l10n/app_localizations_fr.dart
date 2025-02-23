@@ -72,6 +72,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get serieCompletate => 'Série terminée: ';
 
   @override
+  String get serieTotali => 'Série totale: ';
+
+  @override
   String get confermaEliminaScheda => 'Êtes-vous sûr de vouloir supprimer l\'onglet?';
 
   @override

@@ -23,7 +23,7 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiSelectDialogField(
       initialValue: giorniSettimanaTradotti,
-      items: getDaysOfWeekTranslated(context)
+      items: getDayOfWeekTranslatedFromEnum(context)
           .map((e) => MultiSelectItem(e, e))
           .toList(),
       listType: MultiSelectListType.LIST,
@@ -103,7 +103,7 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
       onConfirm: (values) {
         values.isNotEmpty
             ? giorniSettimanaTradotti = values
-            : giorniSettimanaTradotti = [];
+            : giorniSettimanaTradotti = ['0'];
         onUpdate(giorniSettimanaTradotti);
       },
       chipDisplay: MultiSelectChipDisplay(
@@ -113,7 +113,7 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
         textStyle: TextStyle(
             color: ThemeProvider.getColor(AppColors.secondaryColor),
             fontSize: 14),
-        items: getDaysOfWeekTranslated(context)
+        items: getDayOfWeekTranslatedFromEnum(context)
             .map((d) => MultiSelectItem(d, d))
             .toList(),
       ),

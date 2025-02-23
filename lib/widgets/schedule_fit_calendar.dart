@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
 import '../providers/calendar_provider.dart';
 import '../providers/exercise_info_provider.dart';
@@ -151,18 +152,18 @@ class ScheduleFitCalendar extends StatelessWidget {
               final periodicExercises = context
                   .read<ExerciseInfoProvider>()
                   .getPeriodicExercises(day.weekday);
-              final exercisesForDay =
-                  context.read<ExerciseInfoProvider>().getExercisesForDate(day);
-              final periodicMarkers = periodicExercises.take(3).toList();
-              final markersForDay = periodicMarkers.length < 3
-                  ? exercisesForDay.take(3 - periodicMarkers.length).toList()
-                  : [];
+              final exercisesByDate =
+                  context.read<ExerciseInfoProvider>().getExercisesByDate(day);
+              List<ExerciseInfoData> totalExercises = [
+                ...{...periodicExercises, ...exercisesByDate}
+              ];
+              final markers = totalExercises.take(3);
 
               return Positioned(
                 top: 45,
                 child: Row(
                   children: [
-                    ...periodicMarkers.map((event) {
+                    ...markers.map((event) {
                       return Container(
                         width: 5,
                         height: 5,
@@ -175,23 +176,11 @@ class ScheduleFitCalendar extends StatelessWidget {
                         ),
                       );
                     }),
-                    ...markersForDay.map((event) {
-                      return Container(
-                        width: 5,
-                        height: 5,
-                        margin: const EdgeInsets.symmetric(horizontal: 1),
-                        decoration: BoxDecoration(
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor),
-                          shape: BoxShape.circle,
-                        ),
-                      );
-                    }),
-                    if (periodicExercises.length + exercisesForDay.length > 3)
+                    if (totalExercises.length > 3)
                       Container(
                         margin: const EdgeInsets.only(top: 1, left: 2),
                         child: Text(
-                          "+${(periodicExercises.length + exercisesForDay.length) - 3}",
+                          "+${(totalExercises.length) - 3}",
                           style: TextStyle(
                             color: ThemeProvider.getColor(
                                 AppColors.calendarDaysOfWeekColor),

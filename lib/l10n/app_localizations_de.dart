@@ -72,6 +72,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get serieCompletate => 'Abgeschlossene serie: ';
 
   @override
+  String get serieTotali => 'Gesamtserie: ';
+
+  @override
   String get confermaEliminaScheda => 'Sind Sie sicher, dass Sie die Karte löschen möchten?';
 
   @override

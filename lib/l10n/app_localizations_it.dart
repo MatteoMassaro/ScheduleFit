@@ -72,6 +72,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get serieCompletate => 'Serie completate: ';
 
   @override
+  String get serieTotali => 'Serie totali: ';
+
+  @override
   String get confermaEliminaScheda => 'Sei sicuro di voler eliminare la scheda?';
 
   @override

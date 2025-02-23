@@ -73,7 +73,7 @@ class $ExerciseInfoTable extends ExerciseInfo
   static const VerificationMeta _dataMeta = const VerificationMeta('data');
   @override
   late final GeneratedColumn<DateTime> data = GeneratedColumn<DateTime>(
-      'data', aliasedName, false,
+      'data', aliasedName, true,
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
       defaultValue: currentDate);
@@ -165,7 +165,7 @@ class $ExerciseInfoTable extends ExerciseInfo
           attachedDatabase.typeMapping.read(DriftSqlType.string,
               data['${effectivePrefix}giorni_settimana'])!),
       data: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}data'])!,
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}data']),
     );
   }
 
@@ -187,7 +187,7 @@ class ExerciseInfoData extends DataClass
   int serieTotali;
   int serieCompletate;
   List<int> giorniSettimana;
-  DateTime data;
+  DateTime? data;
   ExerciseInfoData(
       {this.id,
       required this.nomeEsercizio,
@@ -196,7 +196,7 @@ class ExerciseInfoData extends DataClass
       required this.serieTotali,
       required this.serieCompletate,
       required this.giorniSettimana,
-      required this.data});
+      this.data});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -212,7 +212,9 @@ class ExerciseInfoData extends DataClass
       map['giorni_settimana'] = Variable<String>(
           $ExerciseInfoTable.$convertergiorniSettimana.toSql(giorniSettimana));
     }
-    map['data'] = Variable<DateTime>(data);
+    if (!nullToAbsent || data != null) {
+      map['data'] = Variable<DateTime>(data);
+    }
     return map;
   }
 
@@ -225,7 +227,7 @@ class ExerciseInfoData extends DataClass
       serieTotali: Value(serieTotali),
       serieCompletate: Value(serieCompletate),
       giorniSettimana: Value(giorniSettimana),
-      data: Value(data),
+      data: data == null && nullToAbsent ? const Value.absent() : Value(data),
     );
   }
 
@@ -241,7 +243,7 @@ class ExerciseInfoData extends DataClass
       serieTotali: serializer.fromJson<int>(json['serieTotali']),
       serieCompletate: serializer.fromJson<int>(json['serieCompletate']),
       giorniSettimana: serializer.fromJson<List<int>>(json['giorniSettimana']),
-      data: serializer.fromJson<DateTime>(json['data']),
+      data: serializer.fromJson<DateTime?>(json['data']),
     );
   }
   @override
@@ -255,7 +257,7 @@ class ExerciseInfoData extends DataClass
       'serieTotali': serializer.toJson<int>(serieTotali),
       'serieCompletate': serializer.toJson<int>(serieCompletate),
       'giorniSettimana': serializer.toJson<List<int>>(giorniSettimana),
-      'data': serializer.toJson<DateTime>(data),
+      'data': serializer.toJson<DateTime?>(data),
     };
   }
 
@@ -267,7 +269,7 @@ class ExerciseInfoData extends DataClass
           int? serieTotali,
           int? serieCompletate,
           List<int>? giorniSettimana,
-          DateTime? data}) =>
+          Value<DateTime?> data = const Value.absent()}) =>
       ExerciseInfoData(
         id: id.present ? id.value : this.id,
         nomeEsercizio: nomeEsercizio ?? this.nomeEsercizio,
@@ -276,7 +278,7 @@ class ExerciseInfoData extends DataClass
         serieTotali: serieTotali ?? this.serieTotali,
         serieCompletate: serieCompletate ?? this.serieCompletate,
         giorniSettimana: giorniSettimana ?? this.giorniSettimana,
-        data: data ?? this.data,
+        data: data.present ? data.value : this.data,
       );
   ExerciseInfoData copyWithCompanion(ExerciseInfoCompanion data) {
     return ExerciseInfoData(
@@ -340,7 +342,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
   Value<int> serieTotali;
   Value<int> serieCompletate;
   Value<List<int>> giorniSettimana;
-  Value<DateTime> data;
+  Value<DateTime?> data;
   ExerciseInfoCompanion({
     this.id = const Value.absent(),
     this.nomeEsercizio = const Value.absent(),
@@ -394,7 +396,7 @@ class ExerciseInfoCompanion extends UpdateCompanion<ExerciseInfoData> {
       Value<int>? serieTotali,
       Value<int>? serieCompletate,
       Value<List<int>>? giorniSettimana,
-      Value<DateTime>? data}) {
+      Value<DateTime?>? data}) {
     return ExerciseInfoCompanion(
       id: id ?? this.id,
       nomeEsercizio: nomeEsercizio ?? this.nomeEsercizio,
@@ -833,7 +835,7 @@ typedef $$ExerciseInfoTableCreateCompanionBuilder = ExerciseInfoCompanion
   Value<int> serieTotali,
   Value<int> serieCompletate,
   required List<int> giorniSettimana,
-  Value<DateTime> data,
+  Value<DateTime?> data,
 });
 typedef $$ExerciseInfoTableUpdateCompanionBuilder = ExerciseInfoCompanion
     Function({
@@ -844,7 +846,7 @@ typedef $$ExerciseInfoTableUpdateCompanionBuilder = ExerciseInfoCompanion
   Value<int> serieTotali,
   Value<int> serieCompletate,
   Value<List<int>> giorniSettimana,
-  Value<DateTime> data,
+  Value<DateTime?> data,
 });
 
 final class $$ExerciseInfoTableReferences extends BaseReferences<
@@ -1051,7 +1053,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             Value<int> serieTotali = const Value.absent(),
             Value<int> serieCompletate = const Value.absent(),
             Value<List<int>> giorniSettimana = const Value.absent(),
-            Value<DateTime> data = const Value.absent(),
+            Value<DateTime?> data = const Value.absent(),
           }) =>
               ExerciseInfoCompanion(
             id: id,
@@ -1071,7 +1073,7 @@ class $$ExerciseInfoTableTableManager extends RootTableManager<
             Value<int> serieTotali = const Value.absent(),
             Value<int> serieCompletate = const Value.absent(),
             required List<int> giorniSettimana,
-            Value<DateTime> data = const Value.absent(),
+            Value<DateTime?> data = const Value.absent(),
           }) =>
               ExerciseInfoCompanion.insert(
             id: id,

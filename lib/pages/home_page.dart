@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:schedule_fit/database/schedule_fit_database.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:schedule_fit/providers/page_provider.dart';
 
 import '../enums/schedule_fit_colors.dart';
 import '../enums/schedule_fit_pages.dart';
 import '../providers/exercise_info_provider.dart';
-import '../providers/notification_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/schedule_fit_accordion.dart';
 import '../widgets/schedule_fit_drawer.dart';
@@ -23,7 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late ExerciseInfoProvider _exerciseInfoProvider;
   late PageProvider _pageProvider;
-  late List<ExerciseInfoData> todayExercises;
 
   @override
   void initState() {
@@ -67,10 +64,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Consumer<ExerciseInfoProvider>(
         builder: (context, exerciseInfoProvider, child) {
-          todayExercises = exerciseInfoProvider.getTodayExercises();
-
           return exerciseInfoProvider.exerciseList.isEmpty
               ?
+
               ///Text Tip
               Center(
                   child: Padding(
@@ -84,8 +80,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               :
+
               ///Days Of Week Accordions
-              ScheduleFitAccordion(todayExercises: todayExercises);
+              const ScheduleFitAccordion();
         },
       ),
       floatingActionButton: FloatingActionButton(

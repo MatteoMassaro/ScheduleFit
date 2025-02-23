@@ -23,12 +23,8 @@ class _ScheduleFitExercisesDialogState
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => EditExercisePage(
           id: -1,
-          nomeEsercizio: '',
-          nomeMuscolo: muscleIconName,
-          immagineMuscolo: muscleIconPath,
-          serieTotali: 0,
-          serieCompletate: 0,
-          giorniSettimana: const [],
+          categoriaEsercizio: muscleIconName,
+          immagine: muscleIconPath,
           onSave: widget.onSave),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);

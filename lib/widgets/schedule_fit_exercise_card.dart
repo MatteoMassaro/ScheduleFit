@@ -19,6 +19,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final List<int> giorniSettimana;
   final VoidCallback? onDelete;
   final bool onlyView;
+  final bool todayExercise;
 
   const ScheduleFitExerciseCard({
     super.key,
@@ -31,6 +32,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
     required this.giorniSettimana,
     required this.onDelete,
     required this.onlyView,
+    required this.todayExercise,
   });
 
   @override
@@ -68,7 +70,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ///Exercise Name & Completed Series
+                      ///Exercise Name & Series
                       Expanded(
                         flex: 6,
                         child: Column(
@@ -83,15 +85,25 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                       AppColors.secondaryColor)),
                             ),
                             const SizedBox(height: 10),
-                            Text(
-                                '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
-                                textAlign: TextAlign.start,
-                                softWrap: true,
-                                overflow: TextOverflow.visible,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: ThemeProvider.getColor(
-                                        AppColors.exerciseCardTextColor))),
+                            widget.todayExercise
+                                ? Text(
+                                    '${AppLocalizations.of(context)!.serieCompletate}${widget.serieCompletate}/${widget.serieTotali}',
+                                    textAlign: TextAlign.start,
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ThemeProvider.getColor(
+                                            AppColors.exerciseCardTextColor)))
+                                : Text(
+                                    '${AppLocalizations.of(context)!.serieTotali}${widget.serieTotali}',
+                                    textAlign: TextAlign.start,
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ThemeProvider.getColor(
+                                            AppColors.exerciseCardTextColor))),
                           ],
                         ),
                       ),
@@ -164,12 +176,9 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                   MaterialPageRoute(
                                     builder: (context) => EditExercisePage(
                                       id: widget.id,
-                                      nomeEsercizio: widget.nomeEsercizio,
-                                      nomeMuscolo: widget.categoriaEsercizio,
-                                      immagineMuscolo: widget.immagine,
-                                      serieTotali: widget.serieTotali,
-                                      serieCompletate: widget.serieCompletate,
-                                      giorniSettimana: widget.giorniSettimana,
+                                      categoriaEsercizio:
+                                          widget.categoriaEsercizio,
+                                      immagine: widget.immagine,
                                       onSave: () {
                                         exerciseInfoProvider.loadExercises();
                                       },
@@ -180,14 +189,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ViewExercisePage(
-                                        id: widget.id,
-                                        nomeEsercizio: widget.nomeEsercizio,
-                                        nomeMuscolo: widget.categoriaEsercizio,
-                                        immagineMuscolo: widget.immagine,
-                                        serieTotali: widget.serieTotali,
-                                        serieCompletate: widget.serieCompletate,
-                                        giorniSettimana: widget.giorniSettimana,
-                                        onSave: () => ()),
+                                        id: widget.id, onSave: () => ()),
                                   ),
                                 );
                         },

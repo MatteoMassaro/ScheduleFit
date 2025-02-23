@@ -227,6 +227,12 @@ abstract class AppLocalizations {
   /// **'Serie completate: '**
   String get serieCompletate;
 
+  /// No description provided for @serieTotali.
+  ///
+  /// In it, this message translates to:
+  /// **'Serie totali: '**
+  String get serieTotali;
+
   /// No description provided for @confermaEliminaScheda.
   ///
   /// In it, this message translates to:

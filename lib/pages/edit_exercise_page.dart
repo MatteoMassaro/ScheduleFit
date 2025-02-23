@@ -15,23 +15,15 @@ import '../widgets/schedule_fit_days_of_week_dropdown.dart';
 
 class EditExercisePage extends StatefulWidget {
   int id;
-  String nomeEsercizio;
-  final String nomeMuscolo;
-  final String immagineMuscolo;
-  int serieTotali;
-  int serieCompletate;
-  List<int> giorniSettimana;
+  final String categoriaEsercizio;
+  final String immagine;
   final Function onSave;
 
   EditExercisePage({
     super.key,
     required this.id,
-    required this.nomeEsercizio,
-    required this.nomeMuscolo,
-    required this.immagineMuscolo,
-    required this.serieTotali,
-    required this.serieCompletate,
-    required this.giorniSettimana,
+    required this.categoriaEsercizio,
+    required this.immagine,
     required this.onSave,
   });
 
@@ -40,6 +32,7 @@ class EditExercisePage extends StatefulWidget {
 }
 
 class _EditExercisePageState extends State<EditExercisePage> {
+  late ExerciseInfoData exercise;
   late SeriesInfoProvider seriesInfoProvider;
   late ExerciseInfoProvider exerciseInfoProvider;
   late TextEditingController _nomeEsercizioController;
@@ -53,20 +46,36 @@ class _EditExercisePageState extends State<EditExercisePage> {
     super.initState();
     exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     seriesInfoProvider = context.read<SeriesInfoProvider>();
+
+    _getExercise();
+    _getSeries();
+
     _nomeEsercizioController =
-        TextEditingController(text: widget.nomeEsercizio);
+        TextEditingController(text: exercise.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      weekDaysTranslated = widget.giorniSettimana
-          .map((g) => getDayOfWeekTranslated(context, g))
+      weekDaysTranslated = exercise.giorniSettimana
+          .map((g) => getDayOfWeekTranslatedFromInt(context, g))
           .toList();
     });
-    _getSeries();
   }
 
   @override
   void dispose() {
     _nomeEsercizioController.dispose();
     super.dispose();
+  }
+
+  ///Get Exercise
+  void _getExercise() {
+    setState(() => exercise = exerciseInfoProvider.getExerciseById(widget.id) ??
+        ExerciseInfoData(
+          nomeEsercizio: '',
+          categoriaEsercizio: widget.categoriaEsercizio,
+          immagine: widget.immagine,
+          serieTotali: 0,
+          serieCompletate: 0,
+          giorniSettimana: const [],
+        ));
   }
 
   ///Get Series
@@ -88,7 +97,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
   Future<void> _addSeriesCard() async {
     seriesInfoProvider.addSeries(widget.id);
     setState(() {
-      widget.serieTotali++;
+      exercise.serieTotali++;
     });
   }
 
@@ -96,7 +105,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
   Future<void> _updateCompletedSeries(
       Map<String, dynamic> updatedValues, int index) async {
     setState(() {
-      widget.serieCompletate = updatedValues['serieCompletate'];
+      exercise.serieCompletate = updatedValues['serieCompletate'];
       _updateSaveButtonState();
     });
   }
@@ -116,14 +125,13 @@ class _EditExercisePageState extends State<EditExercisePage> {
             ? drift.Value(widget.id)
             : const drift.Value.absent(),
         nomeEsercizio: drift.Value(_nomeEsercizioController.text),
-        categoriaEsercizio: drift.Value(widget.nomeMuscolo),
-        immagine: drift.Value(widget.immagineMuscolo),
-        serieCompletate: drift.Value(widget.serieCompletate),
-        serieTotali: drift.Value(widget.serieTotali),
+        categoriaEsercizio: drift.Value(exercise.categoriaEsercizio),
+        immagine: drift.Value(exercise.immagine),
+        serieCompletate: drift.Value(exercise.serieCompletate),
+        serieTotali: drift.Value(exercise.serieTotali),
         giorniSettimana: drift.Value(weekDaysTranslated
             .map((g) => getDayOfWeekTranslatedFromString(context, g))
-            .toList()),
-        data: drift.Value(DateTime.now()));
+            .toList()));
     final exerciseId = await exerciseInfoProvider.upsertExercise(exerciseInfo);
     widget.id = exerciseId;
   }
@@ -145,16 +153,16 @@ class _EditExercisePageState extends State<EditExercisePage> {
 
   ///Remove Series
   void _removeSeries(int seriesId, int index) async {
-    widget.serieTotali--;
-    seriesList[index].completata == true ? widget.serieCompletate-- : null;
+    exercise.serieTotali--;
+    seriesList[index].completata == true ? exercise.serieCompletate-- : null;
     seriesId != -1
         ? {
             await seriesInfoProvider.deleteSeries(seriesId, widget.id),
             await exerciseInfoProvider.upsertExerciseSeries(
                 ExerciseInfoCompanion(
                     id: drift.Value(widget.id),
-                    serieTotali: drift.Value(widget.serieTotali),
-                    serieCompletate: drift.Value(widget.serieCompletate)))
+                    serieTotali: drift.Value(exercise.serieTotali),
+                    serieCompletate: drift.Value(exercise.serieCompletate)))
           }
         : seriesList.removeAt(index);
     _getSeries();
@@ -186,7 +194,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: widget.nomeEsercizio != ''
+        title: exercise.nomeEsercizio != ''
             ? Text(AppLocalizations.of(context)!.modificaScheda)
             : Text(AppLocalizations.of(context)!.creaScheda),
       ),
@@ -209,8 +217,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.nomeMuscolo(
-                              widget.nomeMuscolo[0].toLowerCase() +
-                                  widget.nomeMuscolo
+                              exercise.categoriaEsercizio[0].toLowerCase() +
+                                  exercise.categoriaEsercizio
                                       .substring(1)
                                       .replaceAllMapped(
                                         RegExp(r' \w'),
@@ -229,7 +237,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
                           ),
                           const SizedBox(height: 5),
                           Image.asset(
-                            widget.immagineMuscolo,
+                            exercise.immagine,
                             width: 40,
                             height: 40,
                             fit: BoxFit.contain,
@@ -314,13 +322,13 @@ class _EditExercisePageState extends State<EditExercisePage> {
                           unitaMisura: seriesList[index].unitaMisura,
                           peso: seriesList[index].peso,
                           completata: seriesList[index].completata,
-                          serieCompletate: widget.serieCompletate,
+                          serieCompletate: exercise.serieCompletate,
                           onDelete: () =>
                               _removeSeries(seriesList[index].id ?? -1, index),
-                          onUpdate: (updatedValues) {
-                            _updateCompletedSeries(updatedValues, index);
-                          },
+                          onUpdate: (updatedValues) =>
+                              _updateCompletedSeries(updatedValues, index),
                           onlyView: false,
+                          startTraining: false,
                         );
                       },
                     ),

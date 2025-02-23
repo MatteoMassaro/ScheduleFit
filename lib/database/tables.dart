@@ -17,7 +17,7 @@ class ExerciseInfo extends Table {
 
   TextColumn get giorniSettimana => text().map(const IntegerListConverter())();
 
-  DateTimeColumn get data => dateTime().withDefault(currentDate)();
+  DateTimeColumn get data => dateTime().nullable().withDefault(currentDate)();
 }
 
 class SeriesInfo extends Table {

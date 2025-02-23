@@ -16,7 +16,7 @@ class CalendarProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedDay(DateTime day) {
+  void setSelectedDay(DateTime? day) {
     _selectedDay = day;
     notifyListeners();
   }

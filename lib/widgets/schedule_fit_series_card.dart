@@ -20,6 +20,7 @@ class ScheduleFitSeriesCard extends StatefulWidget {
   final VoidCallback? onDelete;
   final ValueChanged<Map<String, dynamic>> onUpdate;
   final bool onlyView;
+  final bool startTraining;
 
   ScheduleFitSeriesCard({
     super.key,
@@ -32,6 +33,7 @@ class ScheduleFitSeriesCard extends StatefulWidget {
     required this.onDelete,
     required this.onUpdate,
     required this.onlyView,
+    required this.startTraining,
   });
 
   @override
@@ -97,25 +99,26 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                         color:
                             ThemeProvider.getColor(AppColors.secondaryColor))),
                 const Spacer(),
-                ScheduleFitSwitch(
-                  imageActive: Images.check,
-                  imageNotActive: Images.cross,
-                  colorActive: ThemeProvider.getColor(AppColors.checkColor) ??
-                      const Color(0xFF3A8A3D),
-                  colorNotActive:
-                      ThemeProvider.getColor(AppColors.crossColor) ??
-                          const Color(0xFF850909),
-                  currentValue: _switchValue,
-                  onChanged: (newValue) => !widget.onlyView
-                      ? setState(() {
+                widget.startTraining
+                    ? ScheduleFitSwitch(
+                        imageActive: Images.check,
+                        imageNotActive: Images.cross,
+                        colorActive:
+                            ThemeProvider.getColor(AppColors.checkColor) ??
+                                const Color(0xFF3A8A3D),
+                        colorNotActive:
+                            ThemeProvider.getColor(AppColors.crossColor) ??
+                                const Color(0xFF850909),
+                        currentValue: _switchValue,
+                        onChanged: (newValue) => setState(() {
                           _switchValue = newValue;
                           newValue
                               ? widget.serieCompletate++
                               : widget.serieCompletate--;
                           _updateValues();
-                        })
-                      : null,
-                )
+                        }),
+                      )
+                    : const SizedBox.shrink()
               ]),
 
               ///Number Of Repetitions

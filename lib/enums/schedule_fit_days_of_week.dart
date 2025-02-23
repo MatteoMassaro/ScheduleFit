@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:schedule_fit/l10n/app_localizations.dart';
 
 enum DaysOfWeek {
+  oggi,
   lunedi,
   martedi,
   mercoledi,
@@ -12,6 +13,7 @@ enum DaysOfWeek {
 }
 
 Map<DaysOfWeek, int> dayOfWeekName = {
+  DaysOfWeek.oggi: 0,
   DaysOfWeek.lunedi: 1,
   DaysOfWeek.martedi: 2,
   DaysOfWeek.mercoledi: 3,
@@ -25,9 +27,11 @@ List<int> getDaysOfWeek() {
   return DaysOfWeek.values.map((day) => dayOfWeekName[day] ?? -1).toList();
 }
 
-List<String> getDaysOfWeekTranslated(BuildContext context) {
+List<String> getDayOfWeekTranslatedFromEnum(BuildContext context) {
   return DaysOfWeek.values.map((day) {
     switch (day) {
+      case DaysOfWeek.oggi:
+        return AppLocalizations.of(context)!.oggi;
       case DaysOfWeek.lunedi:
         return '${AppLocalizations.of(context)!.ogni} ${AppLocalizations.of(context)!.lunedi}';
       case DaysOfWeek.martedi:
@@ -48,8 +52,10 @@ List<String> getDaysOfWeekTranslated(BuildContext context) {
   }).toList();
 }
 
-String getDayOfWeekTranslated(BuildContext context, int day) {
+String getDayOfWeekTranslatedFromInt(BuildContext context, int day) {
   switch (day) {
+    case 0:
+      return AppLocalizations.of(context)!.oggi;
     case 1:
       return '${AppLocalizations.of(context)!.ogni} ${AppLocalizations.of(context)!.lunedi}';
     case 2:
@@ -82,6 +88,8 @@ int getDayOfWeekTranslatedFromString(BuildContext context, String day) {
 extension DaysOfWeekTranslation on AppLocalizations {
   String translateEnum(DaysOfWeek day) {
     switch (day) {
+      case DaysOfWeek.oggi:
+        return oggi;
       case DaysOfWeek.lunedi:
         return lunedi;
       case DaysOfWeek.martedi:

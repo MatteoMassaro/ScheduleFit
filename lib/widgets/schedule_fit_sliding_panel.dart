@@ -4,6 +4,7 @@ import 'package:schedule_fit/l10n/app_localizations.dart';
 import 'package:schedule_fit/widgets/schedule_fit_calendar.dart';
 import 'package:schedule_fit/widgets/schedule_fit_exercise_card.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 import '../database/schedule_fit_database.dart';
 import '../enums/schedule_fit_colors.dart';
@@ -27,17 +28,18 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
         .read<ExerciseInfoProvider>()
         .getPeriodicExercises(_selectedDate.weekday);
 
-    List<ExerciseInfoData> exerciseListForDate =
-        context.read<ExerciseInfoProvider>().getExercisesForDate(_selectedDate);
+    List<ExerciseInfoData> exercisesByDate =
+        context.read<ExerciseInfoProvider>().getExercisesByDate(_selectedDate);
+
+    List<ExerciseInfoData> totalExercises = [
+      ...{...periodicExercises, ...exercisesByDate}
+    ];
 
     return SlidingUpPanel(
       backdropEnabled: true,
       color: ThemeProvider.getColor(AppColors.primaryColor) ??
           const Color(0xFF556EAA),
-      isDraggable:
-          periodicExercises.isNotEmpty || exerciseListForDate.isNotEmpty
-              ? true
-              : false,
+      isDraggable: totalExercises.isNotEmpty ? true : false,
       minHeight: 200,
       maxHeight: MediaQuery.of(context).size.height * 0.9,
       renderPanelSheet: false,
@@ -91,8 +93,8 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
               color: Colors.transparent,
             ),
 
-            ///Exercise By Date Card List
-            exerciseListForDate.isNotEmpty
+            ///Exercise Card List
+            totalExercises.isNotEmpty
                 ? Expanded(
                     child: ListView.separated(
                       padding: periodicExercises.isEmpty
@@ -101,19 +103,26 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ScheduleFitExerciseCard(
-                          id: exerciseListForDate[index].id ?? -1,
-                          nomeEsercizio:
-                              exerciseListForDate[index].nomeEsercizio,
+                          id: totalExercises[index].id ?? -1,
+                          nomeEsercizio: totalExercises[index].nomeEsercizio,
                           categoriaEsercizio:
-                              exerciseListForDate[index].categoriaEsercizio,
-                          immagine: exerciseListForDate[index].immagine,
-                          serieTotali: exerciseListForDate[index].serieTotali,
+                              totalExercises[index].categoriaEsercizio,
+                          immagine: totalExercises[index].immagine,
+                          serieTotali: totalExercises[index].serieTotali,
                           serieCompletate:
-                              exerciseListForDate[index].serieCompletate,
-                          giorniSettimana:
-                              exerciseListForDate[index].giorniSettimana,
+                              totalExercises[index].serieCompletate,
+                          giorniSettimana: totalExercises[index]
+                              .giorniSettimana
+                              .map((giorno) => giorno == 0
+                                  ? isSameDay(DateTime.now(),
+                                          totalExercises[index].data)
+                                      ? giorno
+                                      : -1
+                                  : giorno)
+                              .toList(),
                           onDelete: null,
                           onlyView: true,
+                          todayExercise: _selectedDate.day == DateTime.now().day,
                         );
                       },
                       separatorBuilder: (context, index) {
@@ -123,48 +132,13 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
                         );
                       },
                       shrinkWrap: true,
-                      itemCount: exerciseListForDate.length,
-                    ),
-                  )
-                : Container(),
-
-            ///Periodic Exercise Card List
-            periodicExercises.isNotEmpty
-                ? Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      physics: const ClampingScrollPhysics(),
-                      itemBuilder: (context, index1) {
-                        return ScheduleFitExerciseCard(
-                          id: periodicExercises[index1].id ?? -1,
-                          nomeEsercizio:
-                              periodicExercises[index1].nomeEsercizio,
-                          categoriaEsercizio:
-                              periodicExercises[index1].categoriaEsercizio,
-                          immagine: periodicExercises[index1].immagine,
-                          serieTotali: periodicExercises[index1].serieTotali,
-                          serieCompletate:
-                              periodicExercises[index1].serieCompletate,
-                          giorniSettimana:
-                              periodicExercises[index1].giorniSettimana,
-                          onDelete: null,
-                          onlyView: true,
-                        );
-                      },
-                      separatorBuilder: (context, index1) {
-                        return const Divider(
-                          height: 0.5,
-                          color: Colors.transparent,
-                        );
-                      },
-                      shrinkWrap: true,
-                      itemCount: periodicExercises.length,
+                      itemCount: totalExercises.length,
                     ),
                   )
                 : Container(),
 
             ///No Exercises Text
-            periodicExercises.isEmpty && exerciseListForDate.isEmpty
+            periodicExercises.isEmpty && exercisesByDate.isEmpty
                 ? Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(

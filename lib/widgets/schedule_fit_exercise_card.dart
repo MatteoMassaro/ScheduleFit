@@ -16,7 +16,7 @@ class ScheduleFitExerciseCard extends StatefulWidget {
   final String immagine;
   final int serieCompletate;
   final int serieTotali;
-  final List<int> giorniSettimana;
+  final List<int?> giorniSettimana;
   final VoidCallback? onDelete;
   final bool onlyView;
   final bool todayExercise;

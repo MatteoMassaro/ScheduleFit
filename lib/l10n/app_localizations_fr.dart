@@ -197,6 +197,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get oggi => 'Aujourd\'hui';
 
   @override
+  String get nonAssegnati => 'Non attribué';
+
+  @override
   String get impostazioni => 'Paramètres';
 
   @override

@@ -425,6 +425,12 @@ abstract class AppLocalizations {
   /// **'Oggi'**
   String get oggi;
 
+  /// No description provided for @nonAssegnati.
+  ///
+  /// In it, this message translates to:
+  /// **'Non assegnati'**
+  String get nonAssegnati;
+
   /// No description provided for @impostazioni.
   ///
   /// In it, this message translates to:

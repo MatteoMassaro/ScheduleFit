@@ -75,14 +75,14 @@ String getDayOfWeekTranslatedFromInt(BuildContext context, int day) {
   }
 }
 
-int getDayOfWeekTranslatedFromString(BuildContext context, String day) {
+int? getDayOfWeekTranslatedFromString(BuildContext context, String day) {
   for (var dayOfWeek in DaysOfWeek.values) {
     if (day.toLowerCase().contains(
         AppLocalizations.of(context)!.translateEnum(dayOfWeek).toLowerCase())) {
-      return dayOfWeekName[dayOfWeek] ?? -1;
+      return dayOfWeekName[dayOfWeek];
     }
   }
-  return -1;
+  return null;
 }
 
 extension DaysOfWeekTranslation on AppLocalizations {

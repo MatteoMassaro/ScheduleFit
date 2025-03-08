@@ -9,15 +9,17 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        drawerEnableOpenDragGesture: true,
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.calendario),
-        ),
-        drawer: ScheduleFitDrawer(
-          onSave: () {},
-        ),
-        body: const ScheduleFitSlidingPanel());
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          drawerEnableOpenDragGesture: true,
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.calendario),
+          ),
+          drawer: ScheduleFitDrawer(
+            onSave: () {},
+          ),
+          body: const ScheduleFitSlidingPanel()),
+    );
   }
 }

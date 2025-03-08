@@ -30,7 +30,7 @@ class _ScheduleFitSlidingPanelState extends State<ScheduleFitSlidingPanel> {
           exerciseInfoProvider.getPeriodicExercises(_selectedDate.weekday);
 
       List<ExerciseInfoData> exercisesByDate =
-          exerciseInfoProvider.getExercisesByDate(_selectedDate);
+          exerciseInfoProvider.getTodayExercises(_selectedDate);
 
       List<ExerciseInfoData> totalExercises = [
         ...{...periodicExercises, ...exercisesByDate}

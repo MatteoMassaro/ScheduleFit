@@ -153,7 +153,7 @@ class ScheduleFitCalendar extends StatelessWidget {
                   .read<ExerciseInfoProvider>()
                   .getPeriodicExercises(day.weekday);
               final exercisesByDate =
-                  context.read<ExerciseInfoProvider>().getExercisesByDate(day);
+                  context.read<ExerciseInfoProvider>().getTodayExercises(day);
               List<ExerciseInfoData> totalExercises = [
                 ...{...periodicExercises, ...exercisesByDate}
               ];

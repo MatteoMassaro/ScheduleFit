@@ -49,49 +49,55 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawerEnableOpenDragGesture: true,
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.mioAllenamento,
-          style: const TextStyle(color: Colors.white),
+    return SafeArea(
+      child: Scaffold(
+        drawerEnableOpenDragGesture: true,
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context)!.mioAllenamento,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
-      ),
-      drawer: ScheduleFitDrawer(
-        onSave: () {
-          _exerciseInfoProvider.loadExercises();
-        },
-      ),
-      body: Consumer<ExerciseInfoProvider>(
-        builder: (context, exerciseInfoProvider, child) {
-          return exerciseInfoProvider.exerciseList.isEmpty
-              ?
+        drawer: ScheduleFitDrawer(
+          onSave: () {
+            _exerciseInfoProvider.loadExercises();
+          },
+        ),
+        body: Consumer<ExerciseInfoProvider>(
+          builder: (context, exerciseInfoProvider, child) {
+            return exerciseInfoProvider.exerciseList.isEmpty ||
+                    exerciseInfoProvider.exerciseList.every((exercise) =>
+                        exercise.giorniSettimana.length == 1 &&
+                        exercise.giorniSettimana.single == 0 &&
+                        exercise.data?.day != DateTime.now().day)
+                ?
 
-              ///Text Tip
-              Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      AppLocalizations.of(context)
-                              ?.suggerimentoAggiungiScheda ??
-                          '',
-                      style: const TextStyle(fontSize: 16),
+                ///Text Tip
+                Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        AppLocalizations.of(context)
+                                ?.suggerimentoAggiungiScheda ??
+                            '',
+                        style: const TextStyle(fontSize: 16),
+                      ),
                     ),
-                  ),
-                )
-              :
+                  )
+                :
 
-              ///Days Of Week Accordions
-              const ScheduleFitAccordion();
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showExercisesDialog,
-        tooltip: AppLocalizations.of(context)!.creaScheda,
-        backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
-        child: Icon(
-          Icons.add,
-          color: ThemeProvider.getColor(AppColors.pageBackgroundColor),
+                ///Days Of Week Accordions
+                const ScheduleFitAccordion();
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showExercisesDialog,
+          tooltip: AppLocalizations.of(context)!.creaScheda,
+          backgroundColor: ThemeProvider.getColor(AppColors.primaryColor),
+          child: Icon(
+            Icons.add,
+            color: ThemeProvider.getColor(AppColors.pageBackgroundColor),
+          ),
         ),
       ),
     );

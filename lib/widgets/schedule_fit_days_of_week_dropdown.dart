@@ -101,9 +101,7 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
         ),
       ),
       onConfirm: (values) {
-        values.isNotEmpty
-            ? giorniSettimanaTradotti = values
-            : giorniSettimanaTradotti = ['0'];
+        giorniSettimanaTradotti = values;
         onUpdate(giorniSettimanaTradotti);
       },
       chipDisplay: MultiSelectChipDisplay(

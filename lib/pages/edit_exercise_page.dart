@@ -53,9 +53,11 @@ class _EditExercisePageState extends State<EditExercisePage> {
     _nomeEsercizioController =
         TextEditingController(text: exercise.nomeEsercizio);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      weekDaysTranslated = exercise.giorniSettimana
-          .map((g) => getDayOfWeekTranslatedFromInt(context, g))
-          .toList();
+      weekDaysTranslated = exercise.giorniSettimana.isNotEmpty
+          ? exercise.giorniSettimana
+              .map((g) => getDayOfWeekTranslatedFromInt(context, g!))
+              .toList()
+          : [];
     });
   }
 
@@ -191,197 +193,204 @@ class _EditExercisePageState extends State<EditExercisePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: exercise.nomeEsercizio != ''
-            ? Text(AppLocalizations.of(context)!.modificaScheda)
-            : Text(AppLocalizations.of(context)!.creaScheda),
-      ),
-      body: Consumer<SeriesInfoProvider>(
-          builder: (context, seriesInfoProvider, child) {
-        return Column(
-          children: [
-            ///Header
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                children: [
-                  ///Icon
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.nomeMuscolo(
-                              exercise.categoriaEsercizio[0].toLowerCase() +
-                                  exercise.categoriaEsercizio
-                                      .substring(1)
-                                      .replaceAllMapped(
-                                        RegExp(r' \w'),
-                                        (match) => match
-                                            .group(0)!
-                                            .toUpperCase()
-                                            .trim(),
-                                      ),
-                            ),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: ThemeProvider.getColor(
-                                  AppColors.secondaryColor),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Image.asset(
-                            exercise.immagine,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  ///Title
-                  Expanded(
-                    flex: 3,
-                    child: AutoSizeTextField(
-                      controller: _nomeEsercizioController,
-                      style: TextStyle(
-                          fontSize: 25,
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor)),
-                      decoration: InputDecoration(
-                          hintText:
-                              AppLocalizations.of(context)!.inserisciTitolo,
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          counterText: "",
-                          border: InputBorder.none),
-                      maxLines: 2,
-                      textInputAction: TextInputAction.done,
-                      scrollPhysics: const NeverScrollableScrollPhysics(),
-                      minFontSize: 23,
-                      maxFontSize: 25,
-                      maxLength: 30,
-                      textAlign: TextAlign.center,
-                      onChanged: (text) {
-                        setState(() {
-                          _isSaveButtonEnabled = text.isNotEmpty;
-                          if (text.isNotEmpty) {
-                            final newText = text.substring(0, 1).toUpperCase() +
-                                text.substring(1);
-                            _nomeEsercizioController.value = TextEditingValue(
-                              text: newText,
-                              selection: TextSelection.collapsed(
-                                  offset: newText.length),
-                            );
-                          }
-                          _updateSaveButtonState();
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            ///Days Of Week Dropdown
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 10, left: 24, right: 24),
-              child: ScheduleFitDaysOfWeekDropdown(
-                  giorniSettimanaTradotti: weekDaysTranslated,
-                  onUpdate: _updateWeekDays),
-            ),
-
-            ///Series Card List
-            Expanded(
-              flex: 5,
-              child: _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 20),
-                      key: ValueKey(seriesList.length),
-                      shrinkWrap: true,
-                      itemCount: seriesList.length,
-                      itemBuilder: (context, index) {
-                        return ScheduleFitSeriesCard(
-                          key: ValueKey(seriesList[index].idEsercizio),
-                          index: index,
-                          ripetizioni: seriesList[index].ripetizioni,
-                          unitaMisura: seriesList[index].unitaMisura,
-                          peso: seriesList[index].peso,
-                          completata: seriesList[index].completata,
-                          serieCompletate: exercise.serieCompletate,
-                          onDelete: () =>
-                              _removeSeries(seriesList[index].id ?? -1, index),
-                          onUpdate: (updatedValues) =>
-                              _updateCompletedSeries(updatedValues, index),
-                          onlyView: false,
-                          startTraining: false,
-                        );
-                      },
-                    ),
-            ),
-
-            ///Buttons
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: exercise.nomeEsercizio != ''
+              ? Text(AppLocalizations.of(context)!.modificaScheda)
+              : Text(AppLocalizations.of(context)!.creaScheda),
+        ),
+        body: Consumer<SeriesInfoProvider>(
+            builder: (context, seriesInfoProvider, child) {
+          return Column(
+            children: [
+              ///Header
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(150, 65),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        backgroundColor:
-                            ThemeProvider.getColor(AppColors.primaryColor),
-                        padding: const EdgeInsets.all(10),
+                    ///Icon
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.nomeMuscolo(
+                                exercise.categoriaEsercizio[0].toLowerCase() +
+                                    exercise.categoriaEsercizio
+                                        .substring(1)
+                                        .replaceAllMapped(
+                                          RegExp(r' \w'),
+                                          (match) => match
+                                              .group(0)!
+                                              .toUpperCase()
+                                              .trim(),
+                                        ),
+                              ),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: ThemeProvider.getColor(
+                                    AppColors.secondaryColor),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Image.asset(
+                              exercise.immagine,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.contain,
+                            ),
+                          ],
+                        ),
                       ),
-                      onPressed: _addSeriesCard,
-                      child: Text(AppLocalizations.of(context)!.aggiungiSerie,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.white)),
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(150, 65),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        backgroundColor: _isSaveButtonEnabled
-                            ? Colors.green
-                            : Colors.grey.withOpacity(0.2),
-                        padding: const EdgeInsets.all(10),
-                      ),
-                      onPressed: _isSaveButtonEnabled ? _saveChanges : null,
-                      child: Text(
-                        AppLocalizations.of(context)!.salva,
+
+                    const SizedBox(width: 10),
+
+                    ///Title
+                    Expanded(
+                      flex: 3,
+                      child: AutoSizeTextField(
+                        controller: _nomeEsercizioController,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: ThemeProvider.getColor(
+                                AppColors.secondaryColor)),
+                        decoration: InputDecoration(
+                            hintText:
+                                AppLocalizations.of(context)!.inserisciTitolo,
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            counterText: "",
+                            border: InputBorder.none),
+                        maxLines: 2,
+                        textInputAction: TextInputAction.done,
+                        scrollPhysics: const NeverScrollableScrollPhysics(),
+                        minFontSize: 23,
+                        maxFontSize: 25,
+                        maxLength: 30,
                         textAlign: TextAlign.center,
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.white),
+                        onChanged: (text) {
+                          setState(() {
+                            _isSaveButtonEnabled = text.isNotEmpty;
+                            if (text.isNotEmpty) {
+                              final newText =
+                                  text.substring(0, 1).toUpperCase() +
+                                      text.substring(1);
+                              _nomeEsercizioController.value = TextEditingValue(
+                                text: newText,
+                                selection: TextSelection.collapsed(
+                                    offset: newText.length),
+                              );
+                            }
+                            _updateSaveButtonState();
+                          });
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
-        );
-      }),
+
+              ///Days Of Week Dropdown
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, bottom: 10, left: 24, right: 24),
+                child: ScheduleFitDaysOfWeekDropdown(
+                    giorniSettimanaTradotti: weekDaysTranslated,
+                    onUpdate: _updateWeekDays),
+              ),
+
+              ///Series Card List
+              Expanded(
+                flex: 5,
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20),
+                        key: ValueKey(seriesList.length),
+                        shrinkWrap: true,
+                        itemCount: seriesList.length,
+                        itemBuilder: (context, index) {
+                          return ScheduleFitSeriesCard(
+                            key: ValueKey(seriesList[index].idEsercizio),
+                            index: index,
+                            ripetizioni: seriesList[index].ripetizioni,
+                            unitaMisura: seriesList[index].unitaMisura,
+                            peso: seriesList[index].peso,
+                            completata: seriesList[index].completata,
+                            serieCompletate: exercise.serieCompletate,
+                            onDelete: () => _removeSeries(
+                                seriesList[index].id ?? -1, index),
+                            onUpdate: (updatedValues) =>
+                                _updateCompletedSeries(updatedValues, index),
+                            onlyView: false,
+                            startTraining: false,
+                          );
+                        },
+                      ),
+              ),
+
+              ///Buttons
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width, 0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          backgroundColor:
+                              ThemeProvider.getColor(AppColors.primaryColor),
+                          padding: const EdgeInsets.all(10),
+                        ),
+                        onPressed: _addSeriesCard,
+                        child: Text(AppLocalizations.of(context)!.aggiungiSerie,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.white)),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.09),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          backgroundColor: _isSaveButtonEnabled
+                              ? Colors.green
+                              : Colors.grey.withOpacity(0.2),
+                          padding: const EdgeInsets.all(10),
+                        ),
+                        onPressed: _isSaveButtonEnabled ? _saveChanges : null,
+                        child: Text(
+                          AppLocalizations.of(context)!.salva,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

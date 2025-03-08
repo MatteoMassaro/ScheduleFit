@@ -87,7 +87,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
         elevation: 10,
         color: ThemeProvider.getColor(AppColors.primaryColor),
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.only(top:24, left: 24, right: 24, bottom: 14),
           child: Column(
             children: <Widget>[
               ///Title & Switch
@@ -216,14 +216,15 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                   ),
                 )
               ]),
-              const SizedBox(height: 5),
 
               ///Delete Button
               !widget.onlyView
                   ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Spacer(),
                         TextButton(
+                          style: const ButtonStyle(
+                              padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                           onPressed: widget.onDelete,
                           child: Text(
                               AppLocalizations.of(context)!.eliminaSerie,

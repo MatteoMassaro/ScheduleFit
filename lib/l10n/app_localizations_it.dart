@@ -197,6 +197,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get oggi => 'Oggi';
 
   @override
+  String get nonAssegnati => 'Non assegnati';
+
+  @override
   String get impostazioni => 'Impostazioni';
 
   @override

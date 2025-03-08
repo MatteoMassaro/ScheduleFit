@@ -125,10 +125,11 @@ class _ViewExercisePageState extends State<ViewExercisePage>
 
   ///Get Days of Week Translated
   Future<void> _getDaysOfWeekTranslated() async {
-    giorniSettimanaTradotti = exercise.giorniSettimana
-        .where((g) => g != -1)
-        .map((g) => getDayOfWeekTranslatedFromInt(context, g))
-        .toList();
+    giorniSettimanaTradotti = exercise.giorniSettimana.isNotEmpty
+        ? exercise.giorniSettimana
+            .map((g) => getDayOfWeekTranslatedFromInt(context, g!))
+            .toList()
+        : [];
   }
 
   ///Get Exercise
@@ -205,310 +206,329 @@ class _ViewExercisePageState extends State<ViewExercisePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.visualizzaScheda),
-      ),
-      body: Consumer<SeriesInfoProvider>(
-          builder: (context, seriesInfoProvider, child) {
-        return Stack(children: [
-          Column(
-            children: [
-              ///Header
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    ///Icon
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.nomeMuscolo(
-                                exercise.categoriaEsercizio[0].toLowerCase() +
-                                    exercise.categoriaEsercizio
-                                        .substring(1)
-                                        .replaceAllMapped(
-                                          RegExp(r' \w'),
-                                          (match) => match
-                                              .group(0)!
-                                              .toUpperCase()
-                                              .trim(),
-                                        ),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.visualizzaScheda),
+        ),
+        body: Consumer<SeriesInfoProvider>(
+            builder: (context, seriesInfoProvider, child) {
+          return Stack(children: [
+            Column(
+              children: [
+                ///Header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: [
+                      ///Icon
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.nomeMuscolo(
+                                  exercise.categoriaEsercizio[0].toLowerCase() +
+                                      exercise.categoriaEsercizio
+                                          .substring(1)
+                                          .replaceAllMapped(
+                                            RegExp(r' \w'),
+                                            (match) => match
+                                                .group(0)!
+                                                .toUpperCase()
+                                                .trim(),
+                                          ),
+                                ),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: ThemeProvider.getColor(
+                                      AppColors.secondaryColor),
+                                ),
                               ),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: ThemeProvider.getColor(
-                                    AppColors.secondaryColor),
+                              const SizedBox(height: 5),
+                              Image.asset(
+                                exercise.immagine,
+                                width: 40,
+                                height: 40,
+                                fit: BoxFit.contain,
                               ),
-                            ),
-                            const SizedBox(height: 5),
-                            Image.asset(
-                              exercise.immagine,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.contain,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
 
-                    const SizedBox(width: 10),
+                      const SizedBox(width: 10),
 
-                    ///Title
-                    Expanded(
-                      flex: 3,
-                      child: AutoSizeText(
-                        _nomeEsercizioController.text,
-                        style: TextStyle(
-                            fontSize: 25,
+                      ///Title
+                      Expanded(
+                        flex: 3,
+                        child: AutoSizeText(
+                          _nomeEsercizioController.text,
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: ThemeProvider.getColor(
+                                  AppColors.secondaryColor)),
+                          maxLines: 2,
+                          minFontSize: 23,
+                          maxFontSize: 25,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                ///Days Of Week List
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 10, left: 24, right: 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: AssetImage(getImage(Images.stopwatch)),
+                            width: 30,
+                            height: 30,
+                          ),
+                          const SizedBox(width: 10),
+                          const ScheduleFitStopwatch()
+                        ],
+                      ),
+                      MultiSelectChipDisplay(
+                        scroll: true,
+                        scrollBar: HorizontalScrollBar(isAlwaysShown: false),
+                        chipColor:
+                            ThemeProvider.getColor(AppColors.primaryColor),
+                        textStyle: TextStyle(
                             color: ThemeProvider.getColor(
-                                AppColors.secondaryColor)),
-                        maxLines: 2,
-                        minFontSize: 23,
-                        maxFontSize: 25,
-                        textAlign: TextAlign.center,
+                                AppColors.secondaryColor),
+                            fontSize: 14),
+                        items: giorniSettimanaTradotti
+                            .map((d) => MultiSelectItem(d, d))
+                            .toList(),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              ///Days Of Week List
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 10, left: 24, right: 24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image(
-                          image: AssetImage(getImage(Images.stopwatch)),
-                          width: 30,
-                          height: 30,
+                ///Series Card List
+                Expanded(
+                  flex: 5,
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.only(
+                              left: 24, right: 24, bottom: 10),
+                          key: ValueKey(seriesList.length),
+                          shrinkWrap: true,
+                          itemCount: seriesList.length,
+                          itemBuilder: (context, index) {
+                            return ScheduleFitSeriesCard(
+                              key: ValueKey(seriesList[index].idEsercizio),
+                              index: index,
+                              ripetizioni: seriesList[index].ripetizioni,
+                              unitaMisura: seriesList[index].unitaMisura,
+                              peso: seriesList[index].peso,
+                              completata: seriesList[index].completata,
+                              serieCompletate: exercise.serieCompletate,
+                              onDelete: null,
+                              onUpdate: (updatedValues) =>
+                                  _updateCompletedSeries(updatedValues, index),
+                              onlyView: true,
+                              startTraining: startTraining,
+                            );
+                          },
                         ),
-                        const SizedBox(width: 10),
-                        const ScheduleFitStopwatch()
-                      ],
-                    ),
-                    MultiSelectChipDisplay(
-                      scroll: true,
-                      scrollBar: HorizontalScrollBar(isAlwaysShown: false),
-                      chipColor: ThemeProvider.getColor(AppColors.primaryColor),
-                      textStyle: TextStyle(
-                          color:
-                              ThemeProvider.getColor(AppColors.secondaryColor),
-                          fontSize: 14),
-                      items: giorniSettimanaTradotti
-                          .map((d) => MultiSelectItem(d, d))
-                          .toList(),
-                    ),
-                  ],
                 ),
-              ),
 
-              ///Series Card List
-              Expanded(
-                flex: 5,
-                child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                ///Buttons
+                startTraining
+                    ?
+
+                    ///Stopwatch Buttons
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  backgroundColor: ThemeProvider.getColor(
+                                      AppColors.secondaryColor),
+                                  padding: const EdgeInsets.all(10),
+                                ),
+                                onPressed: () => setState(() =>
+                                    firstButtonText ==
+                                            AppLocalizations.of(context)!
+                                                .sospendiAllenamento
+                                        ? {
+                                            firstButtonText =
+                                                AppLocalizations.of(context)!
+                                                    .riprendiAllenamento,
+                                            stopwatchProvider.stop()
+                                          }
+                                        : {
+                                            firstButtonText =
+                                                AppLocalizations.of(context)!
+                                                    .sospendiAllenamento,
+                                            stopwatchProvider.start()
+                                          }),
+                                child: Text(firstButtonText,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white)),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Flexible(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  backgroundColor: ThemeProvider.getColor(
+                                      AppColors.cancelColor),
+                                  padding: const EdgeInsets.all(10),
+                                ),
+                                onPressed: () =>
+                                    _openDialog(exerciseInfoProvider),
+                                child: Text(
+                                  secondButtonText,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       )
-                    : ListView.builder(
-                        padding: const EdgeInsets.only(
-                            left: 24, right: 24, bottom: 10),
-                        key: ValueKey(seriesList.length),
-                        shrinkWrap: true,
-                        itemCount: seriesList.length,
-                        itemBuilder: (context, index) {
-                          return ScheduleFitSeriesCard(
-                            key: ValueKey(seriesList[index].idEsercizio),
-                            index: index,
-                            ripetizioni: seriesList[index].ripetizioni,
-                            unitaMisura: seriesList[index].unitaMisura,
-                            peso: seriesList[index].peso,
-                            completata: seriesList[index].completata,
-                            serieCompletate: exercise.serieCompletate,
-                            onDelete: null,
-                            onUpdate: (updatedValues) =>
-                                _updateCompletedSeries(updatedValues, index),
-                            onlyView: true,
-                            startTraining: startTraining,
-                          );
-                        },
-                      ),
-              ),
+                    :
 
-              ///Buttons
-              startTraining
-                  ?
-
-                  ///Stopwatch Buttons
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                    ///Only View Buttons
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(150, 65),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: ThemeProvider.getColor(
-                                    AppColors.secondaryColor),
-                                padding: const EdgeInsets.all(10),
-                              ),
-                              onPressed: () => setState(() => firstButtonText ==
-                                      AppLocalizations.of(context)!
-                                          .sospendiAllenamento
-                                  ? {
-                                      firstButtonText =
-                                          AppLocalizations.of(context)!
-                                              .riprendiAllenamento,
-                                      stopwatchProvider.stop()
-                                    }
-                                  : {
-                                      firstButtonText =
-                                          AppLocalizations.of(context)!
-                                              .sospendiAllenamento,
-                                      stopwatchProvider.start()
-                                    }),
-                              child: Text(firstButtonText,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 18, color: Colors.white)),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(150, 65),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: ThemeProvider.getColor(
-                                    AppColors.cancelColor),
-                                padding: const EdgeInsets.all(10),
-                              ),
-                              onPressed: () =>
-                                  _openDialog(exerciseInfoProvider),
-                              child: Text(
-                                secondButtonText,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  backgroundColor: !_showCountdown
+                                      ? ThemeProvider.getColor(
+                                          AppColors.secondaryColor)
+                                      : Colors.grey.withOpacity(0.2),
+                                  padding: const EdgeInsets.all(10),
+                                ),
+                                onPressed: () => !_showCountdown
+                                    ? countdownManager.startCountdown()
+                                    : null,
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .iniziaAllenamento,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white)),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    )
-                  :
-
-                  ///Only View Buttons
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(150, 65),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: !_showCountdown
-                                    ? ThemeProvider.getColor(
-                                        AppColors.secondaryColor)
-                                    : Colors.grey.withOpacity(0.2),
-                                padding: const EdgeInsets.all(10),
-                              ),
-                              onPressed: () => !_showCountdown
-                                  ? countdownManager.startCountdown()
-                                  : null,
-                              child: Text(
-                                  AppLocalizations.of(context)!
-                                      .iniziaAllenamento,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 18, color: Colors.white)),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(150, 65),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: !_showCountdown
-                                    ? ThemeProvider.getColor(
-                                        AppColors.primaryColor)
-                                    : Colors.grey.withOpacity(0.2),
-                                padding: const EdgeInsets.all(10),
-                              ),
-                              onPressed: () => !_showCountdown
-                                  ? Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditExercisePage(
-                                          id: widget.id,
-                                          categoriaEsercizio:
-                                              exercise.categoriaEsercizio,
-                                          immagine: exercise.immagine,
-                                          onSave: () => exerciseInfoProvider
-                                              .loadExercises(),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  backgroundColor: !_showCountdown
+                                      ? ThemeProvider.getColor(
+                                          AppColors.primaryColor)
+                                      : Colors.grey.withOpacity(0.2),
+                                  padding: const EdgeInsets.all(10),
+                                ),
+                                onPressed: () => !_showCountdown
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditExercisePage(
+                                            id: widget.id,
+                                            categoriaEsercizio:
+                                                exercise.categoriaEsercizio,
+                                            immagine: exercise.immagine,
+                                            onSave: () => exerciseInfoProvider
+                                                .loadExercises(),
+                                          ),
                                         ),
-                                      ),
-                                    ).then((values) => {
-                                        _getExercise(),
-                                        _getDaysOfWeekTranslated(),
-                                        _getSeries(),
-                                      })
-                                  : null,
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .modificaScheda
-                                    .toUpperCase(),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                                      ).then((values) => {
+                                          _getExercise(),
+                                          _getDaysOfWeekTranslated(),
+                                          _getSeries(),
+                                        })
+                                    : null,
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .modificaScheda
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    )
-            ],
-          ),
+                      )
+              ],
+            ),
 
-          ///Countdown Animation
-          ScheduleFitCountdownAnimation(
-            countdown: _countdown,
-            countdownController: _countdownController,
-            scaleAnimation: _scaleAnimation,
-            opacityAnimation: _opacityAnimation,
-            showCountdown: _showCountdown,
-            onCountdownFinished: () {
-              stopwatchProvider.start();
-              setState(() {
-                startTraining = true;
-                firstButtonText =
-                    AppLocalizations.of(context)!.sospendiAllenamento;
-                secondButtonText =
-                    AppLocalizations.of(context)!.terminaAllenamento;
-              });
-            },
-          ),
-        ]);
-      }),
+            ///Countdown Animation
+            ScheduleFitCountdownAnimation(
+              countdown: _countdown,
+              countdownController: _countdownController,
+              scaleAnimation: _scaleAnimation,
+              opacityAnimation: _opacityAnimation,
+              showCountdown: _showCountdown,
+              onCountdownFinished: () {
+                stopwatchProvider.start();
+                setState(() {
+                  startTraining = true;
+                  firstButtonText =
+                      AppLocalizations.of(context)!.sospendiAllenamento;
+                  secondButtonText =
+                      AppLocalizations.of(context)!.terminaAllenamento;
+                });
+              },
+            ),
+          ]);
+        }),
+      ),
     );
   }
 }

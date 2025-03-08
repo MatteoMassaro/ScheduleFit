@@ -34,12 +34,19 @@ class ExerciseInfoProvider extends ChangeNotifier {
     return _exerciseList.where((exercise) => exercise.id == id).singleOrNull;
   }
 
-  ///Get Execises By Date
-  List<ExerciseInfoData> getExercisesByDate(DateTime date) {
+  ///Get Today Execises
+  List<ExerciseInfoData> getTodayExercises(DateTime date) {
     return _exerciseList
         .where((exercise) =>
             isSameDay(exercise.data, date) &&
             exercise.giorniSettimana.contains(0))
+        .toList();
+  }
+
+  ///Get Not Assigned Exercises
+  List<ExerciseInfoData> getNotAssignedExercises() {
+    return _exerciseList
+        .where((exercise) => exercise.giorniSettimana.isEmpty)
         .toList();
   }
 

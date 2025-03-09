@@ -27,7 +27,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get cerca => 'Nahe';
 
   @override
-  String get chiudi => 'SCHLIESSEN';
+  String get chiudi => 'Schliessen';
 
   @override
   String get lingua => 'Sprache';
@@ -60,13 +60,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sitoWeb => 'Webseite';
 
   @override
-  String get eliminaScheda => 'KARTE LÖSCHEN';
+  String get eliminaScheda => 'Karte löschen';
 
   @override
-  String get eliminaSchedaDialog => 'Karte löschen';
-
-  @override
-  String get apriScheda => 'KARTE ÖFFNEN';
+  String get apriScheda => 'Karte öffnen';
 
   @override
   String get serieCompletate => 'Abgeschlossene serie: ';
@@ -78,10 +75,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get confermaEliminaScheda => 'Sind Sie sicher, dass Sie die Karte löschen möchten?';
 
   @override
-  String get si => 'JA';
+  String get si => 'Ja';
 
   @override
-  String get annulla => 'STORNIEREN';
+  String get annulla => 'Stornieren';
 
   @override
   String get scegliGruppoMuscolare => 'Wählen sie eine muskelgruppe';
@@ -132,10 +129,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inserisciTitolo => 'Titel eingeben';
 
   @override
-  String get aggiungiSerie => 'SERIE HINZUFÜGEN';
+  String get aggiungiSerie => 'Serie hinzufügen';
 
   @override
-  String get salva => 'SPEICHERN';
+  String get salva => 'Speichern';
 
   @override
   String serie(Object numero) {
@@ -146,7 +143,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get numeroRipetizioni => 'Anzahl der wiederholungen';
 
   @override
-  String get eliminaSerie => 'SERIE LÖSCHEN';
+  String get eliminaSerie => 'Serie löschen';
 
   @override
   String get suggerimentoAggiungiScheda => 'Klicken sie auf \'+\' um eine registerkarte hinzuzufügen';
@@ -164,7 +161,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nessunEsercizio => 'Keine übung';
 
   @override
-  String get conferma => 'BESTÄTIGT';
+  String get conferma => 'Bestätigt';
 
   @override
   String get giorniAllenamento => 'Trainingstage';
@@ -209,20 +206,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tema => 'Thema';
 
   @override
-  String get inizioAllenamento => 'TRAININGSBEGINN';
+  String get inizioAllenamento => 'Trainingsbeginn';
 
   @override
-  String get iniziaAllenamento => 'TRAINING STARTEN';
+  String get iniziaAllenamento => 'Training starten';
 
   @override
-  String get sospendiAllenamento => 'TRAINING UNTERBRECHEN';
+  String get sospendiAllenamento => 'Training unterbrechen';
 
   @override
-  String get riprendiAllenamento => 'TRAINING FORTSETZEN';
+  String get riprendiAllenamento => 'Training fortsetzen';
 
   @override
-  String get terminaAllenamento => 'TRAINING BEENDEN';
+  String get terminaAllenamento => 'Training beenden';
 
   @override
   String get confermaTerminaAllenamento => 'Sind Sie sicher, dass Sie das Training beenden möchten?';
+
+  @override
+  String get allenamentoInCorso => 'Training läuft';
+
+  @override
+  String get sospendi => 'Unterbrechen';
+
+  @override
+  String get riprendi => 'Fortsetzen';
+
+  @override
+  String get termina => 'Beenden';
 }

@@ -153,7 +153,7 @@ class ScheduleFitContactsDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text(
-            AppLocalizations.of(context)!.chiudi,
+            AppLocalizations.of(context)!.chiudi.toUpperCase(),
             style: const TextStyle(color: Colors.white),
           ),
         ),

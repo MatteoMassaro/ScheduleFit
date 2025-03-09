@@ -9,8 +9,11 @@ class StopwatchProvider extends ChangeNotifier {
 
   int get milliseconds => _milliseconds;
 
+  int get seconds => _milliseconds ~/ 1000;
+
   bool get isRunning => _isRunning;
 
+  ///Start
   void start() {
     if (!_isRunning) {
       _isRunning = true;
@@ -21,6 +24,7 @@ class StopwatchProvider extends ChangeNotifier {
     }
   }
 
+  ///Stop
   void stop() {
     if (_isRunning) {
       _isRunning = false;
@@ -29,6 +33,7 @@ class StopwatchProvider extends ChangeNotifier {
     }
   }
 
+  ///Reset
   void reset() {
     _timer?.cancel() ;
     _milliseconds = 0;

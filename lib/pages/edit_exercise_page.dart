@@ -347,8 +347,8 @@ class _EditExercisePageState extends State<EditExercisePage> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize:
-                              Size(MediaQuery.of(context).size.width, 0),
+                          minimumSize: Size(MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.09),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           backgroundColor:
@@ -356,7 +356,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
                           padding: const EdgeInsets.all(10),
                         ),
                         onPressed: _addSeriesCard,
-                        child: Text(AppLocalizations.of(context)!.aggiungiSerie,
+                        child: Text(AppLocalizations.of(context)!.aggiungiSerie.toUpperCase(),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.white)),
@@ -377,7 +377,7 @@ class _EditExercisePageState extends State<EditExercisePage> {
                         ),
                         onPressed: _isSaveButtonEnabled ? _saveChanges : null,
                         child: Text(
-                          AppLocalizations.of(context)!.salva,
+                          AppLocalizations.of(context)!.salva.toUpperCase(),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 18, color: Colors.white),

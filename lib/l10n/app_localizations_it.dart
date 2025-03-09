@@ -27,7 +27,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get cerca => 'Cerca';
 
   @override
-  String get chiudi => 'CHIUDI';
+  String get chiudi => 'Chiudi';
 
   @override
   String get lingua => 'Lingua';
@@ -60,13 +60,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sitoWeb => 'Sito web';
 
   @override
-  String get eliminaScheda => 'ELIMINA SCHEDA';
+  String get eliminaScheda => 'Elimina scheda';
 
   @override
-  String get eliminaSchedaDialog => 'Elimina scheda';
-
-  @override
-  String get apriScheda => 'APRI SCHEDA';
+  String get apriScheda => 'Apri scheda';
 
   @override
   String get serieCompletate => 'Serie completate: ';
@@ -78,10 +75,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get confermaEliminaScheda => 'Sei sicuro di voler eliminare la scheda?';
 
   @override
-  String get si => 'SI';
+  String get si => 'Si';
 
   @override
-  String get annulla => 'ANNULLA';
+  String get annulla => 'Annulla';
 
   @override
   String get scegliGruppoMuscolare => 'Scegli gruppo muscolare';
@@ -132,10 +129,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inserisciTitolo => 'Inserisci titolo';
 
   @override
-  String get aggiungiSerie => 'AGGIUNGI SERIE';
+  String get aggiungiSerie => 'Aggiungi serie';
 
   @override
-  String get salva => 'SALVA';
+  String get salva => 'Salva';
 
   @override
   String serie(Object numero) {
@@ -146,7 +143,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get numeroRipetizioni => 'Numero ripetizioni';
 
   @override
-  String get eliminaSerie => 'ELIMINA SERIE';
+  String get eliminaSerie => 'Elimina serie';
 
   @override
   String get suggerimentoAggiungiScheda => 'Clicca su \'+\' per aggiungere una scheda';
@@ -164,7 +161,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get nessunEsercizio => 'Nessun esercizio';
 
   @override
-  String get conferma => 'CONFERMA';
+  String get conferma => 'Conferma';
 
   @override
   String get giorniAllenamento => 'Giorni dell\'allenamento';
@@ -209,20 +206,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tema => 'Tema';
 
   @override
-  String get inizioAllenamento => 'INIZIO ALLENAMENTO';
+  String get inizioAllenamento => 'Inizio allenamento';
 
   @override
-  String get iniziaAllenamento => 'INIZIA ALLENAMENTO';
+  String get iniziaAllenamento => 'Inizia allenamento';
 
   @override
-  String get sospendiAllenamento => 'SOSPENDI ALLENAMENTO';
+  String get sospendiAllenamento => 'Sospendi allenamento';
 
   @override
-  String get riprendiAllenamento => 'RIPRENDI ALLENAMENTO';
+  String get riprendiAllenamento => 'Riprendi allenamento';
 
   @override
-  String get terminaAllenamento => 'TERMINA ALLENAMENTO';
+  String get terminaAllenamento => 'Termina allenamento';
 
   @override
   String get confermaTerminaAllenamento => 'Sei sicuro di voler terminare l\'allenamento?';
+
+  @override
+  String get allenamentoInCorso => 'Allenamento in corso';
+
+  @override
+  String get sospendi => 'Sospendi';
+
+  @override
+  String get riprendi => 'Riprendi';
+
+  @override
+  String get termina => 'Termina';
 }

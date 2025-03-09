@@ -227,7 +227,7 @@ class _ScheduleFitSeriesCardState extends State<ScheduleFitSeriesCard> {
                               padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                           onPressed: widget.onDelete,
                           child: Text(
-                              AppLocalizations.of(context)!.eliminaSerie,
+                              AppLocalizations.of(context)!.eliminaSerie.toUpperCase(),
                               style: TextStyle(
                                   color: ThemeProvider.getColor(
                                       AppColors.cancelColor))),

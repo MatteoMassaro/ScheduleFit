@@ -87,14 +87,14 @@ class ScheduleFitDaysOfWeekDropdown extends StatelessWidget {
         ),
       ),
       confirmText: Text(
-        AppLocalizations.of(context)!.conferma,
+        AppLocalizations.of(context)!.conferma.toUpperCase(),
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
       ),
       cancelText: Text(
-        AppLocalizations.of(context)!.chiudi,
+        AppLocalizations.of(context)!.chiudi.toUpperCase(),
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: ThemeProvider.getColor(AppColors.cancelColor),

@@ -35,7 +35,7 @@ class ScheduleFitCountdownAnimation extends StatelessWidget {
               child: Opacity(
                 opacity: opacityAnimation.value,
                 child: Text(
-                  countdown > 0 ? "$countdown" : AppLocalizations.of(context)!.inizioAllenamento,
+                  countdown > 0 ? "$countdown" : AppLocalizations.of(context)!.inizioAllenamento.toUpperCase(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 50,

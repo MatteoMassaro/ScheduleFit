@@ -98,7 +98,7 @@ class _ScheduleFitExercisesDialogState
             Navigator.of(context).pop();
           },
           child: Text(
-            AppLocalizations.of(context)!.annulla,
+            AppLocalizations.of(context)!.annulla.toUpperCase(),
             style:
                 TextStyle(color: ThemeProvider.getColor(AppColors.cancelColor)),
           ),

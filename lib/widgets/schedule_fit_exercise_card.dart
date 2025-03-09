@@ -161,7 +161,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                 _openDialog(exerciseInfoProvider);
                               },
                               child: Text(
-                                AppLocalizations.of(context)!.eliminaScheda,
+                                AppLocalizations.of(context)!.eliminaScheda.toUpperCase(),
                                 style: TextStyle(
                                     color: ThemeProvider.getColor(
                                         AppColors.cancelColor)),
@@ -194,7 +194,7 @@ class _CardState extends State<ScheduleFitExerciseCard> {
                                 );
                         },
                         child: Text(
-                          AppLocalizations.of(context)!.apriScheda,
+                          AppLocalizations.of(context)!.apriScheda.toUpperCase(),
                           style: TextStyle(
                               color: ThemeProvider.getColor(
                                   AppColors.exerciseCardTextColor)),

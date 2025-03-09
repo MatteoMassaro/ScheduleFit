@@ -11,6 +11,7 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeMode get themeMode => _isLightMode ? ThemeMode.light : ThemeMode.dark;
 
+  ///Toggle Theme
   void toggleTheme() {
     _isLightMode = !_isLightMode;
     notifyListeners();
@@ -60,6 +61,7 @@ class ThemeProvider with ChangeNotifier {
     AppColors.stopwatchColor: const Color(0xFFFFFFFF),
   };
 
+  ///Get Color
   static Color? getColor(AppColors color) {
     return _isLightMode ? lightColors[color] : darkColors[color];
   }

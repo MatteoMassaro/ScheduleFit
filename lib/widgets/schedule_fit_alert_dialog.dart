@@ -38,7 +38,7 @@ class ScheduleFitAlertDialog extends StatelessWidget {
         ///Confirm Button
         TextButton(
           onPressed: () => onPressed(),
-          child: Text(AppLocalizations.of(context)!.si,
+          child: Text(AppLocalizations.of(context)!.si.toUpperCase(),
               style: const TextStyle(color: Colors.white)),
         ),
 
@@ -48,7 +48,7 @@ class ScheduleFitAlertDialog extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text(
-            AppLocalizations.of(context)!.annulla,
+            AppLocalizations.of(context)!.annulla.toUpperCase(),
             style:
                 TextStyle(color: ThemeProvider.getColor(AppColors.cancelColor)),
           ),

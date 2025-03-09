@@ -27,7 +27,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cerca => 'Search';
 
   @override
-  String get chiudi => 'CLOSE';
+  String get chiudi => 'Close';
 
   @override
   String get lingua => 'Language';
@@ -60,13 +60,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sitoWeb => 'Website';
 
   @override
-  String get eliminaScheda => 'DELETE CARD';
+  String get eliminaScheda => 'Delete card';
 
   @override
-  String get eliminaSchedaDialog => 'Delete card';
-
-  @override
-  String get apriScheda => 'OPEN CARD';
+  String get apriScheda => 'Open card';
 
   @override
   String get serieCompletate => 'Completed series: ';
@@ -78,10 +75,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confermaEliminaScheda => 'Are you sure you want to delete the card?';
 
   @override
-  String get si => 'YES';
+  String get si => 'Yes';
 
   @override
-  String get annulla => 'CANCEL';
+  String get annulla => 'Cancel';
 
   @override
   String get scegliGruppoMuscolare => 'Choose muscle group';
@@ -132,10 +129,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inserisciTitolo => 'Enter title';
 
   @override
-  String get aggiungiSerie => 'ADD SERIES';
+  String get aggiungiSerie => 'Add series';
 
   @override
-  String get salva => 'SAVE';
+  String get salva => 'Save';
 
   @override
   String serie(Object numero) {
@@ -146,7 +143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get numeroRipetizioni => 'Number of repetitions';
 
   @override
-  String get eliminaSerie => 'DELETE SERIES';
+  String get eliminaSerie => 'Delete series';
 
   @override
   String get suggerimentoAggiungiScheda => 'Click on \'+\' to add a tab';
@@ -164,7 +161,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nessunEsercizio => 'No exercise';
 
   @override
-  String get conferma => 'CONFIRM';
+  String get conferma => 'Confirm';
 
   @override
   String get giorniAllenamento => 'Training days';
@@ -209,20 +206,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tema => 'Theme';
 
   @override
-  String get inizioAllenamento => 'TRAINING START';
+  String get inizioAllenamento => 'Training start';
 
   @override
-  String get iniziaAllenamento => 'START TRAINING';
+  String get iniziaAllenamento => 'Start training';
 
   @override
-  String get sospendiAllenamento => 'PAUSE TRAINING';
+  String get sospendiAllenamento => 'Pause training';
 
   @override
-  String get riprendiAllenamento => 'RESUME TRAINING';
+  String get riprendiAllenamento => 'Resume training';
 
   @override
-  String get terminaAllenamento => 'END TRAINING';
+  String get terminaAllenamento => 'End training';
 
   @override
   String get confermaTerminaAllenamento => 'Are you sure you want to finish your training?';
+
+  @override
+  String get allenamentoInCorso => 'Training in progress';
+
+  @override
+  String get sospendi => 'Pause';
+
+  @override
+  String get riprendi => 'Resume';
+
+  @override
+  String get termina => 'End';
 }

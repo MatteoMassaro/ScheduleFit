@@ -19,6 +19,7 @@ import '../enums/schedule_fit_images.dart';
 import '../l10n/app_localizations.dart';
 import '../managers/countdown_manager.dart';
 import '../providers/exercise_info_provider.dart';
+import '../providers/notification_provider.dart';
 import '../providers/series_info_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/schedule_fit_alert_dialog.dart';
@@ -44,6 +45,7 @@ class _ViewExercisePageState extends State<ViewExercisePage>
   late SeriesInfoProvider seriesInfoProvider;
   late ExerciseInfoProvider exerciseInfoProvider;
   late StopwatchProvider stopwatchProvider;
+  late NotificationProvider notificationProvider;
   late CountdownManager countdownManager;
   late TextEditingController _nomeEsercizioController;
   late List<SeriesInfoData> seriesList = [];
@@ -65,6 +67,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
     exerciseInfoProvider = context.read<ExerciseInfoProvider>();
     seriesInfoProvider = context.read<SeriesInfoProvider>();
     stopwatchProvider = context.read<StopwatchProvider>();
+    notificationProvider = context.read<NotificationProvider>();
+    notificationProvider.addListener(_onStopAction);
+    notificationProvider.addListener(_onPauseResumeAction);
 
     _getExercise();
     seriesInfoProvider.clearSeries();
@@ -94,15 +99,19 @@ class _ViewExercisePageState extends State<ViewExercisePage>
         _showCountdown = false;
         startTraining = true;
         stopwatchProvider.start();
-        firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
-        secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
+        firstButtonText =
+            AppLocalizations.of(context)!.sospendiAllenamento.toUpperCase();
+        secondButtonText =
+            AppLocalizations.of(context)!.terminaAllenamento.toUpperCase();
       }),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getDaysOfWeekTranslated();
-      firstButtonText = AppLocalizations.of(context)!.sospendiAllenamento;
-      secondButtonText = AppLocalizations.of(context)!.terminaAllenamento;
+      firstButtonText =
+          AppLocalizations.of(context)!.sospendiAllenamento.toUpperCase();
+      secondButtonText =
+          AppLocalizations.of(context)!.terminaAllenamento.toUpperCase();
     });
 
     _scaleAnimation = Tween<double>(begin: 1, end: 0.2).animate(
@@ -121,6 +130,50 @@ class _ViewExercisePageState extends State<ViewExercisePage>
       stopwatchProvider.reset();
     });
     super.dispose();
+  }
+
+  ///On Stop Action
+  void _onStopAction() {
+    if (context.read<NotificationProvider>().isStopActionPressed) {
+      setState(() {
+        firstButtonText =
+            AppLocalizations.of(context)!.iniziaAllenamento.toUpperCase();
+        secondButtonText =
+            AppLocalizations.of(context)!.modificaScheda.toUpperCase();
+        startTraining = false;
+        stopwatchProvider.reset();
+      });
+      notificationProvider.cancelTrainingNotification(stopwatchProvider);
+    }
+  }
+
+  ///On Pause Resume Action
+  void _onPauseResumeAction() {
+    if (!context.read<NotificationProvider>().isStopActionPressed) {
+      if (context.read<NotificationProvider>().isPauseResumeActionPressed) {
+        setState(() {
+          firstButtonText =
+              AppLocalizations.of(context)!.riprendiAllenamento.toUpperCase();
+          stopwatchProvider.stop();
+          notificationProvider.updateTrainingNotification(
+              context,
+              exercise.nomeEsercizio,
+              exercise.categoriaEsercizio,
+              stopwatchProvider);
+        });
+      } else {
+        setState(() {
+          firstButtonText =
+              AppLocalizations.of(context)!.sospendiAllenamento.toUpperCase();
+          stopwatchProvider.start();
+          notificationProvider.updateTrainingNotification(
+              context,
+              exercise.nomeEsercizio,
+              exercise.categoriaEsercizio,
+              stopwatchProvider);
+        });
+      }
+    }
   }
 
   ///Get Days of Week Translated
@@ -186,17 +239,21 @@ class _ViewExercisePageState extends State<ViewExercisePage>
       context: context,
       builder: (BuildContext context) {
         return ScheduleFitAlertDialog(
-            title: AppLocalizations.of(context)!.terminaAllenamento,
+            title:
+                AppLocalizations.of(context)!.terminaAllenamento.toUpperCase(),
             message: AppLocalizations.of(context)!.confermaTerminaAllenamento,
             onPressed: () async {
               setState(() {
-                firstButtonText =
-                    AppLocalizations.of(context)!.iniziaAllenamento;
+                firstButtonText = AppLocalizations.of(context)!
+                    .iniziaAllenamento
+                    .toUpperCase();
                 secondButtonText = AppLocalizations.of(context)!.modificaScheda;
                 startTraining = false;
                 stopwatchProvider.reset();
                 Navigator.of(context).pop();
               });
+              notificationProvider
+                  .cancelTrainingNotification(stopwatchProvider);
               await _upsertSeries();
               await _upsertExercise();
             });
@@ -283,7 +340,7 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                   ),
                 ),
 
-                ///Days Of Week List
+                ///Days Of Week List & Stopwatch
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 20, bottom: 10, left: 24, right: 24),
@@ -366,7 +423,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 0),
+                                      MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height *
+                                          0.09),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: ThemeProvider.getColor(
@@ -377,16 +436,19 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                     firstButtonText ==
                                             AppLocalizations.of(context)!
                                                 .sospendiAllenamento
+                                                .toUpperCase()
                                         ? {
                                             firstButtonText =
                                                 AppLocalizations.of(context)!
-                                                    .riprendiAllenamento,
+                                                    .riprendiAllenamento
+                                                    .toUpperCase(),
                                             stopwatchProvider.stop()
                                           }
                                         : {
                                             firstButtonText =
                                                 AppLocalizations.of(context)!
-                                                    .sospendiAllenamento,
+                                                    .sospendiAllenamento
+                                                    .toUpperCase(),
                                             stopwatchProvider.start()
                                           }),
                                 child: Text(firstButtonText,
@@ -400,7 +462,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 0),
+                                      MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height *
+                                          0.09),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: ThemeProvider.getColor(
@@ -432,7 +496,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 0),
+                                      MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height *
+                                          0.09),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: !_showCountdown
@@ -441,12 +507,23 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                                       : Colors.grey.withOpacity(0.2),
                                   padding: const EdgeInsets.all(10),
                                 ),
-                                onPressed: () => !_showCountdown
-                                    ? countdownManager.startCountdown()
+                                onPressed: () async => !_showCountdown
+                                    ? {
+                                        countdownManager.startCountdown(),
+                                        await Future.delayed(
+                                            const Duration(seconds: 3)),
+                                        notificationProvider
+                                            .showTrainingNotification(
+                                                context,
+                                                exercise.nomeEsercizio,
+                                                exercise.categoriaEsercizio,
+                                                stopwatchProvider),
+                                      }
                                     : null,
                                 child: Text(
                                     AppLocalizations.of(context)!
-                                        .iniziaAllenamento,
+                                        .iniziaAllenamento
+                                        .toUpperCase(),
                                     textAlign: TextAlign.center,
                                     maxLines: 2,
                                     softWrap: true,
@@ -460,7 +537,9 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 0),
+                                      MediaQuery.of(context).size.width,
+                                      MediaQuery.of(context).size.height *
+                                          0.09),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   backgroundColor: !_showCountdown
@@ -519,10 +598,12 @@ class _ViewExercisePageState extends State<ViewExercisePage>
                 stopwatchProvider.start();
                 setState(() {
                   startTraining = true;
-                  firstButtonText =
-                      AppLocalizations.of(context)!.sospendiAllenamento;
-                  secondButtonText =
-                      AppLocalizations.of(context)!.terminaAllenamento;
+                  firstButtonText = AppLocalizations.of(context)!
+                      .sospendiAllenamento
+                      .toUpperCase();
+                  secondButtonText = AppLocalizations.of(context)!
+                      .terminaAllenamento
+                      .toUpperCase();
                 });
               },
             ),

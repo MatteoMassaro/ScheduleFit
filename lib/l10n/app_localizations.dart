@@ -140,7 +140,7 @@ abstract class AppLocalizations {
   /// No description provided for @chiudi.
   ///
   /// In it, this message translates to:
-  /// **'CHIUDI'**
+  /// **'Chiudi'**
   String get chiudi;
 
   /// No description provided for @lingua.
@@ -206,19 +206,13 @@ abstract class AppLocalizations {
   /// No description provided for @eliminaScheda.
   ///
   /// In it, this message translates to:
-  /// **'ELIMINA SCHEDA'**
-  String get eliminaScheda;
-
-  /// No description provided for @eliminaSchedaDialog.
-  ///
-  /// In it, this message translates to:
   /// **'Elimina scheda'**
-  String get eliminaSchedaDialog;
+  String get eliminaScheda;
 
   /// No description provided for @apriScheda.
   ///
   /// In it, this message translates to:
-  /// **'APRI SCHEDA'**
+  /// **'Apri scheda'**
   String get apriScheda;
 
   /// No description provided for @serieCompletate.
@@ -242,13 +236,13 @@ abstract class AppLocalizations {
   /// No description provided for @si.
   ///
   /// In it, this message translates to:
-  /// **'SI'**
+  /// **'Si'**
   String get si;
 
   /// No description provided for @annulla.
   ///
   /// In it, this message translates to:
-  /// **'ANNULLA'**
+  /// **'Annulla'**
   String get annulla;
 
   /// No description provided for @scegliGruppoMuscolare.
@@ -302,13 +296,13 @@ abstract class AppLocalizations {
   /// No description provided for @aggiungiSerie.
   ///
   /// In it, this message translates to:
-  /// **'AGGIUNGI SERIE'**
+  /// **'Aggiungi serie'**
   String get aggiungiSerie;
 
   /// No description provided for @salva.
   ///
   /// In it, this message translates to:
-  /// **'SALVA'**
+  /// **'Salva'**
   String get salva;
 
   /// No description provided for @serie.
@@ -326,7 +320,7 @@ abstract class AppLocalizations {
   /// No description provided for @eliminaSerie.
   ///
   /// In it, this message translates to:
-  /// **'ELIMINA SERIE'**
+  /// **'Elimina serie'**
   String get eliminaSerie;
 
   /// No description provided for @suggerimentoAggiungiScheda.
@@ -362,7 +356,7 @@ abstract class AppLocalizations {
   /// No description provided for @conferma.
   ///
   /// In it, this message translates to:
-  /// **'CONFERMA'**
+  /// **'Conferma'**
   String get conferma;
 
   /// No description provided for @giorniAllenamento.
@@ -452,31 +446,31 @@ abstract class AppLocalizations {
   /// No description provided for @inizioAllenamento.
   ///
   /// In it, this message translates to:
-  /// **'INIZIO ALLENAMENTO'**
+  /// **'Inizio allenamento'**
   String get inizioAllenamento;
 
   /// No description provided for @iniziaAllenamento.
   ///
   /// In it, this message translates to:
-  /// **'INIZIA ALLENAMENTO'**
+  /// **'Inizia allenamento'**
   String get iniziaAllenamento;
 
   /// No description provided for @sospendiAllenamento.
   ///
   /// In it, this message translates to:
-  /// **'SOSPENDI ALLENAMENTO'**
+  /// **'Sospendi allenamento'**
   String get sospendiAllenamento;
 
   /// No description provided for @riprendiAllenamento.
   ///
   /// In it, this message translates to:
-  /// **'RIPRENDI ALLENAMENTO'**
+  /// **'Riprendi allenamento'**
   String get riprendiAllenamento;
 
   /// No description provided for @terminaAllenamento.
   ///
   /// In it, this message translates to:
-  /// **'TERMINA ALLENAMENTO'**
+  /// **'Termina allenamento'**
   String get terminaAllenamento;
 
   /// No description provided for @confermaTerminaAllenamento.
@@ -484,6 +478,30 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Sei sicuro di voler terminare l\'allenamento?'**
   String get confermaTerminaAllenamento;
+
+  /// No description provided for @allenamentoInCorso.
+  ///
+  /// In it, this message translates to:
+  /// **'Allenamento in corso'**
+  String get allenamentoInCorso;
+
+  /// No description provided for @sospendi.
+  ///
+  /// In it, this message translates to:
+  /// **'Sospendi'**
+  String get sospendi;
+
+  /// No description provided for @riprendi.
+  ///
+  /// In it, this message translates to:
+  /// **'Riprendi'**
+  String get riprendi;
+
+  /// No description provided for @termina.
+  ///
+  /// In it, this message translates to:
+  /// **'Termina'**
+  String get termina;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
